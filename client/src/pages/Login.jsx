@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../store/auth";
+//import { useNavigate, Link } from "react-router-dom";
+//import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
-import { RotatingLines } from "react-loader-spinner"; // Import the loader component
+//import { RotatingLines } from "react-loader-spinner"; // Import the loader component
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -23,34 +23,34 @@ const Login = ({ setIsLoggedIn }) => {
     e.preventDefault();
     setLoading(true); // Start loading
 
-    if (!backendUrl) {
-      toast.error("Backend URL is not defined. Please check your environment variables.");
-      setLoading(false); // Stop loading if error
-      return;
-    }
+    // if (!backendUrl) {
+    //   toast.error("Backend URL is not defined. Please check your environment variables.");
+    //   setLoading(false); // Stop loading if error
+    //   return;
+    // }
 
-    try {
-      const response = await fetch(`${backendUrl}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
+    // try {
+    //   const response = await fetch(`${backendUrl}/api/auth/login`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(credentials),
+    //   });
 
-      const responseData = await response.json();
+    //   const responseData = await response.json();
 
-      if (response.ok) {
-        storeTokenInLS(responseData.token);
-        toast.success("Login Successfully");
-        navigate("/");
-      } else {
-        toast.error(responseData.message || "Invalid Credentials");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred. Please try again.");
-    } finally {
-      setLoading(false); // Stop loading
-    }
+    //   if (response.ok) {
+    //     storeTokenInLS(responseData.token);
+    //     toast.success("Login Successfully");
+    //     navigate("/");
+    //   } else {
+    //     toast.error(responseData.message || "Invalid Credentials");
+    //   }
+    // } catch (error) {
+    //   console.error("Login error:", error);
+    //   toast.error("An error occurred. Please try again.");
+    // } finally {
+    //   setLoading(false); // Stop loading
+    // }
   };
 
   return (
