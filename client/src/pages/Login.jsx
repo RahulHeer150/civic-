@@ -9,10 +9,10 @@ import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Login = ({ setIsLoggedIn }) => {
-  const navigate = useNavigate();
-  const { storeTokenInLS } = useAuth();
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false); // Loading state
+//  const navigate = useNavigate();
+//  const { storeTokenInLS } = useAuth();
+ const [credentials, setCredentials] = useState({ email: "", password: "" });
+//  const [loading, setLoading] = useState(false); // Loading state
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,36 +22,7 @@ const Login = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading
-
-    // if (!backendUrl) {
-    //   toast.error("Backend URL is not defined. Please check your environment variables.");
-    //   setLoading(false); // Stop loading if error
-    //   return;
-    // }
-
-    // try {
-    //   const response = await fetch(`${backendUrl}/api/auth/login`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(credentials),
-    //   });
-
-    //   const responseData = await response.json();
-
-    //   if (response.ok) {
-    //     storeTokenInLS(responseData.token);
-    //     toast.success("Login Successfully");
-    //     navigate("/");
-    //   } else {
-    //     toast.error(responseData.message || "Invalid Credentials");
-    //   }
-    // } catch (error) {
-    //   console.error("Login error:", error);
-    //   toast.error("An error occurred. Please try again.");
-    // } finally {
-    //   setLoading(false); // Stop loading
-    // }
-  };
+  }
 
   return (
     <>
@@ -97,13 +68,13 @@ const Login = ({ setIsLoggedIn }) => {
         >
           {loading ? (
             <div className="flex justify-center items-center">
-              <RotatingLines
+              {/* <RotatingLines
                 strokeColor="white"
                 strokeWidth="5"
                 animationDuration="0.75"
                 width="24"
                 visible={true}
-              />
+              /> */}
             </div>
           ) : (
             "Login"

@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './index.css'
 import Register from './pages/Register'
+import Login from './pages/Login'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
     <Register />
+    <Login/>
     {/* <AuthPage/> */}
     </>
   )
