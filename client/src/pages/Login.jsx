@@ -66,19 +66,6 @@ const Login = ({ setIsLoggedIn }) => {
           className={`py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto block bg-gradient-to-r from-purple-500 to-red-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95${loading ? " opacity-50 cursor-not-allowed" : ""}`}
           disabled={loading} // Disable button while loading
         >
-          {loading ? (
-            <div className="flex justify-center items-center">
-              {/* <RotatingLines
-                strokeColor="white"
-                strokeWidth="5"
-                animationDuration="0.75"
-                width="24"
-                visible={true}
-              /> */}
-            </div>
-          ) : (
-            "Login"
-          )}
         </button>
 
         <div className="flex flex-col items-center mt-4 space-y-2">
