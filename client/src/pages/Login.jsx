@@ -64,7 +64,7 @@ const Login = ({ setIsLoggedIn }) => {
         <button
           type="submit"
           className={`py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto block bg-gradient-to-r from-purple-500 to-red-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95${loading ? " opacity-50 cursor-not-allowed" : ""}`}
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
         </button>
 
