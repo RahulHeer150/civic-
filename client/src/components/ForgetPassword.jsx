@@ -15,32 +15,32 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!backendUrl) {
-      toast.error("Backend URL is not defined. Please check your environment variables.");
-      setLoading(false);
-      return;
-    }
+    // if (!backendUrl) {
+    //   toast.error("Backend URL is not defined. Please check your environment variables.");
+    //   setLoading(false);
+    //   return;
+    // }
 
-    try {
-      const response = await fetch(`${backendUrl}/api/auth/forgot-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+    // try {
+    //   const response = await fetch(`${backendUrl}/api/auth/forgot-password`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ email }),
+    //   });
 
-      const responseData = await response.json();
+    //   const responseData = await response.json();
 
-      if (response.ok) {
-        toast.success("Password reset link sent! Please check your email.");
-      } else {
-        toast.error(responseData.message || "Failed to send password reset email.");
-      }
-    } catch (error) {
-      console.error("Forgot password error:", error);
-      toast.error("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    //   if (response.ok) {
+    //     toast.success("Password reset link sent! Please check your email.");
+    //   } else {
+    //     toast.error(responseData.message || "Failed to send password reset email.");
+    //   }
+    // } catch (error) {
+    //   console.error("Forgot password error:", error);
+    //   toast.error("An error occurred. Please try again.");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
