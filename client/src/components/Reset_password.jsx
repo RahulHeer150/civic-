@@ -13,45 +13,45 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { token } = useParams(); // Extract token from URL params
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match.");
-      setLoading(false);
-      return;
-    }
+    // if (newPassword !== confirmPassword) {
+    //   toast.error("Passwords do not match.");
+    //   setLoading(false);
+    //   return;
+    // }
 
-    if (!backendUrl) {
-      toast.error("Backend URL is not defined. Please check your environment variables.");
-      setLoading(false);
-      return;
-    }
+    // if (!backendUrl) {
+    //   toast.error("Backend URL is not defined. Please check your environment variables.");
+    //   setLoading(false);
+    //   return;
+    // }
 
-    try {
-      const response = await fetch(`${backendUrl}/api/auth/reset-password/${token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newPassword }),
-      });
+    // try {
+    //   const response = await fetch(`${backendUrl}/api/auth/reset-password/${token}`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ newPassword }),
+    //   });
 
-      const responseData = await response.json();
+    //   const responseData = await response.json();
 
-      if (response.ok) {
-        toast.success("Password reset successful. Please login.");
-        navigate("/login");
-      } else {
-        toast.error(responseData.message || "Failed to reset password.");
-      }
-    } catch (error) {
-      console.error("Reset password error:", error);
-      toast.error("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    //   if (response.ok) {
+    //     toast.success("Password reset successful. Please login.");
+    //     navigate("/login");
+    //   } else {
+    //     toast.error(responseData.message || "Failed to reset password.");
+    //   }
+    // } catch (error) {
+    //   console.error("Reset password error:", error);
+    //   toast.error("An error occurred. Please try again.");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
