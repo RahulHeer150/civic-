@@ -3,8 +3,8 @@ import React from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './index.css'
-import Register from './pages/Register'
-//import Login from './pages/Login'
+//import Register from './pages/Register'
+import Login from './pages/Login'
 //import Update_user from './components/Update_user'
 //import AuthPage from './pages/AuthPage'
 
@@ -13,8 +13,8 @@ function App() {
 
   return (
     <>
-    <Register />
-    {/* <Login/>  */}
+    {/* <Register /> */}
+    <Login/> 
     {/* <Update_user/> */}
     </>
   )
