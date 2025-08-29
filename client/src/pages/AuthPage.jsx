@@ -27,7 +27,7 @@ const AuthPage = ({ setIsLoggedIn, image }) => {
           <div className={`${
                 activeButton === "login" ? " mt-[0vh]" : "-mt-[8vh]"
               } bg-gradient-to-r from-purple-100 to-red-100 flex text-xl justify-center rounded-full max-w-md mx-auto mb-4 `}>
-            {/* <Link
+            <Link
               to="/login"
               className={`${
                 activeButton === "login" ? " bg-gradient-to-r from-purple-500 to-red-500 text-white font-bold " : "bg-gradient-to-r from-purple-100 to-red-100 text-black font-bold"
@@ -44,7 +44,7 @@ const AuthPage = ({ setIsLoggedIn, image }) => {
               style={{ fontSize: "0.9rem" }}
             >
               Register
-            </Link> */}
+            </Link>
           </div>
 
           {activeButton === "register" ? (

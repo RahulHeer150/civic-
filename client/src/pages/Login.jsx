@@ -78,12 +78,12 @@ const Login = () => {
         <div className='flex flex-col items-center mt-4 space-y-2'>
           <p className='text-sm text-gray-600'> 
             Forgot your Password?
-             {/* <Link to="/Forgot_Password" className='text-[#ed1f26] font-semibold hover:underline'>Click Here</Link> */}
+             <Link to="/Forgot_Password" className='text-[#ed1f26] font-semibold hover:underline'>Click Here</Link>
           </p>
 
            <p className='text-sm text-gray-600'> 
             New here?
-             {/* <Link to="/Register" className='text-[#ed1f26] font-semibold hover:underline'>Sign Up</Link> */}
+             <Link to="/Register" className='text-[#ed1f26] font-semibold hover:underline'>Sign Up</Link>
           </p>
         </div>
 

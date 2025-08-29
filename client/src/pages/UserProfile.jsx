@@ -12,7 +12,7 @@ import { FaEdit } from "react-icons/fa";import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const Update_user = () => {
+const  UserProfile= () => {
   return (
     <>
     <div className='bg-gray-100  flex items-center justify-center'>
@@ -84,4 +84,4 @@ const ProfileItem = ({ label, value, icon }) => (
   </div>
 );
 
-export default Update_user;
+export default UserProfile;
