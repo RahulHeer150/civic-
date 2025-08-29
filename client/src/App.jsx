@@ -19,21 +19,26 @@ function App() {
 
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/Register' element={<Register/>}/>
-        <Route path='/Login' element={<Login/>}/>
-        {/* <Route path='/Logout' element={<Logout/>}/> */}
-        <Route path='/Update_user' element={<Update_user/>}/>
-        <Route path='/Userprofile' element={<UserProfile/>}/>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
-        <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
-        <Route path='/Register' element={<Register/>}/>
-        <Route path='/Register' element={<Register/>}/>
+      <>
+      <Update_user/>
+      
+      </>
+  
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path='/Register' element={<Register/>}/>
+    //     <Route path='/Login' element={<Login/>}/>
+    //     {/* <Route path='/Logout' element={<Logout/>}/> */}
+    //     <Route path='/Update_user' element={<Update_user/>}/>
+    //     <Route path='/Userprofile' element={<UserProfile/>}/>
+    //     <Route path='/' element={<Home/>}/>
+    //     <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
+    //     <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
+    //     <Route path='/Register' element={<Register/>}/>
+    //     <Route path='/Register' element={<Register/>}/>
 
-      </Routes>
-    </BrowserRouter>
+    //   </Routes>
+    // </BrowserRouter>
   )
 }
 
