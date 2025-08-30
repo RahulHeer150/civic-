@@ -10,6 +10,10 @@ const Reset_password = () => {
   const [confirmPassword , setConfirmPassword]=useState("")
   const[loading,setLoading]=useState(false)
 
+  if(newPassword !== confirmPassword){
+    toast.error("Password do not Match !!.")
+  }
+
   const handleSubmit=async(e)=>{
     e.preventDefault();
   }
