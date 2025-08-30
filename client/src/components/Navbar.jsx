@@ -1,15 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import {Link, useLocation} from 'react-router-dom';
 import { faCaretDown }  from '@fortawesome/free-solid-svg-icons'
-import { faFontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const Navbar = () => {
-    const location=useLocation();
+    //const location=useLocation();
     const [isOpen, setIsOpen]=useState(false);
     const [isHamburgerOpen , setIsHamburgerOpen]=useState(false);
     const [navbarBg, setNavbarBg]=useState("bg-transparent");
-    const[textColor, setTextColor]=useState("text-white");
+    const[textColor, setTextColor]=useState("text-red");
     const [padding, setPadding]=useState("py-4 md:py-6");
     const [underlineColor,setUnderlineColor]=useState("before:bg-white");
     const[JoinBtnHoverBg, setJoinBtnHoverBg]=useState("hover:bg-white");
@@ -77,6 +77,12 @@ const Navbar = () => {
                 <Link to="/" title='home' className={`text-2xl font-bold transition-all duration-200 rounded font-pj hover:text-opacity-50 ${textColor}`}>
                 image
                 </Link>
+            </div>
+            <div className='flex lg:hidden'>
+              <button 
+              type='button'
+              classname={`focus:outline-none ${textColor}`}
+              ></button>
             </div>
         </div>
 
