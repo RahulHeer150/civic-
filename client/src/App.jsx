@@ -1,8 +1,5 @@
-import { useState } from 'react'
 import { BrowserRouter , Route , Routes } from 'react-router-dom'
 import React from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './index.css'
 
 import Home from './pages/Home'
@@ -13,6 +10,7 @@ import ResetPassword from './components/Reset_password'
 //import AuthPage from './pages/AuthPage'
 import Register from './pages/Register'
 import Update_user from './pages/Update_user'
+import Navbar from './components/Navbar'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -20,7 +18,7 @@ function App() {
 
   return (
       <>
-      <ResetPassword/>
+      <Navbar/>
       
       </>
   
