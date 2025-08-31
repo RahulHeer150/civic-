@@ -11,6 +11,7 @@ import ResetPassword from './components/Reset_password'
 import Register from './pages/Register'
 import Update_user from './pages/Update_user'
 import Navbar from './components/Navbar'
+import Hero1 from './components/Hero1'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
 
   return (
       <>
-      <Navbar/>
+      <Hero1/>
       
       </>
   
