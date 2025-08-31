@@ -8,6 +8,7 @@ const ReportForm = () => {
     const [photo, setPhoto] = React.useState(null);
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(e)
         // Handle form submission logic here
     }
 
