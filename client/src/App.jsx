@@ -23,8 +23,6 @@ function App() {
   return (
       <>
       <OurMission/>
-      <Report_Header/>
-      <ReportForm/>
       
       </>
   
