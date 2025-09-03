@@ -1,9 +1,10 @@
 import React from 'react'
+import MissionImg from '../assets/Mission.png'
 
 const OurMission = () => {
     return (
     <section className="w-full bg-white text-gray-900 py-16 px-6 md:px-20">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <div className="w-1/2 mx-auto grid md:grid-cols-2 gap-10 items-center">
         
         {/* Left Side - Content */}
         <div>
@@ -26,8 +27,15 @@ const OurMission = () => {
         </div>
 
         {/* Right Side - Image Placeholder */}
-        <div className="w-full h-80 bg-gray-100 rounded-2xl flex items-center justify-center border border-gray-200">
-          <span className="text-gray-400">[ Image / Illustration ]</span>
+        <div className="w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center">
+         <img
+                    src={MissionImg}
+                    alt="Mission_image"
+                    height={500}
+                    width={500}
+                    loading="lazy"
+                    className="max-w-full h-auto md:px-5"
+                  />
         </div>
 
       </div>
@@ -35,3 +43,4 @@ const OurMission = () => {
   );
   
 }
+export default OurMission

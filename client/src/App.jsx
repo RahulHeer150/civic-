@@ -14,6 +14,7 @@ import Navbar from './components/Navbar'
 import Hero1 from './components/Hero1'
 import ReportForm from './components/ReportForm'
 import Report_Header from './components/Report_Header'
+import OurMission from './components/OurMission'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
   return (
       <>
+      <OurMission/>
       <Report_Header/>
       <ReportForm/>
       
