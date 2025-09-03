@@ -22,6 +22,7 @@ function App() {
   return (
       <>
       <Report_Header/>
+      <ReportForm/>
       
       </>
   
