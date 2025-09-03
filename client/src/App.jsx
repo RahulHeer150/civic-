@@ -13,6 +13,7 @@ import Update_user from './pages/Update_user'
 import Navbar from './components/Navbar'
 import Hero1 from './components/Hero1'
 import ReportForm from './components/ReportForm'
+import Report_Header from './components/Report_Header'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
 
   return (
       <>
-      <ReportForm/>
+      <Report_Header/>
       
       </>
   
