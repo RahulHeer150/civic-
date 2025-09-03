@@ -21,7 +21,7 @@ const Report_Header = () => {
        <div className="w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center">
           <img
             src={ReportImg}
-            alt="forgot password"
+            alt="Report_header"
             height={350}
             width={500}
             loading="lazy"
