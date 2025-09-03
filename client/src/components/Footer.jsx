@@ -1,18 +1,17 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import "./Footer.css"; // Adjust the path based on your project structure
-import logo from "../landing_page/logo.jpg"; 
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-top">
-        <h1>Follow Us and Stay Inspired!</h1>
+    <footer className="bg-[rgb(30,144,255)] text-white font-sans px-10 py-5 text-center">
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-6 font-bold m-0">Follow Us and Stay Inspired!</h1>
         <a
           href="https://linkedin.com"
-          className="footer-social-icon"
+          className="text-[##1e3a8a] text-4 w-[50px] h-[50px] flex items-center justify-center rounded-full bg-white hover:bg-gray-200 hover:text-[#1e3a8a] hover:scale-110 transition-colors duration-300 ease-in-out
+"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -20,22 +19,22 @@ const Footer = () => {
         </a>
       </div>
 
-      <div className="footer-divider"></div>
+      <div className="w-full h-[2px] bg-white mt-4"></div>
 
-      <div className="footer-bottom">
+      <div className="flex justify-between items-center flex-wrap gap-4 md:flex-col text-center">
         <div className="footer-logo">
           <img
             src={logo} // Replace with the actual logo URL
             alt="CrowdFix Logo"
-            className="footer-logo-img"
+            className="h-[40px]"
           />
         </div>
-        <div className="footer-copyright">
+        <div className="text-2">
           CrowdFix.com &copy; 2024. All rights reserved.
         </div>
-        <div className="footer-links">
-          <Link to="#about" className="footer-link">About Us</Link>
-          <Link href="#contact" className="footer-link">Contact Us</Link>
+        <div className="flex gap-4 md:justify-center">
+          <Link to="#about" className="text-white text-4 transition-colors duration-300 ease">About Us</Link>
+          <Link href="#contact" className="text-white text-4 transition-colors duration-300 ease">Contact Us</Link>
         </div>
       </div>
     </footer>
