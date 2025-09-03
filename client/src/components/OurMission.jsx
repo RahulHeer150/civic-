@@ -7,7 +7,7 @@ const OurMission = () => {
             <div className="max-w-7xl mx-auto gap-10 items-center md:flex">
                 {/* Left Side - Content */}
                 <div className="
-                    w-full md:w-1/2 mb-10 md:mb-0 p-6
+                    w-full md:w-full mb-10  p-6
                     md:shadow-lg md:border-4 md:border-blue-600 md:rounded-2xl
                     lg:border-0 lg:rounded-none lg:shadow-none
                 ">
