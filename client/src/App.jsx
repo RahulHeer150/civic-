@@ -12,8 +12,6 @@ import Register from './pages/Register'
 import Update_user from './pages/Update_user'
 import Navbar from './components/Navbar'
 import Hero1 from './components/Hero1'
-import ReportForm from './components/ReportForm'
-import Report_Header from './components/Report_Header'
 import OurMission from './components/OurMission'
 import Hero2 from './components/Hero2'
 import Footer from './components/Footer'
@@ -24,27 +22,33 @@ function App() {
 
 
   return (
-      <>
-      <Navbar/>
-      <Aboutus/>
       
-      </>
   
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path='/Register' element={<Register/>}/>
-    //     <Route path='/Login' element={<Login/>}/>
-    //     {/* <Route path='/Logout' element={<Logout/>}/> */}
-    //     <Route path='/Update_user' element={<Update_user/>}/>
-    //     <Route path='/Userprofile' element={<UserProfile/>}/>
-    //     <Route path='/' element={<Home/>}/>
-    //     <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
-    //     <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
-    //     <Route path='/Register' element={<Register/>}/>
-    //     <Route path='/Register' element={<Register/>}/>
+    <BrowserRouter>
+        <Navbar/>
+      <Routes>
+        <Route path='/Register' element={<Register/>}/>
+         <Route path='/Authpage' element={<AuthPage/>}/>
+        <Route path='/Login' element={<Login/>}/>
+        <Route path='/Logout' element={<Logout/>}/> 
+        <Route path='/Update_user' element={<Update_user/>}/>
+        <Route path='/Userprofile' element={<UserProfile/>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/Report-issue' element={<Report-Page/>}/>
+        <Route path='/Explore' element={<Explore/>}/>
+        <Route path='/howitworks' element={<How_it_works/>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/>
 
-    //   </Routes>
-    // </BrowserRouter>
+        <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
+        <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
+        <Route path='/About' element={<About/>}/>
+        <Route path='/Register' element={<Register/>}/>
+
+      </Routes>
+      <Footer/>
+    </BrowserRouter>
   )
 }
 
