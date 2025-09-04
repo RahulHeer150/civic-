@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { RotatingLines } from 'react-loader-spinner'
-import loginImg from '../assets/login.png'
+import ResetImg from '../assets/resetp.png'
 
 const Reset_password = () => {
   const [newPassword,setNewPassword]=useState("")
@@ -23,7 +23,7 @@ const Reset_password = () => {
            {/* left side image  */}
            <div className='w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center'>
             <img 
-            src={loginImg} 
+            src={ResetImg} 
             alt="forgot password" 
             height={350}
             width={500}

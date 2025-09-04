@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Forgot_password = () => {
   return (
     <div className='flex flex-col min-h-screen pt-4 md:pt-20'>
