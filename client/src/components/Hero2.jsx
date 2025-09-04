@@ -8,7 +8,7 @@ const steps = [
   { icon: <FaCheckCircle aria-label="Solve Icon" />, title: "Solve", description: "Authorities take action" },
 ];
 
-const HowItWorks = () => {
+const Hero2 = () => {
   return (
     <section className="text-center py-16 px-6 bg-gradient-to-br from-gray-50 to-gray-100">
       <h2 className="text-3xl font-bold text-gray-800 mb-12">How It Works</h2>
@@ -34,4 +34,4 @@ const HowItWorks = () => {
   );
 };
 
-export default HowItWorks;
+export default Hero2;

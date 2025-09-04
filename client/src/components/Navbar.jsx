@@ -32,9 +32,9 @@ const Navbar = () => {
   }
       const MenuItems = [
   { id: "home", label: "Home", icon: <AiOutlineHome className="inline mr-2" />, to: "/" },
-  { id: "report-issue", label: "Report an Issue", icon: <AiOutlineUser className="inline mr-2" />, to: "/" },
-  { id: "explore-issue", label: "Explore Issue", icon: <AiOutlineFundProjectionScreen className="inline mr-2" />, to: "/projects" },
-  { id: "How it Works", label: "How it works", icon: <AiFillStar className="inline mr-2" />, to: "/skillsection" },
+  { id: "report-issue", label: "Report an Issue", icon: <AiOutlineUser className="inline mr-2" />, to: "/Report-issue" },
+  { id: "explore-issue", label: "Explore Issue", icon: <AiOutlineFundProjectionScreen className="inline mr-2" />, to: "/Explore" },
+  { id: "How it Works", label: "How it works", icon: <AiFillStar className="inline mr-2" />, to: "/howitworks" },
 ];
 
   return (
@@ -45,12 +45,12 @@ const Navbar = () => {
         <ul className=' hidden lg:flex space-x-8 text-black ml-8 text-xl text-bold'>
           {MenuItems.map((item) => (
             <li key={item.id} className={`cursor-pointer hover:text-sky-400 ${activeSection === item.id ? "text-sky-500" : ""}` }>
-              <a className="flex items-center gap-2  border-transparent  pb-2 hover:text-sky-400  transition-all duration-300 " 
+              <Link className="flex items-center gap-2  border-transparent  pb-2 hover:text-sky-400  transition-all duration-300 " 
               to={item.to}
               onClick={()=>handlemenuClick(item.id)}>
                 {item.icon}
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
