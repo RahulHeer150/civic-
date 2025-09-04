@@ -1,93 +1,92 @@
-import React, { useRef, useState, useEffect } from 'react'
-import {Link, useLocation} from 'react-router-dom';
-import { faCaretDown }  from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react'
+import { FiMenu,FiX } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import {
+  AiFillStar,
+  AiOutlineHome,
+  AiOutlineFundProjectionScreen,
+  AiOutlineUser,
+} from "react-icons/ai";
+
+import { CgFileDocument } from "react-icons/cg";
+import { FaFileSignature } from 'react-icons/fa6';
+
+
 
 
 const Navbar = () => {
-    //const location=useLocation();
-    const [isOpen, setIsOpen]=useState(false);
-    const [isHamburgerOpen , setIsHamburgerOpen]=useState(false);
-    const [navbarBg, setNavbarBg]=useState("bg-transparent");
-    const[textColor, setTextColor]=useState("text-red");
-    const [padding, setPadding]=useState("py-4 md:py-6");
-    const [underlineColor,setUnderlineColor]=useState("before:bg-white");
-    const[JoinBtnHoverBg, setJoinBtnHoverBg]=useState("hover:bg-white");
-    const[JoinBtnHoverText, setJoinBtnHoverText]=useState("hover:text-black");
-
-    const[dropdownBg, setDropdownBg]=useState("bg-transparent");
-    const[isResourceOpen, setIsResourceOpen] = useState(false);
-    const dropdownRef=useRef(null);
-
-      const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsResourceOpen(false);
-    }
-  };
-    useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50 || location.pathname !== "/") {
-        setNavbarBg("bg-white border-b-2 shadow-md transition-shadow duration-300 ease-in-out hover:shadow-xl");
-        setTextColor("text-[#ed1f26] transition-colors duration-300 ease-in-out hover:text-[#d10b22]");
-        setPadding("py-2 transition-all duration-1000 ease-in-out"); // Adjusted height for different devices
-        setUnderlineColor("before:bg-[#ed1f26] before:scale-x-0 group-hover:before:scale-x-100 transition-transform duration-300 ease-in-out");
-        setJoinBtnHoverBg("hover:bg-[#ed1f26] hover:shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out");
-        setJoinBtnHoverText("hover:text-white transition-colors duration-300 ease-in-out");
-        setDropdownBg("bg-white border border-[#ed1f26] border-t-transparent shadow-lg rounded-lg transform transition-transform duration-300 ease-in-out hover:scale-105");
-        
-
-      } else {
-        setNavbarBg("bg-transparent");
-        setTextColor("text-white");
-        setPadding("py-4 transition-all duration-300 ease-in-out"); // Default height
-        setUnderlineColor("before:bg-white");
-        setJoinBtnHoverBg("hover:bg-white");
-        setJoinBtnHoverText("hover:text-black");
-        setDropdownBg("bg-black");
-
-
-      }
+  const[IsOpen,setIsOpen]=useState(false)
+  const[activeSection,setActiveSection]=useState("")
+  const[isScrolled,setIsScrolled]=useState(false)
+  useEffect(()=>{
+    const handlescroll=()=>{
+      setIsScrolled(window.scrollY>50)
     };
 
-    if (location.pathname !== "/") {
-      setNavbarBg("bg-white shadow-md");
-      setTextColor("text-[#ed1f26]");
-      setPadding("py-2");
-      setUnderlineColor("before:bg-[#ed1f26]");
-      setJoinBtnHoverBg("hover:bg-[#ed1f26]");
-      setJoinBtnHoverText("hover:text-white");
-      setDropdownBg("bg-white");
-    } else {
-      handleScroll();
-    }
+    window.addEventListener("scroll",handlescroll);
+    return()=> window.removeEventListener("scroll",handlescroll)
+  },[]);
+  const handlemenuClick=(sectionId)=>{
+      setActiveSection(sectionId);
+      setIsOpen(false);
+  }
+      const MenuItems = [
+  { id: "home", label: "Home", icon: <AiOutlineHome className="inline mr-2" />, to: "/" },
+  { id: "report-issue", label: "Report an Issue", icon: <AiOutlineUser className="inline mr-2" />, to: "/" },
+  { id: "explore-issue", label: "Explore Issue", icon: <AiOutlineFundProjectionScreen className="inline mr-2" />, to: "/projects" },
+  { id: "How it Works", label: "How it works", icon: <AiFillStar className="inline mr-2" />, to: "/skillsection" },
+];
 
-    window.addEventListener("scroll", handleScroll);
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [location.pathname]);
-  
   return (
-    <header className={`fixed w-full z-30 transition-all duration-300 ease-in-out  ${navbarBg} ${padding}`}>
-        <div className='relative flex items-center justify-between'>
-            <div className='flex-shrink-0'>
-                <Link to="/" title='home' className={`text-2xl font-bold transition-all duration-200 rounded font-pj hover:text-opacity-50 ${textColor}`}>
-                image
-                </Link>
-            </div>
-            <div className='flex lg:hidden'>
-              <button 
-              type='button'
-              classname={`focus:outline-none ${textColor}`}
-              ></button>
-            </div>
+    <>
+    <nav className={`fixed top-0 w-full z-50 transition duration-300 px-[7vw] md:px-[12vw] lg:px-[10vw] ${isScrolled ? "bg-[#05041480] bg-opacity-80 backdrop:blur-3xl shadow-md":"bg-transparent"}`}>
+      <div className='text-white py-4 px-1 flex flex-row justify-between items-center'>
+        <img src="/profile.png" alt="" className='h-8 w-13'/>
+        <ul className=' hidden lg:flex space-x-8 text-white ml-8 text-3xl text-bold'>
+          {MenuItems.map((item) => (
+            <li key={item.id} className={`cursor-pointer hover:text-sky-400 ${activeSection === item.id ? "text-sky-500" : ""}` }>
+              <a className="flex items-center gap-2 border-b-4 border-transparent hover:border-sky-400 pb-2 hover:text-sky-400  transition-all duration-300 " 
+              to={item.to}
+              onClick={()=>handlemenuClick(item.id)}>
+                {item.icon}
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+         
+         <div className='lg:hidden'>
+          {
+            IsOpen ?
+            (
+              <FiX className='text-3xl text-sky-400 cursor-pointer' onClick={()=>setIsOpen(false)}/>
+            ):(
+              <FiMenu className='text-3xl text-sky-400 cursor-pointer' onClick={()=>setIsOpen(true)}/>
+            )
+          }
+         </div>
+      </div>
+      {IsOpen && (
+        <div className='absolute top-16 left-1/2 transform -translate-x-1/2 w-4/5 bg-opacity-50 backdrop-filter backdrop-blur-lg z-50 rounded-lg shadow-lg'>
+          <ul className='flex flex-col items-center space-y-4 py-4 text-white'>
+              {MenuItems.map((item) => (
+            <li key={item.id} className='cursor-pointer '>
+              <a className="flex items-center gap-2 border-b-4 border-transparent hover:border-white hover:text-gray-300 transition-all duration-200 " 
+              to={item.to}
+              onClick={()=>handlemenuClick(item.id)}>
+                {item.icon}
+                {item.label}
+              </a>
+            </li>
+          ))}
+          </ul>
         </div>
-
-    </header>
-  )
+      )}
+    </nav>
+    
+    
+    </>
+  ) 
 }
 
 export default Navbar

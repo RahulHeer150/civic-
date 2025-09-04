@@ -17,6 +17,7 @@ import Report_Header from './components/Report_Header'
 import OurMission from './components/OurMission'
 import Hero2 from './components/Hero2'
 import Footer from './components/Footer'
+import Aboutus from './components/Aboutus'
 //import AuthPage from './pages/AuthPage'
 
 function App() {
@@ -24,8 +25,8 @@ function App() {
 
   return (
       <>
-      <Hero2/>
-      <Footer/>
+
+      <Aboutus/>
       
       </>
   
