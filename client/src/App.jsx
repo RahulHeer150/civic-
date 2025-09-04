@@ -3,6 +3,8 @@ import React from 'react'
 import './index.css'
 
 import Home from './pages/Home'
+import How_it_works from './pages/How_it_works'
+import Explore from './pages/Explore'
 import UserProfile from './pages/UserProfile'
 import Login from './pages/Login'
 import ForgotPassword from './components/ForgetPassword'
@@ -15,8 +17,10 @@ import Hero1 from './components/Hero1'
 import OurMission from './components/OurMission'
 import Hero2 from './components/Hero2'
 import Footer from './components/Footer'
-import Aboutus from './components/Aboutus'
-//import AuthPage from './pages/AuthPage'
+import About from './pages/About'
+import AuthPage from './pages/AuthPage'
+import Logout from './components/Logout'
+import Contact from './pages/Contact'
 
 function App() {
 
