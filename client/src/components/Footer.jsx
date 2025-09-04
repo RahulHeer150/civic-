@@ -1,11 +1,10 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[rgb(30,144,255)] text-white font-sans px-10 py-5 text-center">
+    <footer className="bg-[rgb(30,144,255)] text-white font-sans px-10 pt-5 text-center">
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-6 font-bold m-0">Follow Us and Stay Inspired!</h1>
         <a
@@ -15,7 +14,7 @@ const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FontAwesomeIcon icon={faLinkedin} />
+          {FaLinkedinIn}
         </a>
       </div>
 
@@ -24,7 +23,7 @@ const Footer = () => {
       <div className="flex justify-between items-center flex-wrap gap-4 md:flex-col text-center">
         <div className="footer-logo">
           <img
-            src={logo} // Replace with the actual logo URL
+            src="" // Replace with the actual logo URL
             alt="CrowdFix Logo"
             className="h-[40px]"
           />
@@ -33,8 +32,8 @@ const Footer = () => {
           CrowdFix.com &copy; 2024. All rights reserved.
         </div>
         <div className="flex gap-4 md:justify-center">
-          <Link to="#about" className="text-white text-4 transition-colors duration-300 ease">About Us</Link>
-          <Link href="#contact" className="text-white text-4 transition-colors duration-300 ease">Contact Us</Link>
+          <a to="#about" className="text-white text-4 transition-colors duration-300 ease">About Us</a>
+          <a href="#contact" className="text-white text-4 transition-colors duration-300 ease">Contact Us</a>
         </div>
       </div>
     </footer>
