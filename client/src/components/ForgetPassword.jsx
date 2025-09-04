@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { RotatingLines } from 'react-loader-spinner'
-import loginImg from '../assets/login.png'
+import ForgotPass from '../assets/forgetPass.png'
 
 const ForgetPassword = () => {
   const [email,setEmail]= useState("");
@@ -19,7 +19,7 @@ const ForgetPassword = () => {
         {/* left side image  */}
         <div className='w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center'>
          <img 
-         src={loginImg} 
+         src={ForgotPass} 
          alt="forgot password" 
          height={350}
          width={500}
