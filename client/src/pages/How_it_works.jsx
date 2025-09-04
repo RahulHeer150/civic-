@@ -6,4 +6,4 @@ const How_it_works = () => {
   )
 }
 
-export default How_it_works
+export default How_it_works;
