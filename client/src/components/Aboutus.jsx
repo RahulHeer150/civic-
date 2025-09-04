@@ -3,7 +3,7 @@ import AboutImg from '../assets/abt.png'
 
 const Aboutus = () => {
   return (
-      <div className='flex flex-col min-h-screen  p-10'>
+      <div className='flex flex-col min-h-screen  p-10 mt-10'>
            <div className='flex flex-grow flex-col-reverse md:flex-row lg:flex-row w-full max-w-[1190px] pt-5 md:pt-0 mx-auto justify-between items-center '>
              {/* left side image  */}
              <div className='w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center'>
