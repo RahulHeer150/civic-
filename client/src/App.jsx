@@ -26,33 +26,35 @@ function App() {
 
 
   return (
-      
+      <>
+      <AuthPage/>
+      </>
   
-    <BrowserRouter>
-        <Navbar/>
-      <Routes>
-        <Route path='/Register' element={<Register/>}/>
-         <Route path='/Authpage' element={<AuthPage/>}/>
-        <Route path='/Login' element={<Login/>}/>
-        <Route path='/Logout' element={<Logout/>}/> 
-        <Route path='/Update_user' element={<Update_user/>}/>
-        <Route path='/Userprofile' element={<UserProfile/>}/>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/Report-issue' element={<Report-Page/>}/>
-        <Route path='/Explore' element={<Explore/>}/>
-        <Route path='/howitworks' element={<How_it_works/>}/>
-        <Route path='/contactus' element={<Contact/>}/>
-        <Route path='/Error' element={<Error/>}/>
-        <Route path='/' element={<Home/>}/>
+    // <BrowserRouter>
+    //     <Navbar/>
+    //   <Routes>
+    //     <Route path='/Register' element={<Register/>}/>
+    //      <Route path='/Authpage' element={<AuthPage/>}/>
+    //     <Route path='/Login' element={<Login/>}/>
+    //     <Route path='/Logout' element={<Logout/>}/> 
+    //     <Route path='/Update_user' element={<Update_user/>}/>
+    //     <Route path='/Userprofile' element={<UserProfile/>}/>
+    //     <Route path='/' element={<Home/>}/>
+    //     <Route path='/Report-issue' element={<Report-Page/>}/>
+    //     <Route path='/Explore' element={<Explore/>}/>
+    //     <Route path='/howitworks' element={<How_it_works/>}/>
+    //     <Route path='/contactus' element={<Contact/>}/>
+    //     <Route path='/Error' element={<Error/>}/>
+    //     <Route path='/' element={<Home/>}/>
 
-        <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
-        <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
-        <Route path='/About' element={<About/>}/>
-        <Route path='/Register' element={<Register/>}/>
+    //     <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
+    //     <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
+    //     <Route path='/About' element={<About/>}/>
+    //     <Route path='/Register' element={<Register/>}/>
 
-      </Routes>
-      <Footer/>
-    </BrowserRouter>
+    //   </Routes>
+    //   <Footer/>
+    // </BrowserRouter>
   )
 }
 

@@ -4,7 +4,7 @@ import RegisterForm from "./Register";
 import LoginForm from "./Login";
 import loginImg from '../assets/login.png'
 const AuthPage = ({ setIsLoggedIn, image }) => {
-//  const location = useLocation();
+const location = useLocation();
   const path = location.pathname;
 
   // Determine the active button based on the current URL path
