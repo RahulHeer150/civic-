@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="bg-[rgb(30,144,255)] text-white font-sans px-10 pt-5 text-center">
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-6 font-bold m-0">Follow Us and Stay Inspired!</h1>
-        <a
+        <Link
           href="https://linkedin.com"
           className="text-[##1e3a8a] text-4 w-[50px] h-[50px] flex items-center justify-center rounded-full bg-white hover:bg-gray-200 hover:text-[#1e3a8a] hover:scale-110 transition-colors duration-300 ease-in-out
 "
@@ -15,7 +15,7 @@ const Footer = () => {
           rel="noopener noreferrer"
         >
           {FaLinkedinIn}
-        </a>
+        </Link>
       </div>
 
       <div className="w-full h-[2px] bg-white mt-4"></div>

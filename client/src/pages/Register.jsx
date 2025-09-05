@@ -14,6 +14,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 // import { RotatingLines } from "react-loader-spinner"; // Import the loader component
  const Register = () => {
+  const [loading, setLoading] = useState(false); // Loading state
+  const [otpStep, setOtpStep] = useState(false);
   const [user, setUser] = useState({
     Username: "",
     City:" ",
@@ -140,21 +142,29 @@ return(
           <span><FontAwesomeIcon icon={faListOl}/></span><span>OTP</span>
          </label>
       </div>
-
-      <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
-        <input
-         type="text"
-         name="UserID"
-         value={user.userId}
-         onChange={handleInput}
-         placeholder=" "
-         className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
-         />
-         <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
-          <span><FontAwesomeIcon icon={faUser}/></span><span>UserID</span>
-         </label>
-      </div>
     </div>
+<button
+          type="submit"
+          className="py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto  block  bg-gradient-to-r from-blue-700 to-sky-300   transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
+          disabled={loading}
+        >
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <RotatingLines
+                strokeColor="white"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="24"
+                visible={true}
+              />
+            </div>
+          ) : (
+            "Register Now"
+          )}
+        </button>
+        <p className="text-center mt-4 text-gray-600">
+          Already registered? <Link to="/login" className="text-sky-500 font-semibold hover:underline">Login</Link>
+        </p>
   </form>
 
   </>
