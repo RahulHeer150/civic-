@@ -18,6 +18,7 @@ import OurMission from './components/OurMission'
 import Hero2 from './components/Hero2'
 //import Footer from './components/Footer'
 import About from './pages/About'
+import Report_page from './pages/Report_page'
 import AuthPage from './pages/AuthPage'
 import Logout from './components/Logout'
 import Contact from './pages/Contact'
@@ -38,7 +39,7 @@ function App() {
         <Route path='/Update_user' element={<Update_user/>}/>
         <Route path='/Userprofile' element={<UserProfile/>}/>
         <Route path='/' element={<Home/>}/>
-        <Route path='/Report-issue' element={<Report_Page/>}/>
+        <Route path='/Report' element={<Report_page/>}/>
         <Route path='/Explore' element={<Explore/>}/>
         <Route path='/howitworks' element={<How_it_works/>}/>
         <Route path='/contactus' element={<Contact/>}/>
