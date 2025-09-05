@@ -11,10 +11,10 @@ const Footer = () => {
           href="https://linkedin.com"
           className="text-[##1e3a8a] text-4 w-[50px] h-[50px] flex items-center justify-center rounded-full bg-white hover:bg-gray-200 hover:text-[#1e3a8a] hover:scale-110 transition-colors duration-300 ease-in-out
 "
-          target="_blank"
+          target="blank"
           rel="noopener noreferrer"
         >
-          {FaLinkedinIn}
+          {/* {FaLinkedinIn} */}
         </Link>
       </div>
 
