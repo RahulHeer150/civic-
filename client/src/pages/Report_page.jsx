@@ -1,6 +1,6 @@
 import React from 'react'
 import Report_Header from '../components/Report_Header'
-import Report
+import ReportForm from '../components/ReportForm'
 
 const Report_page = () => {
   return (
