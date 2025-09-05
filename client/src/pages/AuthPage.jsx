@@ -26,11 +26,11 @@ const location = useLocation();
         <div className="w-full lg:w-1/2 md:w-1/2  px-6 lg:px-0  text-white" >
           <div className={`${
                 activeButton === "login" ? " mt-[0vh]" : "-mt-[8vh]"
-              } bg-gradient-to-r from-sky-400 to-blue-500 flex text-xl justify-center rounded-full max-w-md mx-auto mb-4 `}>
+              } bg-gradient-to-r from-blue-100 to-sky-100 flex text-xl justify-center rounded-full max-w-md mx-auto mb-4 `}>
             <Link
               to="/login"
               className={`${
-                activeButton === "login" ? " bg-gradient-to-r from-purple-500 to-red-500 text-white font-bold " : "bg-gradient-to-r from-purple-100 to-red-100 text-black font-bold"
+                activeButton === "login" ? " bg-gradient-to-r from-blue-700 to-sky-300 text-white font-bold " : "bg-gradient-to-r from-blue-100 to-sky-100 text-black font-bold"
               } rounded-full flex-1 py-2  text-center`}
               style={{ fontSize: "0.9rem" }}
             >
@@ -39,7 +39,7 @@ const location = useLocation();
             <Link
               to="/register"
               className={`${
-                activeButton === "register" ? "bg-gradient-to-r from-purple-500 to-red-500 text-white font-bold" : "bg-gradient-to-r from-purple-100 to-red-100 text-black font-bold"
+                activeButton === "register" ? "bg-gradient-to-r from-blue-700 to-sky-300 text-white font-bold" : "bg-gradient-to-r from-blue-100 to-sky-100 text-black font-bold"
               } rounded-full flex-1 py-2  text-center`}
               style={{ fontSize: "0.9rem" }}
             >

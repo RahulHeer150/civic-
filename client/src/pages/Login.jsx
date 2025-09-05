@@ -29,10 +29,10 @@ const Login = () => {
          value={credentials.email}
          onChange={handleInputChange}
          placeholder=''
-         className='shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-t-gray-200 focus:border-[#ed1f26] focus:border-r-transparent focus:border-1-transparent disabled:border-0 disable:bg-gray-50' 
+         className='shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-t-gray-200 focus:border-black focus:border-r-transparent focus:border-1-transparent disabled:border-0 disable:bg-gray-50' 
          required
          />
-         <label className='pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2 select-none text-[-12px] font-medium leading-tight text-gray-800 outline-none transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]'>
+         <label className='pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2 select-none text-[-12px] font-medium leading-tight text-gray-800 outline-none transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-black'>
           <span><FontAwesomeIcon icon={faEnvelope}/></span><span>Email</span>
 
          </label>
@@ -46,10 +46,10 @@ const Login = () => {
          value={credentials.password}
          onChange={handleInputChange}
          placeholder=''
-         className='shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-t-gray-200 focus:border-[#ed1f26] focus:border-r-transparent focus:border-1-transparent disabled:border-0 disable:bg-gray-50' 
+         className='shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-t-gray-200 focus:border-black focus:border-r-transparent focus:border-1-transparent disabled:border-0 disable:bg-gray-50' 
          required
          />
-         <label className='pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2 select-none text-[-12px] font-medium leading-tight text-gray-800 outline-none transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]'>
+         <label className='pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2 select-none text-[-12px] font-medium leading-tight text-gray-800 outline-none transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-black'>
           <span><FontAwesomeIcon icon={faLock}/></span><span>Password</span>
 
          </label>
@@ -57,7 +57,7 @@ const Login = () => {
       </div>
     <button
           type="submit"
-          className={`py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto block bg-gradient-to-r from-purple-500 to-red-500 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95${loading ? " opacity-50 cursor-not-allowed" : ""}`}
+          className={`py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto block bg-gradient-to-r from-blue-700 to-sky-300 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95${loading ? " opacity-50 cursor-not-allowed" : ""}`}
           disabled={loading} // Disable button while loading
         >
           {loading ? (
@@ -78,12 +78,12 @@ const Login = () => {
         <div className='flex flex-col items-center mt-4 space-y-2'>
           <p className='text-sm text-gray-600'> 
             Forgot your Password?
-             <Link to="/Forgot_Password" className='text-[#ed1f26] font-semibold hover:underline'>Click Here</Link>
+             <Link to="/Forgot_Password" className='text-sky-500 font-semibold hover:underline'>Click Here</Link>
           </p>
 
            <p className='text-sm text-gray-600'> 
             New here?
-             <Link to="/Register" className='text-[#ed1f26] font-semibold hover:underline'>Sign Up</Link>
+             <Link to="/Register" className='text-sky-500 font-semibold hover:underline'>Sign Up</Link>
           </p>
         </div>
 
