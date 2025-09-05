@@ -26,7 +26,7 @@ const location = useLocation();
         <div className="w-full lg:w-1/2 md:w-1/2  px-6 lg:px-0  text-white" >
           <div className={`${
                 activeButton === "login" ? " mt-[0vh]" : "-mt-[8vh]"
-              } bg-gradient-to-r from-purple-100 to-red-100 flex text-xl justify-center rounded-full max-w-md mx-auto mb-4 `}>
+              } bg-gradient-to-r from-sky-400 to-blue-500 flex text-xl justify-center rounded-full max-w-md mx-auto mb-4 `}>
             <Link
               to="/login"
               className={`${
