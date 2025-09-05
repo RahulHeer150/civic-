@@ -38,7 +38,7 @@ function App() {
         <Route path='/Update_user' element={<Update_user/>}/>
         <Route path='/Userprofile' element={<UserProfile/>}/>
         <Route path='/' element={<Home/>}/>
-        <Route path='/Report-issue' element={<Report-Page/>}/>
+        <Route path='/Report-issue' element={<Report_Page/>}/>
         <Route path='/Explore' element={<Explore/>}/>
         <Route path='/howitworks' element={<How_it_works/>}/>
         <Route path='/contactus' element={<Contact/>}/>
