@@ -46,7 +46,7 @@ function App() {
         <Route path='/Error' element={<Error/>}/>
         <Route path='/' element={<Home/>}/>
 
-        <Route path='/ForgetPassword' element={<ForgotPassword/>}/>
+        <Route path='/Forgot_Password' element={<ForgotPassword/>}/>
         <Route path='/ResetPassword/:token' element={<ResetPassword/>}/>
         <Route path='/About' element={<About/>}/>
         <Route path='/Register' element={<Register/>}/>
