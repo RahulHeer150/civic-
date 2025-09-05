@@ -32,7 +32,7 @@ const Navbar = () => {
   }
       const MenuItems = [
   { id: "home", label: "Home", icon: <AiOutlineHome className="inline mr-2" />, to: "/" },
-  { id: "report-issue", label: "Report an Issue", icon: <AiOutlineUser className="inline mr-2" />, to: "/Report" },
+  { id: "report", label: "Report an Issue", icon: <AiOutlineUser className="inline mr-2" />, to: "/Report" },
   { id: "explore-issue", label: "Explore Issue", icon: <AiOutlineFundProjectionScreen className="inline mr-2" />, to: "/Explore" },
   { id: "How it Works", label: "How it works", icon: <AiFillStar className="inline mr-2" />, to: "/howitworks" },
 ];
