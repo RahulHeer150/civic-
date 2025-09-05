@@ -16,7 +16,7 @@ import Navbar from './components/Navbar'
 import Hero1 from './components/Hero1'
 import OurMission from './components/OurMission'
 import Hero2 from './components/Hero2'
-import Footer from './components/Footer'
+//import Footer from './components/Footer'
 import About from './pages/About'
 import AuthPage from './pages/AuthPage'
 import Logout from './components/Logout'
@@ -51,7 +51,7 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
 
       </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </BrowserRouter>
   )
 }
