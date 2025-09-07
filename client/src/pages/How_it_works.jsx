@@ -27,9 +27,9 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="how-it-works">
-      <h1 className="title">How It Works</h1>
-      <p className="subtitle">Our platform is designed to bring communities together to identify, prioritize, and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:</p>
+    <div className="p-4 text-center">
+      <h1 className="text-6 text-[#2c3e50] mb-4">How It Works</h1>
+      <p className="text-[1.2rem] text-[#34495e] mb-4">Our platform is designed to bring communities together to identify, prioritize, and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:</p>
       <div className="items-container">
         {items.map((item, index) => (
           <div key={index} className="item">
