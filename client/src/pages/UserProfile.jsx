@@ -19,7 +19,7 @@ const  UserProfile= () => {
         <div className='container mx-auto px-6 pt-8 md:pt-12 lg:pt-24'>
             <div className='bg-white shadow-2xl rounded-xl overflow-hidden flex flex-col lg:flex-row min-h-[70vh] w-full lg:w-5/6 mx-auto mt-20 lg:mt-0'>
            {/* Left Section */}
-                <div className='bg-gradient-to-br from-purple-500 to-red-500 p-8 lg:w-1/3 flex flex-col items-center justify-center'>
+                <div className='bg-gradient-to-br from-blue-700 to-sky-300 p-8 lg:w-1/3 flex flex-col items-center justify-center'>
                     <img src={Profile}
                     className='w-32 h-32 rounded-full mb-4' 
                     alt="" />
