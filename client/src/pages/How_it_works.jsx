@@ -1,11 +1,11 @@
 import React from "react";
 import { FaLaptop, FaThumbsUp, FaClipboardList, FaCheckCircle } from "react-icons/fa";
-import "./icons.css"; // Adjust the path based on your project structure
+ // Adjust the path based on your project structure
 
 const HowItWorks = () => {
   const items = [
     {
-      icon: <FaLaptop className="text-12 text-blue-950 mb-4" />, 
+      icon: <FaLaptop className="text-[3rem] text-blue-950 mb-4 justify-center text-center" />, 
       title: "Report", 
       description: "Identify and report an issue in your community to ensure it gets noticed and addressed by the right authorities. Reporting helps bring attention to problems that matter most to you."
     },
@@ -30,22 +30,22 @@ const HowItWorks = () => {
     <div className="p-4 text-center">
       <h1 className="text-6 text-[#2c3e50] mb-4">How It Works</h1>
       <p className="text-[1.2rem] text-[#34495e] mb-4">Our platform is designed to bring communities together to identify, prioritize, and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:</p>
-      <div className="bg-[#fff] border-1 border-[#dcdde1] rounded-lg p-6 max-w-[300px] text-center">
+      <div className="flex flex-wrap justify-center gap-8">
         {items.map((item, index) => (
-          <div key={index} className="item">
+          <div key={index} className="bg-[#fff] border-1 border-[#dcdde1] rounded-lg p-6 max-w-[300px] text-center">
             {item.icon}
             <div className="text">
-              <h2 className="item-title">{item.title}</h2>
-              <p className="item-description">{item.description}</p>
+              <h2 className="text-6 text-[#2c3e50] mb-2">{item.title}</h2>
+              <p className="text-4 text-[#636e72]">{item.description}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="extra-info">
-        <h2>Join Us</h2>
-        <p>Be part of a proactive community committed to making impactful changes. Whether you're reporting issues, voting on priorities, or tracking progress, every step you take contributes to building a better future.</p>
-        <h2>Why It Matters</h2>
-        <p>Your involvement ensures that essential issues are addressed promptly and effectively. By working together, we can create transparent and actionable solutions for everyone.</p>
+      <div className="mt-12">
+        <h2 className="text-7 text-[#2c3e50] mb-2">Join Us</h2>
+        <p className="text-4 max-w-[600px] m-auto md:py-4">Be part of a proactive community committed to making impactful changes. Whether you're reporting issues, voting on priorities, or tracking progress, every step you take contributes to building a better future.</p>
+        <h2 className="text-7 text-[#2c3e50] mb-2">Why It Matters</h2>
+        <p className="text-4 max-w-[600px] m-auto md:py-4">Your involvement ensures that essential issues are addressed promptly and effectively. By working together, we can create transparent and actionable solutions for everyone.</p>
       </div>
     </div>
   );
