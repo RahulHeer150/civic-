@@ -38,7 +38,7 @@ const JoinSection = () => {
         </h1>
         <p className="text-[19px] text-[#666] mt-[10px] mb-[20px]">Issues Reported</p>
       </div>
-      <button className=" mx-5 px-[12px] py-[24px] text-3xl rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3 ">Join CrowdFix Today</button>
+      <button className=" mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3 ">Join CrowdFix Today</button>
     </section>
   );
 };
