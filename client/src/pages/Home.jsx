@@ -7,6 +7,7 @@ import OurMission from '../components/OurMission'
 const Home = () => {
   return (
     <div>
+      
       <Hero1/>
       <Hero2/>
       <OurMission/>
