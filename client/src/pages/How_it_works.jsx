@@ -5,22 +5,22 @@ import "./icons.css"; // Adjust the path based on your project structure
 const HowItWorks = () => {
   const items = [
     {
-      icon: <FaLaptop className="icon" />, 
+      icon: <FaLaptop className="text-12 text-blue-950 mb-4" />, 
       title: "Report", 
       description: "Identify and report an issue in your community to ensure it gets noticed and addressed by the right authorities. Reporting helps bring attention to problems that matter most to you."
     },
     {
-      icon: <FaThumbsUp className="icon" />, 
+      icon: <FaThumbsUp className="text-12 text-blue-950 mb-4" />, 
       title: "Vote", 
       description: "Engage with the community by voting on the most pressing issues to help prioritize them effectively. Your votes can guide decision-makers to focus on what truly matters."
     },
     {
-      icon: <FaClipboardList className="icon" />, 
+      icon: <FaClipboardList className="text-12 text-blue-950 mb-4" />, 
       title: "Track", 
       description: "Stay informed by tracking the progress and updates on the issues you care about. Transparency ensures that you remain updated on the actions being taken."
     },
     {
-      icon: <FaCheckCircle className="icon" />, 
+      icon: <FaCheckCircle className="text-12 text-blue-950 mb-4" />, 
       title: "Solve", 
       description: "Celebrate as authorized parties take action and resolve the problems for a better community. Witness the positive change brought about through collaboration and action."
     }
@@ -30,7 +30,7 @@ const HowItWorks = () => {
     <div className="p-4 text-center">
       <h1 className="text-6 text-[#2c3e50] mb-4">How It Works</h1>
       <p className="text-[1.2rem] text-[#34495e] mb-4">Our platform is designed to bring communities together to identify, prioritize, and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:</p>
-      <div className="items-container">
+      <div className="bg-[#fff] border-1 border-[#dcdde1] rounded-lg p-6 max-w-[300px] text-center">
         {items.map((item, index) => (
           <div key={index} className="item">
             {item.icon}
