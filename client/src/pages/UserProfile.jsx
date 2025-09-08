@@ -26,7 +26,7 @@ const  UserProfile= () => {
                     <h2 className='text-white text-3l font-semibold capitalize'>Username</h2>
                     <motion.button
                     className="text-white mt-4 px-4 py-2 rounded-full border border-white flex items-center"
-                     onClick={() => navigate("/")}
+                     onClick={() => navigate("/Update_user")}
                     whileHover={{ scale: 1.05 }}
                      whileTap={{ scale: 0.95 }}
                     >
