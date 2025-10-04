@@ -27,20 +27,20 @@ const userSchema=new mongoose.Schema({
 
 
     },
-    Phone_no:{
+    phone:{
         type:String,
         required:true,
         unique:true,
         
     },
-    Password:{
+    password:{
         type:String,
         required:true,
         unique:true,
         minlength:[8,'password must be at least 8 characters long'],
 
     },
-    Otp:{
+    otp:{
         type:String,
         required:true,
         unique:true,
