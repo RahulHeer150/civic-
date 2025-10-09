@@ -29,7 +29,7 @@ const Hero1 = () => {
             src={heroImg}
             alt="Report_header"
             loading="lazy"
-            className="object-cover w-full h-full md:px-5 rounded-lg"
+            className="object-cover w-full h-full md:px-5 rounded-lg overflow-hidden"
           />
         </div>
       </div>
