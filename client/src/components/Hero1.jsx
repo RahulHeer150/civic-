@@ -3,7 +3,7 @@ import heroImg from '../assets/herosec.jpg'
 
 const Hero1 = () => {
    return (
-      <div className="flex flex-col min-h-screen pt-4 md:pt-10 bg-gradient-to-bl from-gray-300 to-sky-300">
+      <div className="flex flex-col min-h-screen pt-4 md:pt-10 bg-blue-200">
       <div className="flex flex-grow flex-col-reverse md:flex-col lg:flex-row w-full max-w-screen  md:pt-0 m-5 justify-between items-center md:px-5 ">
 
         <div className="w-full lg:w-1/2 md:w-1/2  lg:px-0 text-black">
@@ -24,12 +24,12 @@ const Hero1 = () => {
             
           </header>
         </div>
-       <div className="w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center overflow-hidden ">
+       <div className="w-full  flex jsutify-center items-center overflow-hidden ">
           <img
             src={heroImg}
             alt="Report_header"
             loading="lazy"
-            className="object-cover w-full h-full md:px-5 rounded-lg overflow-hidden"
+            className="object-cover w-[1000px] h-full md:px-5  shadow-2xrounded-xl shadow-l-sky-300  overflow-hidden"
           />
         </div>
       </div>
