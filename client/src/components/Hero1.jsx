@@ -1,5 +1,5 @@
 import React from 'react'
-import her
+import heroImg from '../assets/herosec1.png'
 
 const Hero1 = () => {
    return (
@@ -17,7 +17,7 @@ const Hero1 = () => {
         </div>
        <div className="w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center">
           <img
-            src={ReportImg}
+            src={heroImg}
             alt="Report_header"
             height={350}
             width={500}
