@@ -9,7 +9,7 @@ const Hero1 = () => {
    // }
 
    return (
-      <div className="flex flex-col min-h-screen pt-4 md:pt-10 bg-blue-200">
+      <div className="flex flex-col min-h-screen pt-4 md:pt-10 bg-blue-200z">
       <div className="flex flex-grow flex-col-reverse md:flex-col lg:flex-row w-full max-w-screen  md:pt-0 m-5 justify-between items-center md:px-5 ">
 
         <div className="w-full lg:w-1/2 md:w-1/2  lg:px-0 text-black">

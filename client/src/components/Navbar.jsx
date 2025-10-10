@@ -67,7 +67,7 @@ const Navbar = () => {
               className="relative group"
             >
               <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
-                <FaUserCircle className="text-sky-600 text-3xl group-hover:scale-110 transition-transform duration-300" />
+                <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
               </div>
             </Link>
 
