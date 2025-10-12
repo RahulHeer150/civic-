@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import React from 'react'
 import { useNavigate, Link } from "react-router-dom";
 // import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
+import axios from "axios";
+import UserDataContext from "../context/userContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
@@ -14,18 +16,17 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 // import { RotatingLines } from "react-loader-spinner"; // Import the loader component
  const Register = () => {
+  const [username, setUsername] = useState(false);
+  const [city, setCity] = useState(false);
+  const [state, setState] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [phone, setPhone] = useState(false);
+  const [password, setPassword] = useState(false);
+   const [userId, setUserId] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
   const [otpStep, setOtpStep] = useState(false);
-  const [user, setUser] = useState({
-    Username: "",
-    City:" ",
-    State:"",
-    email: "",
-    phone: "",
-    password: "",
-    otp: "",
-    userId: "" 
-  });
+  const {user,setUser} =useContext(UserDataContext);
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -37,6 +38,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
     
     // Display a loading spinner or some indication that the request is in progress
     setLoading(true);
+
+
   
 
 
