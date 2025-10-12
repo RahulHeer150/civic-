@@ -28,10 +28,6 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
   const {user,setUser} =useContext(UserDataContext);
   const navigate = useNavigate();
 
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    setUser((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,8 +48,8 @@ return(
         <input
          type="text"
          name="Firstname"
-         value={user.Username}
-         onChange={handleInput}
+         value={username}
+         onChange={setUsername(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -66,8 +62,8 @@ return(
         <input
          type="text"
          name="City"
-         value={user.City}
-         onChange={handleInput}
+         value={city}
+         onChange={setCity(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -80,8 +76,8 @@ return(
         <input
          type="text"
          name="State"
-         value={user.State}
-         onChange={handleInput}
+         value={state}
+         onChange={setState(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -94,8 +90,8 @@ return(
         <input
          type="text"
          name="Email"
-         value={user.email}
-         onChange={handleInput}
+         value={email}
+         onChange={setEmail(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -108,8 +104,8 @@ return(
         <input
          type="text"
          name="Phone no."
-         value={user.phone}
-         onChange={handleInput}
+         value={phone}
+         onChange={setPhone(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -122,8 +118,8 @@ return(
         <input
          type="text"
          name="Password"
-         value={user.password}
-         onChange={handleInput}
+         value={password}
+         onChange={setPassword(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
@@ -136,8 +132,8 @@ return(
         <input
          type="text"
          name="OTP"
-         value={user.otp}
-         onChange={handleInput}
+         value={otp}
+         onChange={setOtpStep(e.target.value)}
          placeholder=" "
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
