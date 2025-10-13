@@ -44,7 +44,7 @@ function App() {
         <Route path='/howitworks' element={<How_it_works/>}/>
         <Route path='/contactus' element={<Contact/>}/>
         <Route path='/Error' element={<Error/>}/>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/home' element={<Home/>}/>
 
 
         <Route path='/Forgot_Password' element={<ForgotPassword/>}/>
