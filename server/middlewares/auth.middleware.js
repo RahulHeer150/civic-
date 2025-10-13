@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken'); 
 const User=require("../models/user.model")
 
-// Mock Secret Key (REPLACE THIS WITH A SECURE ENVIRONMENT VARIABLE!)
-const JWT_SECRET = 'YOUR_SUPER_SECURE_MOCK_SECRET_KEY';
-
 /**
  * Middleware function to authenticate users based on JWT.
  * Assumes the token is passed in the Authorization header as 'Bearer <token>'.
@@ -18,7 +15,7 @@ const authMiddleware = async (req, res, next) => {
     const jwtToken=token.replace('Bearer,"').trim();
     try{
         const isVerified=jwt.verify(jwtToken,process.env.JWT_SECRET);
-        const userData=await UserActivation.findById(isVerified.userId).select({password:0});
+        const userData=await User.findById(isVerified.userId).select({password:0});
 
         if(!userData){
             return res.status(401).json({message: "Unauthorized, User not found,"});

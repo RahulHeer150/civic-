@@ -39,3 +39,17 @@ const register=async(req,res)=>{
         res.status(500).json({message:"internal Server Error"});
     }
 }
+
+const user = async (req, res) => {
+    try {
+        const userData = req.user;
+        return res.status(200).json({ userData });
+    } catch (error) {
+        console.error(`Error from user route ${error}`);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+module.exports={
+    home, register, user
+}
