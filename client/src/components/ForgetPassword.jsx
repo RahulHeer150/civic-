@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { RotatingLines } from 'react-loader-spinner'
+//import { RotatingLines } from 'react-loader-spinner'
 import ForgotPass from '../assets/forgetPass.png'
 
 const ForgetPassword = () => {
