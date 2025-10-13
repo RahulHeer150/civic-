@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 // import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 import axios from "axios";
-import UserDataContext from "../context/userContext";
+import UserDataContext from "../context/UserContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
