@@ -33,12 +33,31 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
     e.preventDefault();
     
     // Display a loading spinner or some indication that the request is in progress
-    setLoading(true);
+   // setLoading(true);
 
+   const newUser={
+    username:username,
+    email:email,
+    city:city,
+    state:state,
+    phone:phone,
+    otp:otp
+   }
+   const response=await axios.post(`${import.meta.env.CLIENT_URL}/users/register`,newUser)
 
-  
+   if(response.status===201){
+    const data=response.data
 
-
+    setUser(data.user)
+    localStorage.setItem('token',data.token)
+    navigate('/home')
+   }
+   setUsername('')
+   setCity('')
+   setState('')
+   setEmail('')
+   setPhone('')
+   setOtpStep('')
    };
 return(
   <>
