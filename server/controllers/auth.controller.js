@@ -32,6 +32,7 @@ const register=async(req,res)=>{
             message:"Registration Successful.",
             userId:newUser._id.toString()
         })
+        console.log('New User Registered:', newUser);
         
 
     }catch(error){
