@@ -9,4 +9,4 @@ router.route('/').get(authController.home)
 router.route('/register').post(validate(SignupSchema),authController.register)
 router.route("/user").get(authMiddleware, authController.user);
 
-module.exports=router;
+module.exports={home,};
