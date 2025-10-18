@@ -121,14 +121,14 @@ module.exports.registerUser = async (req, res) => {
     }
 
     const hashedPassword = await userModel.hashPassword(password);
-    console.log("Hashed Password Check:", hashedPassword);
+    console.log("Hashed Password Check:", password);
     const user = await userService.createUser({
       username,
       city,
       state,
       email,
       phone,
-      password: hashedPassword,
+      password:hashedPassword
     });
 
     const token = user.generateAuthToken();
