@@ -1,33 +1,32 @@
-const jwt = require('jsonwebtoken'); 
-const User=require("../models/user.model")
+const userModel=require("../models/user.model")
+const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
+const blackToken=require("../models/blackToken.model")
 
-/**
- * Middleware function to authenticate users based on JWT.
- * Assumes the token is passed in the Authorization header as 'Bearer <token>'.
- */
-const authMiddleware = async (req, res, next) => {
-    const token=req.header('authorization');
+module.exports.authUser=async(req, res , next)=>{
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
 
-    if(!token){
-        return res.status(401).json({message:"Unauthorized, Token is not provided"})
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const jwtToken=token.replace('Bearer,"').trim();
-    try{
-        const isVerified=jwt.verify(jwtToken,process.env.JWT_SECRET);
-        const userData=await User.findById(isVerified.userId).select({password:0});
 
-        if(!userData){
-            return res.status(401).json({message: "Unauthorized, User not found,"});
-        }
+    const isBlacklisted = await blackToken.findOne({ token: token });
 
-        req.token=token;
-        req.user=userData;
-        next();
+    if (isBlacklisted) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
-    catch(error){
-        return res.status(401).json({message: "Unauthorized, Invalid token."});
-    }
-};
 
-module.exports =authMiddleware;
+    try {
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await userModel.findById(decoded._id)
+
+        req.user = user;
+
+        return next();
+
+    } catch (err) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+}

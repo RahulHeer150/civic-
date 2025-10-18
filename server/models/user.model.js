@@ -5,16 +5,16 @@ const jwt=require('jsonwebtoken')
 const userSchema=new mongoose.Schema({
     username:{
         type:String,
-        required:true,
+       
     },
     city:{
         type:String,
-        required:true,
+       
 
     },
     state:{
         type:String,
-        required:true,
+        
 
 
     },
@@ -40,24 +40,21 @@ const userSchema=new mongoose.Schema({
         minlength:[8,'password must be at least 8 characters long'],
 
     },
-    otp:{
-        type:String,
-        required:true,
-        unique:true,
+    isVerified: { type: Boolean, default: false }, // New field
+    // otp:{
+    //     type:String,
+    //     required:true,
+    //     unique:true,
 
-    },
-    isVerified:{
-        type:Boolean,
-        default:false
-    }
+    // }
 })
 
 userSchema.methods.generateAuthToken=function(){
-    const token=jwt.sign({_id:this._id},process.env.JWT_SECRET_KEY,{expiresIn:'24h'})
+    const token=jwt.sign({_id:this._id},process.env.JWT_SECRET,{expiresIn:'24h'})
     return token
 }
 
-userSchema.methods.comaprePassword=async function(password){
+userSchema.methods.comparePassword=async function(password){
     return await bcrypt.compare(password,this.password)
 }
 

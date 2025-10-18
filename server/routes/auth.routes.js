@@ -1,12 +1,12 @@
-const express=require('express')
-const router =express.Router();
-const authMiddleware=require('../middlewares/auth.middleware')
-const authController=require('../controllers/auth.controller');
-const validate=require('../middlewares/validate.middleware')
-const { SignupSchema, loginSchema } = require('../services/auth.service');
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/auth.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
 
-router.route('/').get(authController.home)
-router.route('/register').post(validate(SignupSchema),authController.register)
-router.route("/user").get(authMiddleware, authController.user);
+// ✅ Register User (POST)
+router.post('/register', userController.registerUser);
 
-module.exports={home,};
+// ✅ Get Profile (GET)
+router.get('/profile', authMiddleware.authUser, userController.getUserProfile);
+
+module.exports = router;
