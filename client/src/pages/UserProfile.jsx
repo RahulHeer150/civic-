@@ -44,8 +44,8 @@ const  UserProfile= () => {
                     icon={<FaEnvelope className='text-gray-500'/>}
                     />
                     <ProfileItem
-                    label="Email"
-                    value="rahulheer34@gmail.com"
+                    label="Phone no."
+                    value="3526589745"
                     icon={<FaPhone className='text-gray-500'/>}
                     />
                     <ProfileItem
