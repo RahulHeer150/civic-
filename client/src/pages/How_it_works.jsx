@@ -28,7 +28,7 @@ const HowItWorks = () => {
 
   return (
     <div className="p-4 text-center mt-20">
-      <h1 className="text-4xl text-blue-950 mb-4">How It Works</h1>
+      <h1 className="text-4xl text-blue-950 mb-4 font-bold font-sans">How It Works</h1>
       <p className="text-[1.2rem] text-black mb-4 px-10">Our platform is designed to bring communities together to identify, prioritize, and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:</p>
       <div className="flex flex-wrap justify-center gap-8">
         {items.map((item, index) => (
