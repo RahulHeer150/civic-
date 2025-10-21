@@ -22,6 +22,7 @@ import Report_page from './pages/Report_page'
 import AuthPage from './pages/AuthPage'
 import Logout from './components/Logout'
 import Contact from './pages/Contact'
+import AllPosts from './components/AllPosts'
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
         <Route path='/contactus' element={<Contact/>}/>
         <Route path='/Error' element={<Error/>}/>
         <Route path='/home' element={<Home/>}/>
+        <Route path='/all-posts' element={<AllPosts/>}/>
 
 
         <Route path='/Forgot_Password' element={<ForgotPassword/>}/>
