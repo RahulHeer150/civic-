@@ -11,7 +11,8 @@ module.exports.createUser=async({
        city,
        state,
        email,
-       phone
+       phone, 
+       password
     })
     return user;
 }
