@@ -6,7 +6,7 @@ import { AuthContext } from './context/auth.jsx'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <authContext>
+    <AuthContext>
     <App />
-    </authContext>
+    </AuthContext>
 )
