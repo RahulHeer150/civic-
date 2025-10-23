@@ -10,6 +10,7 @@ import {
 import { CgFileDocument } from "react-icons/cg";
 import { FaFileSignature } from 'react-icons/fa6';
 import { FaUserCircle } from "react-icons/fa"; // ✅ Added user profile icon
+import navlogo from "../assets/navlogo.png"
 
 const Navbar = () => {
   const [IsOpen, setIsOpen] = useState(false)
@@ -42,7 +43,7 @@ const Navbar = () => {
       <nav className={`fixed top-0 w-full mb-5 shadow-lg shadow-black/20 rounded-lg z-50 transition duration-300 px-[7vw] md:px-[12vw] lg:px-[10vw] bg-[#f1faff] ${isScrolled ? "shadow-lg shadow-black" : "bg-[#f1faff]"}`}>
         <div className='text-white py-3 px-1 flex flex-row justify-between items-center'>
           {/* Left side Logo */}
-          <img src="/profile.png" alt="logo" className='h-8 w-13' />
+          <img src={navlogo} alt="logo" className='h-12 w-38 bg-transparent' />
 
           {/* Center Menu */}
           <ul className='hidden lg:flex space-x-8 text-black ml-8 text-xl font-bold'>
