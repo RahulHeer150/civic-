@@ -1,10 +1,9 @@
 import { useState,useContext } from "react";
 import React from 'react'
 import { useNavigate, Link } from "react-router-dom";
-// import { useAuth } from "../store/auth";
+import { useAuth } from "../context/auth";
 import { toast } from "react-toastify";
 import axios from "axios";
-import UserDataContext from "../context/UserContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +14,7 @@ import { faPhone } from '@fortawesome/free-solid-svg-icons'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 // import { RotatingLines } from "react-loader-spinner"; // Import the loader component
- const Register = () => {
+ const Register = ({setIsLoggedIn}) => {
   const [username, setUsername] = useState(false);
   const [city, setCity] = useState(false);
   const [state, setState] = useState(false);
@@ -33,7 +32,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
     e.preventDefault();
     
     // Display a loading spinner or some indication that the request is in progress
-   // setLoading(true);
+   setLoading(true);
 
    const newUser={
     username:username,
@@ -69,7 +68,7 @@ return(
          name="Firstname"
          value={username}
          onChange={setUsername(e.target.value)}
-         placeholder=" "
+         placeholder=""
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
          <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
