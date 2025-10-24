@@ -16,10 +16,9 @@ const issueSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Road", "Garbage", "Water", "Electricity", "Other"],
-      default: "Other",
+      default: "none",
     },
-    image: {
+    media: {
       type: String, // image filename or URL
     },
     votes: {
@@ -29,10 +28,9 @@ const issueSchema = new mongoose.Schema(
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+     
     },
-  },
-  { timestamps: true }
+  }
 );
 
 const IssueModel = mongoose.model("Issue", issueSchema);
