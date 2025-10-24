@@ -1,7 +1,7 @@
-import { useState,useContext } from "react";
+import { useState } from "react";
 import React from 'react'
 import { useNavigate, Link } from "react-router-dom";
-//import { useAuth } from "../context/auth";
+import { useAuth } from "../context/auth";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -30,39 +30,38 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 
 
-  const handlerSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Display a loading spinner or some indication that the request is in progress
-   setLoading(true);
+    setLoading(true);
 
-   const newUser={
-    username:username,
-    email:email,
-    city:city,
-    state:state,
-    phone:phone,
-    otp:otp
+    try {
+      const response = await fetch(`${backendUrl}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.msg || "Registration successful!");
+        navigate("/login");
+      } else {
+        const errorMessage = data.errors
+          ? data.errors.map((e) => e.message).join(", ")
+          : data.message;
+        toast.error(errorMessage || "Registration failed. Try again.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
    }
-   const response=await axios.post(`${import.meta.env.CLIENT_URL}/users/register`,newUser)
-
-   if(response.status===201){
-    const data=response.data
-
-    setUser(data.user)
-    localStorage.setItem('token',data.token)
-    navigate('/home')
-   }
-   setUsername('')
-   setCity('')
-   setState('')
-   setEmail('')
-   setPhone('')
-   setOtpStep('')
-   };
 return(
   <>
-  <form onSubmit={handlerSubmit} className="flex flex-col gap-2 w-full max-w-md mx-auto mt-6 text-center border-2 rounded-2xl py-10 lg:py-12 px-6 lg:px-10 shadow-2xl">
+  <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full max-w-md mx-auto mt-6 text-center border-2 rounded-2xl py-10 lg:py-12 px-6 lg:px-10 shadow-2xl">
     <div className="flex flex-col gap-6">
       <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
         <input
@@ -70,7 +69,7 @@ return(
          name="Firstname"
          value={username}
          onChange={setUsername(e.target.value)}
-         placeholder=""
+         placeholder="username"
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
          <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
@@ -84,7 +83,7 @@ return(
          name="City"
          value={city}
          onChange={setCity(e.target.value)}
-         placeholder=" "
+         placeholder=" city"
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
          <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
@@ -98,7 +97,7 @@ return(
          name="State"
          value={state}
          onChange={setState(e.target.value)}
-         placeholder=" "
+         placeholder="state"
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
          <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
@@ -112,7 +111,7 @@ return(
          name="Email"
          value={email}
          onChange={setEmail(e.target.value)}
-         placeholder=" "
+         placeholder="email"
          className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
          />
          <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2  select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
@@ -188,7 +187,7 @@ return(
 
   </>
 
-) };
+) };          
 
 
 export default Register
