@@ -1,11 +1,11 @@
 const Issue = require("../models/issueModel");
 const mongoose = require("mongoose");
 
-// 🟢 Add a new issue
+// 🟢 Add a new issue (auth required)
 exports.createIssue = async (req, res) => {
   try {
     const { title, description, location, category, media } = req.body;
-    const userId = req.user ? req.user._id : null; // assuming you use auth middleware
+    const userId = req.user?._id;
 
     if (!title || !description || !location) {
       return res.status(400).json({ message: "All required fields must be filled" });
@@ -21,6 +21,7 @@ exports.createIssue = async (req, res) => {
     });
 
     const savedIssue = await newIssue.save();
+
     res.status(201).json({
       message: "✅ Issue created successfully",
       issue: savedIssue,
@@ -31,10 +32,12 @@ exports.createIssue = async (req, res) => {
   }
 };
 
-// 🔵 Get all issues
+// 🔵 Get all issues (public)
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await Issue.find().populate("reportedBy", "username email");
+    const issues = await Issue.find()
+      .populate("reportedBy", "username email")
+      .sort({ createdAt: -1 });
     res.status(200).json(issues);
   } catch (error) {
     console.error("Error fetching issues:", error);
@@ -42,7 +45,7 @@ exports.getAllIssues = async (req, res) => {
   }
 };
 
-// 🟣 Get issue by ID
+// 🟣 Get issue by ID (public)
 exports.getIssueById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -59,22 +62,26 @@ exports.getIssueById = async (req, res) => {
   }
 };
 
-// 🟠 Update an issue
+// 🟠 Update issue (auth required — only reporter can update)
 exports.updateIssue = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
 
-    const updatedIssue = await Issue.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    });
+    const issue = await Issue.findById(id);
+    if (!issue) return res.status(404).json({ message: "Issue not found" });
 
-    if (!updatedIssue) return res.status(404).json({ message: "Issue not found" });
+    // only the user who reported the issue can update it
+    if (issue.reportedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    Object.assign(issue, updates);
+    await issue.save();
 
     res.status(200).json({
       message: "✅ Issue updated successfully",
-      issue: updatedIssue,
+      issue,
     });
   } catch (error) {
     console.error("Error updating issue:", error);
@@ -82,13 +89,20 @@ exports.updateIssue = async (req, res) => {
   }
 };
 
-// 🔴 Delete an issue
+// 🔴 Delete issue (auth required — only reporter can delete)
 exports.deleteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Issue.findByIdAndDelete(id);
+    const issue = await Issue.findById(id);
 
-    if (!deleted) return res.status(404).json({ message: "Issue not found" });
+    if (!issue) return res.status(404).json({ message: "Issue not found" });
+
+    // only the user who reported the issue can delete it
+    if (issue.reportedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    await issue.deleteOne();
 
     res.status(200).json({ message: "🗑️ Issue deleted successfully" });
   } catch (error) {
@@ -97,7 +111,7 @@ exports.deleteIssue = async (req, res) => {
   }
 };
 
-// 🟡 Upvote an issue
+// 🟡 Upvote an issue (auth optional — can make it required if you want)
 exports.upvoteIssue = async (req, res) => {
   try {
     const { id } = req.params;
@@ -118,7 +132,7 @@ exports.upvoteIssue = async (req, res) => {
   }
 };
 
-// 🔻 Downvote an issue
+// 🔻 Downvote an issue (auth optional)
 exports.downvoteIssue = async (req, res) => {
   try {
     const { id } = req.params;
@@ -126,7 +140,7 @@ exports.downvoteIssue = async (req, res) => {
 
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
-    issue.votes = Math.max(0, issue.votes - 1); // prevent negative votes
+    issue.votes = Math.max(0, issue.votes - 1);
     await issue.save();
 
     res.status(200).json({
