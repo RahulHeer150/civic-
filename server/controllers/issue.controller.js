@@ -35,7 +35,7 @@ exports.createIssue = async (req, res) => {
 // 🔵 Get all issues (public)
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await Issue.find()
+    const issues = await IssueModel.find()
       .populate("reportedBy", "username email")
       .sort({ createdAt: -1 });
     res.status(200).json(issues);
@@ -52,7 +52,7 @@ exports.getIssueById = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(400).json({ message: "Invalid issue ID" });
 
-    const issue = await Issue.findById(id).populate("reportedBy", "username email");
+    const issue = await IssueModel.findById(id).populate("reportedBy", "username email");
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
     res.status(200).json(issue);
@@ -68,7 +68,7 @@ exports.updateIssue = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
-    const issue = await Issue.findById(id);
+    const issue = await IssueModel.findById(id);
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
     // only the user who reported the issue can update it
@@ -93,7 +93,7 @@ exports.updateIssue = async (req, res) => {
 exports.deleteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const issue = await Issue.findById(id);
+    const issue = await IssueModel.findById(id);
 
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
@@ -115,7 +115,7 @@ exports.deleteIssue = async (req, res) => {
 exports.upvoteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const issue = await Issue.findById(id);
+    const issue = await IssueModel.findById(id);
 
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
@@ -136,7 +136,7 @@ exports.upvoteIssue = async (req, res) => {
 exports.downvoteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const issue = await Issue.findById(id);
+    const issue = await IssueModel.findById(id);
 
     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
