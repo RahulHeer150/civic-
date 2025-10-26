@@ -1,4 +1,4 @@
-const IssueModel = require("../models/issue.model");
+const Issue = require("../models/issue.model");
 const mongoose = require("mongoose");
 
 // 🟢 Add a new issue (auth required)
