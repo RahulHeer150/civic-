@@ -2,7 +2,7 @@ const IssueModel = require("../models/issue.model");
 const mongoose = require("mongoose");
 
 // 🟢 Add a new issue (auth required)
-exports.createIssue = async (req, res) => {
+module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location, category, media } = req.body;
     const userId = req.user?._id;
