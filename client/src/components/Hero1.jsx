@@ -1,3 +1,55 @@
+import React from 'react';
+import heroVideo from '../assets/herobg.mp4'; // Move the video into your /src/assets folder
+import { Link, useNavigate } from 'react-router-dom';
+
+const Hero1 = () => {
+  return (
+    <div className="relative flex flex-col min-h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover"
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+
+      {/* Dark Overlay (optional for readability) */}
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      {/* Foreground Content */}
+      <div className="relative z-10 flex flex-col-reverse md:flex-col lg:flex-row w-full max-w-screen-xl m-5 justify-between items-center md:px-5 pt-10">
+        <div className="w-full lg:w-1/2 md:w-1/2 text-white">
+          <header className="h-full flex items-center justify-center">
+            <div className="w-full p-5 text-start">
+              <h1 className="text-6xl font-bold text-blue-300">Having an Issue!</h1>
+              <h3 className="text-5xl mt-3 font-bold">Report It.</h3>
+              <h3 className="text-4xl mt-3 font-bold">Vote for Solutions.</h3>
+
+              <div className="py-5 flex gap-5">
+                <button className="px-6 py-3 rounded-md bg-white text-blue-700 font-semibold text-xl hover:bg-gray-200 transition">
+                  Report an Issue
+                </button>
+                <button className="px-6 py-3 rounded-md bg-gray-200 text-black font-semibold text-xl hover:bg-white transition">
+                  Explore Issues
+                </button>
+              </div>
+            </div>
+          </header>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Hero1;
+
+
+
+
+
 // import React from 'react'
 // import heroImg from '../assets/herosec.jpg'
 // import { Link, useNavigate } from 'react-router-dom'
@@ -48,3 +100,4 @@
 // }
 
 // export default Hero1
+
