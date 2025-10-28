@@ -11,7 +11,7 @@ const Hero1 = () => {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-70"
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
