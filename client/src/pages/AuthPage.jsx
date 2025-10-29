@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import RegisterForm from "./Register";
 import LoginForm from "./Login";
 import loginImg from '../assets/register.png'
-const AuthPage = ({ setIsLoggedIn, image }) => {
+const AuthPage = ({ setIsLoggedIn, image}) => {
 const location = useLocation();
   const path = location.pathname;
 
