@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../context/auth";
+//import { useAuth } from "../context/auth";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,9 +12,12 @@ import { faListOl } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
+import UserDataContext from "../context/UserContext";
+import { useContext } from "react";
+
 
 // import { RotatingLines } from "react-loader-spinner"; // Import the loader component
-const Register = ({ setIsLoggedIn }) => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -24,40 +27,46 @@ const Register = ({ setIsLoggedIn }) => {
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const [otpStep, setOtpStep] = useState("");
-  //const {user,setUser} =useContext(UserDataContext);
+  const {user,setUser} =useContext(UserDataContext);
   const navigate = useNavigate();
-  const { storeTokenLocalStorage } = useAuth();
+  //const { storeTokenLocalStorage } = useAuth();
 
-  const backendUrl=import.meta.env.CLIENT_URL;
+  //const backendUrl=import.meta.env.CLIENT_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const response = await fetch(`${backendUrl}/users/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
+    const newUser = {
+      username: username,
+      city: city,
+      state: state,
+      email: email,
+      phone: phone,
+      password: password,
+      otp: otpStep,
+    };
 
-      const data = await response.json();
 
-      if (response.ok) {
-        toast.success(data.msg || "Registration successful!");
-        navigate("/login");
-      } else {
-        const errorMessage = data.errors
-          ? data.errors.map((e) => e.message).join(", ")
-          : data.message;
-        toast.error(errorMessage || "Registration failed. Try again.");
-      }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      toast.error("An unexpected error occurred. Please try again.");
-    } finally {
-      setLoading(false);
+      const response = await axios.post(`${import.meta.env.CLIENT_URL}/users/register`, newUser)
+
+    if (response.status === 201) {
+      const data = response.data
+      setUser(data.user)
+      localStorage.setItem('token', data.token)
+      navigate('/home')
     }
+
+    setUsername('')
+    setCity('')
+    setState('') 
+    setPhone('') 
+    setEmail('')
+    setPassword('')
+    setLoading(false);
+
+
+  
   };
   return (
     <>
