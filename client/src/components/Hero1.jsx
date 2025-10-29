@@ -17,7 +17,8 @@ const Hero1 = () => {
       </video>
 
       {/* Dark Overlay (optional for readability) */}
-      <div className="absolute inset-0 bg-black/40"></div>
+       <div className="absolute inset-0 bg-black/60"></div>
+
 
       {/* Foreground Content */}
       <div className="relative z-10 flex flex-col-reverse md:flex-col lg:flex-row w-full max-w-screen-xl m-5 justify-between items-center md:px-5 pt-10">
