@@ -12,11 +12,11 @@ import { faListOl } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-import UserDataContext from "../context/UserContext";
+import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
 
 
-// import { RotatingLines } from "react-loader-spinner"; // Import the loader component
+//import { RotatingLines } from "react-loader-spinner"; // Import the loader component
 const Register = () => {
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
@@ -27,7 +27,7 @@ const Register = () => {
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
   const [otpStep, setOtpStep] = useState("");
-  const {user,setUser} =useContext(UserDataContext);
+  const { user, setUser } = useContext(UserDataContext);
   const navigate = useNavigate();
   //const { storeTokenLocalStorage } = useAuth();
 
