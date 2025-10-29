@@ -37,36 +37,48 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    const newUser = {
-      username: username,
-      city: city,
-      state: state,
-      email: email,
-      phone: phone,
-      password: password,
-      otp: otpStep,
-    };
+    try {
+      const newUser = {
+        username,
+        city,
+        state,
+        email,
+        phone,
+        password,
+        otp: otpStep,
+      };
 
 
-      const response = await axios.post(`${import.meta.env.CLIENT_URL}/users/register`, newUser)
+const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/users/register`, 
+        newUser,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
 
-    if (response.status === 201) {
-      const data = response.data
-      setUser(data.user)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
+      if (response.status === 201) {
+        toast.success("Registration successful!");
+        setUser(response.data.user);
+        localStorage.setItem('token', response.data.token);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+      // Reset form
+      setUsername('');
+      setCity('');
+      setState('');
+      setPhone('');
+      setEmail('');
+      setPassword('');
+      setOtpStep('');
     }
-
-    setUsername('')
-    setCity('')
-    setState('') 
-    setPhone('') 
-    setEmail('')
-    setPassword('')
-    setLoading(false);
-
-
-  
   };
   return (
     <>
