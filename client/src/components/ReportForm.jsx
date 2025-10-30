@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const ReportForm = () => {
   const navigate = useNavigate();
-  const [type, setType] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
@@ -18,8 +18,8 @@ const ReportForm = () => {
 
     try {
       // Create FormData to handle file upload
-      await axios.post(`${import.meta.env.VITE_API_URL}/issues/create`, {
-        type,
+     const response= await axios.post(`${import.meta.env.VITE_API_URL}/issues/create`, {
+        title,
         description,
         location,
         date,
@@ -36,7 +36,7 @@ const ReportForm = () => {
     } finally {
       setLoading(false);
       // Reset form
-      setType("");
+      setTitle("");
       setDescription("");
       setDate("");
       setLocation("");
@@ -54,8 +54,8 @@ const ReportForm = () => {
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Type of Incident</label>
           <select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
           >
             <option value="">Select an option</option>

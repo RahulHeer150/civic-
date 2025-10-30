@@ -1,7 +1,7 @@
 const IssueModel =require("../models/issue.model");
 
 module.exports.createIssue=async({
-    title, description, location, media
+    title, description,location, media
 })=>{
     if(!title || !description || ! location ||!media){
         throw new Error(" All fields are Required.")

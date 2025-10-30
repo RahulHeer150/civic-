@@ -16,7 +16,7 @@ module.exports.createIssue = async (req, res) => {
       description,
       location,
       media,
-      reportedBy: userId,
+      // reportedBy: userId,
     });
 
     const savedIssue = await newIssue.save();
