@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // 🟢 Add a new issue (auth required)
 module.exports.createIssue = async (req, res) => {
   try {
-    const { title, description, location, category, media } = req.body;
+    const { title, description, location, media } = req.body;
     const userId = req.user?._id;
 
     if (!title || !description || !location) {
@@ -15,7 +15,6 @@ module.exports.createIssue = async (req, res) => {
       title,
       description,
       location,
-      category,
       media,
       reportedBy: userId,
     });

@@ -14,10 +14,6 @@ const issueSchema = new mongoose.Schema(
       type: String,
       required: [true, "Location is required"],
     },
-    category: {
-      type: String,
-      default: "none",
-    },
     media: {
       type: String, // image filename or URL
     },
