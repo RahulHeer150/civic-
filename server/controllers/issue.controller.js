@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location, media } = req.body;
-    const userId = req.user?._id;
+    // const userId = req.user?._id;
 
     if (!title || !description || !location) {
       return res.status(400).json({ message: "All required fields must be filled" });
