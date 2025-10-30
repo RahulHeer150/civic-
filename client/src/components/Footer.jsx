@@ -1,6 +1,7 @@
 import React from "react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import mainlogo from "../assets/mainlogo.png"
 
 const Footer = () => {
   return (
@@ -23,7 +24,7 @@ const Footer = () => {
       <div className="flex justify-between items-center flex-wrap gap-4 md:flex-col text-center">
         <div className="footer-logo">
           <img
-            src="" // Replace with the actual logo URL
+            src={mainlogo} // Replace with the actual logo URL
             alt="CrowdFix Logo"
             className="h-[40px]"
           />
