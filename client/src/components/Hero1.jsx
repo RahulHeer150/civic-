@@ -30,12 +30,12 @@ const Hero1 = () => {
               <h3 className="text-4xl mt-3 font-bold">Vote for Solutions.</h3>
 
               <div className="py-5 flex gap-5">
-                <button className="px-6 py-3 rounded-md bg-white text-blue-700 font-semibold text-xl hover:bg-gray-200 transition">
+                <Link to="/report" className="px-6 py-3 rounded-md bg-white text-blue-700 font-semibold text-xl hover:bg-gray-200 transition">
                   Report an Issue
-                </button>
-                <button className="px-6 py-3 rounded-md bg-gray-200 text-black font-semibold text-xl hover:bg-white transition">
+                </Link>
+                <Link to="/explore" className="px-6 py-3 rounded-md bg-gray-200 text-black font-semibold text-xl hover:bg-white transition">
                   Explore Issues
-                </button>
+                </Link>
               </div>
             </div>
           </header>
