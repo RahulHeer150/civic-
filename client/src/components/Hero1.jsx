@@ -1,6 +1,6 @@
 import React from 'react';
-import heroVideo from '../assets/herobg.mp4'; // Move the video into your /src/assets folder
-import { Link, useNavigate } from 'react-router-dom';
+import heroVideo from '../assets/herobg.mp4';
+import { Link } from 'react-router-dom';
 
 const Hero1 = () => {
   return (
@@ -16,29 +16,36 @@ const Hero1 = () => {
         <source src={heroVideo} type="video/mp4" />
       </video>
 
-      {/* Dark Overlay (optional for readability) */}
-       <div className="absolute inset-0 bg-black/60"></div>
-
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Foreground Content */}
-      <div className="relative z-10 flex flex-col-reverse md:flex-col lg:flex-row w-full max-w-screen-xl m-5 justify-between items-center md:px-5 pt-10">
-        <div className="w-full lg:w-1/2 md:w-1/2 text-white">
-          <header className="h-full flex items-center justify-center">
-            <div className="w-full p-5 text-start">
-              <h1 className="text-6xl font-bold text-blue-300">Having an Issue!</h1>
-              <h3 className="text-5xl mt-3 font-bold">Report It.</h3>
-              <h3 className="text-4xl mt-3 font-bold">Vote for Solutions.</h3>
+      <div className="relative z-10 flex flex-col justify-center items-start min-h-screen px-10 md:px-20 lg:px-32">
+        <div className="max-w-2xl text-white mt-10 md:mt-20">
+          <h1 className="text-6xl md:text-7xl font-extrabold text-blue-300 drop-shadow-lg">
+            Having an Issue!
+          </h1>
+          <h3 className="text-5xl md:text-6xl mt-4 font-bold drop-shadow-lg">
+            Report It.
+          </h3>
+          <h3 className="text-4xl md:text-5xl mt-3 font-semibold drop-shadow-lg">
+            Vote for Solutions.
+          </h3>
 
-              <div className="py-5 flex gap-5">
-                <Link to="/report" className="px-6 py-3 rounded-md bg-white text-blue-700 font-semibold text-xl hover:bg-gray-200 transition">
-                  Report an Issue
-                </Link>
-                <Link to="/explore" className="px-6 py-3 rounded-md bg-gray-200 text-black font-semibold text-xl hover:bg-white transition">
-                  Explore Issues
-                </Link>
-              </div>
-            </div>
-          </header>
+          <div className="mt-8 flex gap-6">
+            <Link
+              to="/report"
+              className="px-8 py-4 rounded-md bg-white text-blue-700 font-semibold text-xl hover:bg-gray-200 transition"
+            >
+              Report an Issue
+            </Link>
+            <Link
+              to="/explore"
+              className="px-8 py-4 rounded-md bg-gray-200 text-black font-semibold text-xl hover:bg-white transition"
+            >
+              Explore Issues
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -46,6 +53,7 @@ const Hero1 = () => {
 };
 
 export default Hero1;
+
 
 
 
