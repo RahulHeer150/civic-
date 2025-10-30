@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import React from 'react'
 
 const ReportForm = () => {
@@ -6,6 +7,7 @@ const ReportForm = () => {
     const [location, setLocation] = React.useState('');
     const [date, setDate] = React.useState('');
     const [photo, setPhoto] = React.useState(null);
+    const [loading,setLoading]=useState(false)
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(e)
@@ -29,13 +31,11 @@ const ReportForm = () => {
       )
        if (response.status === 201) {
               toast.success("Registration successful!");
-              setUser(response.data.user);
-              localStorage.setItem('token', response.data.token);
-              navigate('/');
+              navigate('/explore');
             }
          catch (error) {
-            console.error('Registration error:', error);
-            toast.error(error.response?.data?.message || "Registration failed");
+            console.error('Report error:', error);
+            toast.error(error.response?.data?.message || "Report failed");
           } finally {
             setLoading(false);
             // Reset form
