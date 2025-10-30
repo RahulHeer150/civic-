@@ -55,7 +55,7 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
 
       </Routes>
-      <Footer/>
+    {/* <Footer/> */}
     </BrowserRouter>
   )
 }
