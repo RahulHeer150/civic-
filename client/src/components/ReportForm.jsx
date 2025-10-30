@@ -9,8 +9,46 @@ const ReportForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(e)
-        // Handle form submission logic here
-    }
+        try{
+        const newIssue={
+            type,
+            description,
+            location,
+            date,
+            photo
+            }
+        }
+        const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/issues/create`, 
+        newIssue,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+       if (response.status === 201) {
+              toast.success("Registration successful!");
+              setUser(response.data.user);
+              localStorage.setItem('token', response.data.token);
+              navigate('/');
+            }
+         catch (error) {
+            console.error('Registration error:', error);
+            toast.error(error.response?.data?.message || "Registration failed");
+          } finally {
+            setLoading(false);
+            // Reset form
+            setType('');
+            setDescription('');
+            setDate('');
+            setLocation("")
+            setPhoto('');
+          }
+
+       
+        
+    };
 
   return (
     <div className='min-h-screen bg-gray-300 p-6 rounded-2xl'>
