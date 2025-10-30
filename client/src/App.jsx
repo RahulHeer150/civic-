@@ -40,8 +40,8 @@ function App() {
         <Route path='/Update_user' element={<Update_user/>}/>
         <Route path='/Userprofile' element={<UserProfile/>}/>
         <Route path='/' element={<Home/>}/>
-        <Route path='/Report' element={<Report_page/>}/>
-        <Route path='/Explore' element={<Explore/>}/>
+        <Route path='/report' element={<Report_page/>}/>
+        <Route path='explore' element={<Explore/>}/>
         <Route path='/howitworks' element={<How_it_works/>}/>
         <Route path='/contactus' element={<Contact/>}/>
         <Route path='/Error' element={<Error/>}/>
@@ -55,7 +55,7 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
 
       </Routes>
-    {/* <Footer/> */}
+    <Footer/>
     </BrowserRouter>
   )
 }
