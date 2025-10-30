@@ -98,7 +98,7 @@ CivicPlus is the platform where your voice drives local change. Easily report is
           <h4 className="mb-4 font-semibold text-lg sm:text-xl">GET HELP</h4>
           <ul>
             <li className="mb-2 text-sm sm:text-lg">
-              {/* <Link to="/about" className="hover:underline">About</Link> */}
+              <Link to="/about" className="hover:underline">About</Link>
             </li>
             <li className="mb-2 text-sm sm:text-lg">
               <button className="hover:underline">Contact Us</button>
