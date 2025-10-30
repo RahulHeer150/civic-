@@ -32,6 +32,36 @@ module.exports.createIssue = async (req, res) => {
   }
 };
 
+// module.exports.createIssue = async (req, res) => {
+//   try {
+//     // ✅ Check what multer parsed
+//     console.log("Body:", req.body)
+
+//     // Destructure fields coming from frontend
+//     const { type, description, location, date } = req.body;
+
+//     // Validate
+//     if (!type || !description || !location || !date) {
+//       return res.status(400).json({ message: "All required fields must be filled" });
+//     }
+
+//     //const photoPath = req.file ? req.file.path : null;
+
+//     const issue = new Issue({
+//       type,
+//       description,
+//       location,
+//       date,
+//     });
+
+//     await issue.save();
+//     res.status(201).json({ message: "Issue created successfully", issue });
+//   } catch (error) {
+//     console.error("Error creating issue:", error);
+//     res.status(500).json({ message: "Server error while creating issue", error });
+//   }
+// };
+
 // 🔵 Get all issues (public)
 exports.getAllIssues = async (req, res) => {
   try {
