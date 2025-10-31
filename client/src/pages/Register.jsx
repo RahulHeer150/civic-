@@ -16,7 +16,7 @@ import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
 
 
-//import { RotatingLines } from "react-loader-spinner"; // Import the loader component
+import { ClipLoader } from "react-loader-spinner"; // Import the loader component
 const Register = () => {
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
@@ -213,7 +213,7 @@ const response = await axios.post(
         >
           {loading ? (
             <div className="flex justify-center items-center">
-              <RotatingLines
+              <ClipLoader
                 strokeColor="white"
                 strokeWidth="5"
                 animationDuration="0.75"
