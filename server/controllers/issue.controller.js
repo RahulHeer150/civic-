@@ -64,7 +64,7 @@ module.exports.createIssue = async (req, res) => {
 // 🔵 Get all issues (public)
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await IssueModel.find()
+    const issues = await Issue.find()
       .populate("reportedBy", "username email")
       .sort({ createdAt: -1 });
     res.status(200).json(issues);

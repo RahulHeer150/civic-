@@ -107,8 +107,7 @@ const blackTokenModel=require('../models/blackToken.model')
 
 module.exports.registerUser = async (req, res) => {
   try {
-    console.log("📥 Request body:", req.body); // 👈 add this for debugging
-
+    console.log("📥 Request body:", req.body);
     const { username, city, state, email, password, phone } = req.body;
 
     if (!username || !city || !state || !email || !password || !phone) {
