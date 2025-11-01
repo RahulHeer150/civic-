@@ -19,6 +19,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBuilding, faLocation } from "@fortawesome/free-solid-svg-icons";
+
 
 const Explore = () => {
   const [issues, setIssues] = useState([]);
@@ -75,7 +78,7 @@ const Explore = () => {
               <h2 className='text-xl font-semibold mb-2'>{issue.title}</h2>
               <p className='text-gray-600 mb-2'>{issue.description}</p>
               <div className='flex justify-between text-sm text-gray-500'>
-                <span>📍 {issue.location}</span>
+                <span><faLocation/> {issue.location}</span>
                 <span>📅 {new Date(issue.date).toLocaleDateString()}</span>
               </div>
             </div>
