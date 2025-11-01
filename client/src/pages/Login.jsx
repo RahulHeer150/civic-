@@ -2,7 +2,7 @@ import { useScroll } from 'framer-motion';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ClipLoader } from 'react-loader-spinner'; // Import the loader component
+import { ClipLoader } from 'react-spinners';// Import the loader component
 import { faLock,faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 

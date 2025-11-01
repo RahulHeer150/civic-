@@ -15,8 +15,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
 
-
-import { ClipLoader } from "react-loader-spinner"; // Import the loader component
+import { ClipLoader } from 'react-spinners'; // Import the loader component
 const Register = () => {
   const [username, setUsername] = useState("");
   const [city, setCity] = useState("");
