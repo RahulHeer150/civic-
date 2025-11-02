@@ -2,7 +2,7 @@ import React from 'react'
 
 const IssueList = () => {
   return (
-    <div>IssueList</div>
+    <div className='bg-gray-100'>IssueList</div>
   )
 }
 
