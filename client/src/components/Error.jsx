@@ -28,6 +28,7 @@ const Error = () => {
             </Link>
           </div>
         </div>
+        
       </section>
     </>
   );
