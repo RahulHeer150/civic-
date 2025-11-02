@@ -14,7 +14,7 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
-import { ClipLoader } from 'react-spinners';
+import { ClipLoader } from "react-spinners";
 
 // Import the loader component
 const Register = () => {
@@ -48,36 +48,35 @@ const Register = () => {
         otp: otpStep,
       };
 
-
-const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/users/register`, 
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/users/register`,
         newUser,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
       if (response.status === 201) {
         toast.success("Registration successful!");
         setUser(response.data.user);
-        localStorage.setItem('token', response.data.token);
-        navigate('/');
+        localStorage.setItem("token", response.data.token);
+        navigate("/");
       }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       toast.error(error.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
       // Reset form
-      setUsername('');
-      setCity('');
-      setState('');
-      setPhone('');
-      setEmail('');
-      setPassword('');
-      setOtpStep('');
+      setUsername("");
+      setCity("");
+      setState("");
+      setPhone("");
+      setEmail("");
+      setPassword("");
+      setOtpStep("");
     }
   };
   return (
@@ -109,7 +108,7 @@ const response = await axios.post(
               type="text"
               name="City"
               value={city}
-               onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => setCity(e.target.value)}
               placeholder=""
               className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
             />
@@ -143,7 +142,7 @@ const response = await axios.post(
               type="text"
               name="Email"
               value={email}
-               onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder=""
               className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
             />
@@ -194,7 +193,7 @@ const response = await axios.post(
               type="text"
               name=""
               value={otpStep}
-            onChange={(e) => setOtpStep(e.target.value)}
+              onChange={(e) => setOtpStep(e.target.value)}
               placeholder=" "
               className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 border-t-transparent bg-transparent px-3 py-3 font-sans text-sm font-normal text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
             />
