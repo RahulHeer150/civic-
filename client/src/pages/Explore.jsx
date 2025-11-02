@@ -19,8 +19,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faLocation } from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocation } from "@fortawesome/free-solid-svg-icons";
 
 
 const Explore = () => {
