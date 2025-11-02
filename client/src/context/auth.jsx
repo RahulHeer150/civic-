@@ -1,18 +1,23 @@
-import React from 'react'
-import { createContext, useContext, useState, useEffect, Children } from "react";
+import React from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  Children,
+} from "react";
 
+const URL = import.meta.env.CLIENT_URL;
 
-const URL=import.meta.env.CLIENT_URL;
+export const AuthContext = createContext();
 
-export const AuthContext=createContext();
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const authorizationToken = `Bearer ${token}`;
 
-export const AuthProvider=({children})=>{
-    const [token,setToken]=useState(localStorage.getItem("token")|| "");
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const authorizationToken = `Bearer ${token}`;
-
-    useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("token", token);
   }, [token]);
 
@@ -26,7 +31,7 @@ export const AuthProvider=({children})=>{
     setUser(null);
   };
 
-   const userAuthentication = async () => {
+  const userAuthentication = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`${URL}/users`, {
@@ -59,11 +64,21 @@ export const AuthProvider=({children})=>{
   const isLoggedIn = !!token;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLocalStorage, logoutUser, user, authorizationToken, isLoading, isAdmin }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        storeTokenInLocalStorage,
+        logoutUser,
+        user,
+        authorizationToken,
+        isLoading,
+        isAdmin,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => {
   const authContextValue = useContext(AuthContext);
