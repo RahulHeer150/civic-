@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
-import { RotatingLines } from 'react-loader-spinner'
+import { ClipLoader } from 'react-spinners'
 import ResetImg from '../assets/resetp.png'
 
 const Reset_password = () => {
@@ -76,7 +76,7 @@ const Reset_password = () => {
              >
                {loading ? (
                    <div className="flex justify-center items-center">
-                     <RotatingLines
+                     <ClipLoader
                        strokeColor="white"
                        strokeWidth="5"
                        animationDuration="0.75"
