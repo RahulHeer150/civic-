@@ -1,33 +1,93 @@
-const Issue = require("../models/issue.model");
-const mongoose = require("mongoose");
 
-// 🟢 Add a new issue (auth required)
+
+// // 🟢 Add a new issue (auth required)
+// module.exports.createIssue = async (req, res) => {
+//   try {
+//     const { title, description, location, media } = req.body;
+//     // const userId = req.user?._id;
+
+//     if (!title || !description || !location) {
+//       return res.status(400).json({ message: "All required fields must be filled" });
+//     }
+
+//     const newIssue = new Issue({
+//       title,
+//       description,
+//       location,
+//       media,
+//       // reportedBy: userId,
+//     });
+
+//     const savedIssue = await newIssue.save();
+
+//     res.status(201).json({
+//       message: "✅ Issue created successfully",
+//       issue: savedIssue,
+//     });
+//   } catch (error) {
+//     console.error("Error creating issue:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
+
+
+const Issue = require('../models/issue.model');
+const mongoose = require('mongoose');
+
+// GET /issues
+module.exports.getIssues = async (req, res) => {
+  try {
+    const issues = await Issue.find().sort({ createdAt: -1 });
+    res.json(issues);
+  } catch (err) {
+    console.error('Error fetching issues:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// POST /issues/create
 module.exports.createIssue = async (req, res) => {
   try {
-    const { title, description, location, media } = req.body;
-    // const userId = req.user?._id;
+    const { title, description, location, date, photo } = req.body;
 
-    if (!title || !description || !location) {
-      return res.status(400).json({ message: "All required fields must be filled" });
+    if (!title) {
+      return res.status(400).json({ message: 'Title is required' });
     }
 
-    const newIssue = new Issue({
+    const issue = new Issue({
       title,
-      description,
-      location,
-      media,
-      // reportedBy: userId,
+      description: description || '',
+      location: location || '',
+      date: date ? new Date(date) : undefined,
+      photo: photo || null,
+      votesCount: 0
     });
 
-    const savedIssue = await newIssue.save();
-
-    res.status(201).json({
+    await issue.save();
+     res.status(201).json({
       message: "✅ Issue created successfully",
-      issue: savedIssue,
+      issue: issue,
     });
-  } catch (error) {
-    console.error("Error creating issue:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } catch (err) {
+    console.error('Error creating issue:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// POST /issues/:id/vote
+module.exports.voteIssue = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const issue = await Issue.findById(id);
+    if (!issue) return res.status(404).json({ message: 'Issue not found' });
+
+    issue.votesCount = (issue.votesCount || 0) + 1;
+    await issue.save();
+
+    res.json({ _id: issue._id, votesCount: issue.votesCount });
+  } catch (err) {
+    console.error('Error voting on issue:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -62,37 +122,37 @@ module.exports.createIssue = async (req, res) => {
 // };
 
 // 🔵 Get all issues (public)
-exports.getIssues = async (req, res) => {
-  try {
-    const issues = await Issue.find().sort({ createdAt: -1 }).lean();
-    // ensure votesCount is in response — prefer voters.length if present
-    const mapped = issues.map(i => ({
-      ...i,
-      votesCount: (i.voters ? i.voters.length : i.votesCount) || 0
-    }));
-    res.json(mapped);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
+// exports.getIssues = async (req, res) => {
+//   try {
+//     const issues = await Issue.find().sort({ createdAt: -1 }).lean();
+//     // ensure votesCount is in response — prefer voters.length if present
+//     const mapped = issues.map(i => ({
+//       ...i,
+//       votesCount: (i.voters ? i.voters.length : i.votesCount) || 0
+//     }));
+//     res.json(mapped);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
 
-// 🟣 Get issue by ID (public)
-exports.getIssueById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id))
-      return res.status(400).json({ message: "Invalid issue ID" });
+// // 🟣 Get issue by ID (public)
+// exports.getIssueById = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     if (!mongoose.Types.ObjectId.isValid(id))
+//       return res.status(400).json({ message: "Invalid issue ID" });
 
-    const issue = await IssueModel.findById(id).populate("reportedBy", "username email");
-    if (!issue) return res.status(404).json({ message: "Issue not found" });
+//     const issue = await IssueModel.findById(id).populate("reportedBy", "username email");
+//     if (!issue) return res.status(404).json({ message: "Issue not found" });
 
-    res.status(200).json(issue);
-  } catch (error) {
-    console.error("Error fetching issue:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
+//     res.status(200).json(issue);
+//   } catch (error) {
+//     console.error("Error fetching issue:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 
 // 🟠 Update issue (auth required — only reporter can update)
 exports.updateIssue = async (req, res) => {
@@ -144,21 +204,21 @@ exports.deleteIssue = async (req, res) => {
 };
 
 // 🟡 Upvote an issue (auth optional — can make it required if you want)
-module.exports.voteIssue = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const issue = await Issue.findById(id);
-    if (!issue) return res.status(404).json({ message: 'Issue not found' });
+// module.exports.voteIssue = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const issue = await Issue.findById(id);
+//     if (!issue) return res.status(404).json({ message: 'Issue not found' });
 
-    issue.votesCount = (issue.votesCount || 0) + 1;
-    await issue.save();
+//     issue.votesCount = (issue.votesCount || 0) + 1;
+//     await issue.save();
 
-    return res.status(200).json({ _id: issue._id, votesCount: issue.votesCount });
-  } catch (err) {
-    console.error('Vote error:', err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-};
+//     return res.status(200).json({ _id: issue._id, votesCount: issue.votesCount });
+//   } catch (err) {
+//     console.error('Vote error:', err);
+//     return res.status(500).json({ message: 'Server error' });
+//   }
+// };
 
 
 // 🔻 Downvote an issue (auth optional)

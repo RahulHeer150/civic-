@@ -1,19 +1,19 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const issueController = require("../controllers/issue.controller");
-//const { authUser } = require("../middlewares/authmiddle");
+const issueController = require('../controllers/issue.controller');
 
-// 🟢 Public routes
-router.get("/", issueController.getAllIssues);
-router.get("/:id", issueController.getIssueById);
+// list all issues
+router.get('/', issueController.getIssues);
 
-// 🔐 Protected routes
-router.post("/create",  issueController.createIssue);
-router.put("/:id",  issueController.updateIssue);
-router.delete("/:id", issueController.deleteIssue);
+// create an issue
+router.post('/create', issueController.createIssue);
 
-// 🔵 Upvote/downvote (optional auth)
+// vote (increment)
 router.post('/:id/vote', issueController.voteIssue);
-router.post("/:id/downvote", issueController.downvoteIssue);
+
+// optional: update/delete/downvote endpoints
+router.put('/:id', issueController.updateIssue);
+router.delete('/:id', issueController.deleteIssue);
+router.post('/:id/downvote', issueController.downvoteIssue);
 
 module.exports = router;

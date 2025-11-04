@@ -27,6 +27,25 @@ const Explore = () => {
     };
     fetchIssues();
   }, []);
+   const handleVote = async (issueId) => {
+    if (voting.has(issueId)) return;
+    setVoting(prev => new Set(prev).add(issueId));
+
+    try {
+      const res = await axios.post(`${API}/issues/${issueId}/vote`);
+      const newCount = res.data.votesCount ?? 0;
+      setIssues(prev => prev.map(i => i._id === issueId ? { ...i, votesCount: newCount } : i));
+    } catch (err) {
+      console.error('Vote failed', err);
+      toast.error('Could not submit vote');
+    } finally {
+      setVoting(prev => {
+        const s = new Set(prev);
+        s.delete(issueId);
+        return s;
+      });
+    }
+  };
 
 
    if (loading) {
