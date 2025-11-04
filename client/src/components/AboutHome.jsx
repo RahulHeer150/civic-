@@ -234,11 +234,6 @@ const About = () => {
   }, []);
 
   const items = [
-    {
-      title: "Our Mission",
-      content: "Our mission is to bridge the communication gap between citizens and local government by creating a powerful, transparent platform for crowdsourced action.",
-    },
-    // ...existing items...
      {
       title: "Our Mission",
       content:
