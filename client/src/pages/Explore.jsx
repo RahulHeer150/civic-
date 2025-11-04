@@ -66,9 +66,9 @@ const Explore = () => {
                 <button
                   onClick={() => handleVote(issue._id)}
                   disabled={voting.has(issue._id)}
-                  className="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2"
+                  className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm flex items-center gap-2"
                 >
-                  👍 {issue.votesCount || 0}
+                  Vote {issue.votesCount || 0}
                 </button>
                 <span className="text-sm text-gray-500">{issue.location ?? '—'}</span>
               </div>
