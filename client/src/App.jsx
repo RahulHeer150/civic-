@@ -38,7 +38,7 @@ function App() {
         <Route path='/Login' element={<AuthPage/>}/>
         <Route path='/Logout' element={<Logout/>}/> 
         <Route path='/Update_user' element={<Update_user/>}/>
-        <Route path='/Userprofile' element={<UserProfile/>}/>
+        <Route path='/userprofile' element={<UserProfile/>}/>
         <Route path='/' element={<Home/>}/>
         <Route path='/report' element={<Report_page/>}/>
         <Route path='explore' element={<Explore/>}/>
