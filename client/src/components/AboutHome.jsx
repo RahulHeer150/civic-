@@ -153,12 +153,10 @@ import about from "../assets/about.png";
 import underline from "../assets/underline.png";
 import backgroundImage from "../assets/bg-integratedweb-2.svg";
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutItem = ({ title, isOpen, onClick, content }) => {
   const contentRef = useRef(null);
-  const itemRef = useRef(null);
   const [contentHeight, setContentHeight] = useState("0px");
 
   useEffect(() => {
@@ -167,22 +165,9 @@ const AboutItem = ({ title, isOpen, onClick, content }) => {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    gsap.from(itemRef.current, {
-      scrollTrigger: {
-        trigger: itemRef.current,
-        start: "top bottom",
-        end: "top center",
-        scrub: 1
-      },
-      y: 50,
-      opacity: 0,
-      duration: 0.8
-    });
-  }, []);
-
   return (
-    <div className="mb-4" ref={itemRef}>
+    // add the about-item class so the parent animation can target all items
+    <div className="mb-4 about-item">
       <div
         className={`bg-[#323290] text-white flex items-center justify-between p-4 rounded-full cursor-pointer ${
           isOpen ? "shadow-lg" : ""
@@ -216,25 +201,30 @@ const About = () => {
   const aboutRef = useRef(null);
 
   useEffect(() => {
+    // animate all .about-item children with a stagger when the about container enters view
     const ctx = gsap.context(() => {
-      gsap.from(aboutRef.current, {
-        scrollTrigger: {
-          trigger: aboutRef.current,
-          start: "top bottom",
-          end: "top center",
-          scrub: 1
-        },
-        y: 100,
-        opacity: 0,
-        duration: 1
-      });
-    });
+      const items = aboutRef.current?.querySelectorAll(".about-item");
+      if (items && items.length) {
+        gsap.from(items, {
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          },
+          y: 60,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power3.out"
+        });
+      }
+    }, aboutRef);
 
     return () => ctx.revert();
   }, []);
 
   const items = [
-     {
+    {
       title: "Our Mission",
       content:
         "Our mission is to bridge the communication gap between citizens and local government by creating a powerful, transparent platform for crowdsourced action.",
@@ -244,7 +234,6 @@ const About = () => {
       content:
         "Our Platform offers a complete solution to community problems: easy mobile reporting for citizens, prioritization through voting, and a transparent system that delivers vetted, centralized data to local authorities. We ensure government accountability, accelerate problem resolution, and improve the quality of life in every neighborhood.",
     },
-
     {
       title: "Community and Support",
       content:
