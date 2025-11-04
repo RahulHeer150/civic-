@@ -62,15 +62,18 @@ module.exports.createIssue = async (req, res) => {
 // };
 
 // 🔵 Get all issues (public)
-exports.getAllIssues = async (req, res) => {
+exports.getIssues = async (req, res) => {
   try {
-    const issues = await Issue.find()
-      .populate("reportedBy", "username email")
-      .sort({ createdAt: -1 });
-    res.status(200).json(issues);
-  } catch (error) {
-    console.error("Error fetching issues:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    const issues = await Issue.find().sort({ createdAt: -1 }).lean();
+    // ensure votesCount is in response — prefer voters.length if present
+    const mapped = issues.map(i => ({
+      ...i,
+      votesCount: (i.voters ? i.voters.length : i.votesCount) || 0
+    }));
+    res.json(mapped);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -141,25 +144,22 @@ exports.deleteIssue = async (req, res) => {
 };
 
 // 🟡 Upvote an issue (auth optional — can make it required if you want)
-exports.upvoteIssue = async (req, res) => {
+module.exports.voteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const issue = await IssueModel.findById(id);
+    const issue = await Issue.findById(id);
+    if (!issue) return res.status(404).json({ message: 'Issue not found' });
 
-    if (!issue) return res.status(404).json({ message: "Issue not found" });
-
-    issue.votes += 1;
+    issue.votesCount = (issue.votesCount || 0) + 1;
     await issue.save();
 
-    res.status(200).json({
-      message: "👍 Issue upvoted successfully",
-      votes: issue.votes,
-    });
-  } catch (error) {
-    console.error("Error upvoting issue:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(200).json({ _id: issue._id, votesCount: issue.votesCount });
+  } catch (err) {
+    console.error('Vote error:', err);
+    return res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 // 🔻 Downvote an issue (auth optional)
 exports.downvoteIssue = async (req, res) => {

@@ -13,7 +13,7 @@ router.put("/:id",  issueController.updateIssue);
 router.delete("/:id", issueController.deleteIssue);
 
 // 🔵 Upvote/downvote (optional auth)
-router.post("/:id/upvote", issueController.upvoteIssue);
+router.post('/:id/vote', issueController.voteIssue);
 router.post("/:id/downvote", issueController.downvoteIssue);
 
 module.exports = router;
