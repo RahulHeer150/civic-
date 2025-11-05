@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { fa } from "@fortawesome/free-solid-svg-icons";
 
 const UserProfile = () => {
   return (
@@ -10,6 +12,7 @@ const UserProfile = () => {
           <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
           <h2 className="text-lg font-semibold">Header Title</h2>
         </div>
+
 
         {/* Content Section */}
         <div className="p-4 space-y-4">
