@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { fa, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const UserProfile = () => {
   return (
@@ -16,8 +16,10 @@ const UserProfile = () => {
         {/* Content Section */}
         <div className="p-4 space-y-4">
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <span><FontAwesomeIcon icon={faUser}/></span>
-            <h1>My Profile</h1>
+           
+            <h1 className="px-3 py-2">
+               <span className="pr-2"><FontAwesomeIcon icon={faUser}/></span>
+              My Profile</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
             <h1>MY Activity</h1>
