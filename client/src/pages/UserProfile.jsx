@@ -38,7 +38,7 @@ const UserProfile = () => {
         {/* Footer / Button */}
         <div className="p-4 border-t border-gray-300 flex justify-center">
           <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-            Action
+            Logout
           </button>
         </div>
       </div>
