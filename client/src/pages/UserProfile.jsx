@@ -13,23 +13,22 @@ const UserProfile = () => {
           <h2 className="text-lg font-semibold">Header Title</h2>
         </div>
 
-
         {/* Content Section */}
         <div className="p-4 space-y-4">
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-<h1>My Profile</h1>
+            <h1>My Profile</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-      <h1>MY Activity</h1>
+            <h1>MY Activity</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-<h1>Update Profile</h1>
+            <h1>Update Profile</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-<h1>Forget Password</h1>
+            <h1>Forget Password</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-<h1>Issues</h1>
+            <h1>Issues</h1>
           </div>
         </div>
 
