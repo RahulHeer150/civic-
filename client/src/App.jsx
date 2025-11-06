@@ -23,6 +23,7 @@ import AuthPage from './pages/AuthPage'
 import Logout from './components/Logout'
 import Contact from './pages/Contact'
 import AllPosts from './components/AllPosts'
+import UserDashBoard from './components/UserDashBoard'
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='/Logout' element={<Logout/>}/> 
         <Route path='/Update_user' element={<Update_user/>}/>
         <Route path='/userprofile' element={<UserProfile/>}/>
+        <Route path='/userdashBoard' element={<UserDashBoard/>}/>
         <Route path='/' element={<Home/>}/>
         <Route path='/report' element={<Report_page/>}/>
         <Route path='explore' element={<Explore/>}/>
@@ -47,6 +49,9 @@ function App() {
         <Route path='/Error' element={<Error/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/all-posts' element={<AllPosts/>}/>
+        <Route path='/allissues' element={<AllPosts/>}/>
+        
+
 
 
         <Route path='/Forgot_Password' element={<ForgotPassword/>}/>

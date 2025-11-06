@@ -19,10 +19,10 @@ const UserProfile = () => {
         {/* Content Section */}
         <div className="px-4 py-4 space-y-4">
           {[
-           { icon: faUser, label: "My Profile", link: "/profile" },
+           { icon: faUser, label: "My Profile", link: "/userdashboard" },
     { icon: faChartLine, label: "My Activity", link: "/activity" },
-    { icon: faUserGear, label: "Update Profile", link: "/update-profile" },
-    { icon: faKey, label: "Forget Password", link: "/forget-password" },
+    { icon: faUserGear, label: "Update Profile", link: "/Update_user" },
+    { icon: faKey, label: "Forget Password", link: "/Forgot_Password" },
     { icon: faClipboardList, label: "Issues", link: "/issues" },
           ].map((item, i) => (
             <div
