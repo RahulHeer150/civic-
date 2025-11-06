@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AllPosts = () => {
+const MyActivity = () => {
   return (
     <div className='h-screen w-screen bg-gray-400 justify-center items-center'>
         <div className='relative left-4 top-[200px]'>
@@ -14,4 +14,4 @@ const AllPosts = () => {
   )
 }
 
-export default AllPosts;
+export default MyActivity;
