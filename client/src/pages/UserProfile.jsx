@@ -23,7 +23,7 @@ const UserProfile = () => {
     { icon: faChartLine, label: "My Activity", link: "/activity" },
     { icon: faUserGear, label: "Update Profile", link: "/Update_user" },
     { icon: faKey, label: "Forget Password", link: "/Forgot_Password" },
-    { icon: faClipboardList, label: "Issues", link: "/issues" },
+    { icon: faClipboardList, label: "Issues", link: "/all-issues" },
           ].map((item, i) => (
             <div
               key={i}

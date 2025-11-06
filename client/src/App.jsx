@@ -22,8 +22,9 @@ import Report_page from './pages/Report_page'
 import AuthPage from './pages/AuthPage'
 import Logout from './components/Logout'
 import Contact from './pages/Contact'
-import AllPosts from './components/AllPosts'
+import MyActivity from './components/MyActivity'
 import UserDashBoard from './components/UserDashBoard'
+import IssueList from './components/IssueList'
 
 function App() {
 
@@ -48,8 +49,8 @@ function App() {
         <Route path='/contactus' element={<Contact/>}/>
         <Route path='/Error' element={<Error/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/all-posts' element={<AllPosts/>}/>
-        <Route path='/allissues' element={<AllPosts/>}/>
+        <Route path='/activity' element={<MyActivity/>}/>
+        <Route path='/all-issues' element={<IssueList/>}/>
         
 
 
