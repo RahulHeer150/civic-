@@ -2,7 +2,10 @@ import React from 'react'
 import Profile from '../assets/profile2.jpg'
 import {motion} from 'framer-motion'
 import { HashLoader } from 'react-spinners'
-import { FaEdit } from "react-icons/fa";import {
+import { FaCity, FaEdit, FaLocationArrow } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/auth";
+import {
 
   FaEnvelope,
   FaPhone,
@@ -13,6 +16,63 @@ import { FaEdit } from "react-icons/fa";import {
 import { useNavigate } from "react-router-dom";
 
 const  UserDashBoard= () => {
+   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const { authorizationToken } = useAuth();
+  const backendUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true); // Start loader
+
+      try {
+        // Simulate a delay for demonstration purposes (remove in production)
+        await new Promise((resolve) => setTimeout(resolve, 500)); // Adjust delay as needed
+
+        const response = await fetch(`${backendUrl}/users`, {
+          method: "GET",
+          headers: {
+            Authorization: authorizationToken,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUserData(data.userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error("Failed to fetch user data");
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchUserData();
+  }, [authorizationToken, backendUrl]);
+
+  // Show loader while data is being fetched
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <HashLoader color="#4f46e5" loading={loading} size={50} />
+      </div>
+    );
+  }
+
+  // Show content when user data is available
+  if (!userData) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <Instagram />
+      </div>
+    );
+  }
+  
+
   return (
     <>
     <div className='bg-gray-100  flex items-center justify-center'>
@@ -40,12 +100,12 @@ const  UserDashBoard= () => {
                 <div className='flex flex-col  gap-6'>
                     <ProfileItem
                     label="Email"
-                    value="rahulheer34@gmail.com"
+                    value={userData.username}
                     icon={<FaEnvelope className='text-gray-500'/>}
                     />
                     <ProfileItem
                     label="Phone no."
-                    value="3526589745"
+                    value={userData.phone}
                     icon={<FaPhone className='text-gray-500'/>}
                     />
                     <ProfileItem
@@ -54,9 +114,14 @@ const  UserDashBoard= () => {
                     icon={<FaListOl className='text-gray-500'/>}
                     />
                     <ProfileItem
-                    label="Email"
-                    value="rahulheer34@gmail.com"
-                    icon={<FaUniversity className='text-gray-500'/>}
+                    label="City"
+                    value={userData.city}
+                    icon={<FaCity className='text-gray-500'/>}
+                    />
+                     <ProfileItem
+                    label="State"
+                    value={userData.state}
+                    icon={<FaLocationArrow className='text-gray-500'/>}
                     />
 
 
