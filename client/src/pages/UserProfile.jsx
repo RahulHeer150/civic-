@@ -1,3 +1,4 @@
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +9,7 @@ const UserProfile = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 mt-20">
       <div className="w-full max-w-lg bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
         <h1 className="text-4xl font-bold mb-6 text-center">User Profile</h1>
+
         {/* Header Section */}
         <div className="flex items-center p-4 border-b border-gray-300">
           <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -15,33 +17,27 @@ const UserProfile = () => {
         </div>
 
         {/* Content Section */}
-        <div className="p-4 space-y-4">
-          <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-           
-            <Link className="px-3 py-2">
-               <span className="pr-2"><FontAwesomeIcon icon={faUser}/></span>
-              My Profile</Link>
-          </div>
-          <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <Link className="px-3 py-2">
-              <span className="pr-2"><FontAwesomeIcon icon={faChartLine}/></span>
-              MY Activity</Link>
-          </div>
-          <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <Link className="px-3 py-2">
-              <span className="pr-2"><FontAwesomeIcon icon={faUserGear}/></span>
-              Update Profile</Link>
-          </div>
-          <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <Link className="px-3 py-2">
-              <span className="pr-2"><FontAwesomeIcon icon={faKey}/></span>
-              Forget Password</Link>
-          </div>
-          <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <Link className="px-3 py-2">
-              <span className="pr-2"><FontAwesomeIcon icon={faClipboardList}/></span>
-              Issues</Link>
-          </div>
+        <div className="px-4 py-4 space-y-4">
+          {[
+           { icon: faUser, label: "My Profile", link: "/profile" },
+    { icon: faChartLine, label: "My Activity", link: "/activity" },
+    { icon: faUserGear, label: "Update Profile", link: "/update-profile" },
+    { icon: faKey, label: "Forget Password", link: "/forget-password" },
+    { icon: faClipboardList, label: "Issues", link: "/issues" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border-2 border-gray-200 rounded-lg hover:bg-gray-50 transition"
+            >
+              <Link
+                to={item.link}
+                className="flex items-center justify-start px-5 py-3 text-gray-700"
+              >
+                <FontAwesomeIcon icon={item.icon} className="mr-3 text-gray-600" />
+                <span className="font-medium">{item.label}</span>
+              </Link>
+            </div>
+          ))}
         </div>
 
         {/* Footer / Button */}
