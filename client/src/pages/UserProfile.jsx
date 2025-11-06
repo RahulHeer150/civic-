@@ -17,29 +17,29 @@ const UserProfile = () => {
         <div className="p-4 space-y-4">
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
            
-            <h1 className="px-3 py-2">
+            <Link className="px-3 py-2">
                <span className="pr-2"><FontAwesomeIcon icon={faUser}/></span>
-              My Profile</h1>
+              My Profile</Link>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <h1 className="px-3 py-2">
+             <Link className="px-3 py-2">
               <span className="pr-2"><FontAwesomeIcon icon={faChartLine}/></span>
-              MY Activity</h1>
+              MY Activity</Link>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <h1 className="px-3 py-2">
+             <Link className="px-3 py-2">
               <span className="pr-2"><FontAwesomeIcon icon={faUserGear}/></span>
-              Update Profile</h1>
+              Update Profile</Link>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <h1 className="px-3 py-2">
+            <Link className="px-3 py-2">
               <span className="pr-2"><FontAwesomeIcon icon={faKey}/></span>
-              Forget Password</h1>
+              Forget Password</Link>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-             <h1 className="px-3 py-2">
+             <Link className="px-3 py-2">
               <span className="pr-2"><FontAwesomeIcon icon={faClipboardList}/></span>
-              Issues</h1>
+              Issues</Link>
           </div>
         </div>
 
