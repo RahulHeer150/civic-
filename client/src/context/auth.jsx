@@ -7,13 +7,14 @@ import {
   Children,
 } from "react";
 
-const URL = import.meta.env.CLIENT_URL;
+const URL = import.meta.env.VITE_API_URL;
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState(null);
+  const [issue,setIssue]=useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const authorizationToken = `Bearer ${token}`;
 
@@ -53,9 +54,30 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+  const getIssueData = async () => {
+    try {
+      const response = await fetch(`${URL}/issues`, {
+        method: "GET",
+        headers: {
+          Authorization: authorizationToken,
+        },
+      }); 
+      if (response.ok) {
+        const data = await response.json();
+        setIssue(data.issues);
+      }
+      else {
+        console.error("Error fetching issue data");
+      }
+
+    } catch (error) {
+      console.error("Error fetching issue data:", error);
+    } 
+  };
 
   useEffect(() => {
     userAuthentication();
+    getIssueData();
   }, [authorizationToken]);
 
   // Determine if the user is an admin based on the user data
@@ -70,6 +92,7 @@ export const AuthProvider = ({ children }) => {
         storeTokenInLocalStorage,
         logoutUser,
         user,
+        issue,
         authorizationToken,
         isLoading,
         isAdmin,
