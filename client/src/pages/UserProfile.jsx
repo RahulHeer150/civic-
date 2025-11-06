@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faChartLine, faUserGear, faClipboardList, faKey } from "@fortawesome/free-solid-svg-icons";
 
 const UserProfile = () => {
   return (
@@ -22,16 +22,24 @@ const UserProfile = () => {
               My Profile</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <h1>MY Activity</h1>
+             <h1 className="px-3 py-2">
+              <span className="pr-2"><FontAwesomeIcon icon={faChartLine}/></span>
+              MY Activity</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <h1>Update Profile</h1>
+             <h1 className="px-3 py-2">
+              <span className="pr-2"><FontAwesomeIcon icon={faUserGear}/></span>
+              Update Profile</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <h1>Forget Password</h1>
+            <h1 className="px-3 py-2">
+              <span className="pr-2"><FontAwesomeIcon icon={faKey}/></span>
+              Forget Password</h1>
           </div>
           <div className="h-12 bg-white border-2 border-gray-200 rounded-lg">
-            <h1>Issues</h1>
+             <h1 className="px-3 py-2">
+              <span className="pr-2"><FontAwesomeIcon icon={faClipboardList}/></span>
+              Issues</h1>
           </div>
         </div>
 
