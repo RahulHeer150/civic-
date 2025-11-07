@@ -5,6 +5,7 @@ import { HashLoader } from "react-spinners";
 import { FaCity, FaEdit, FaLocationArrow } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/auth";
+import { toast } from "react-toastify";
 import {
   FaEnvelope,
   FaPhone,
@@ -66,7 +67,7 @@ const UserDashBoard = () => {
   if (!userData) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <Instagram />
+        <p className="text-gray-500 text-xl">No user data available.</p>
       </div>
     );
   }
