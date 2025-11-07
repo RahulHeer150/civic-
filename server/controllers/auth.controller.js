@@ -1,26 +1,29 @@
-// const userModel=require("../models/user.model")
-// const userService=require("../services/auth.service")
+const userModel=require("../models/user.model")
+const userService=require("../services/auth.service")
+const blackTokenModel=require('../models/blackToken.model')
+const {validationResult} = require('express-validator')
+ 
+module.exports.getUserProfile = async (req, res, next) => {
 
-// const {validationResult} = require('express-validator')
+    res.status(200).json(req.user);
 
+}
 
-// module.exports.registerUser=async(req, res , next) =>{
-//     console.log("working well");
-      
-//     const errors=validationResult(req);
-//      if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }
+// module.exports.register = async (req, res) => {
+//     try {
+//         const { username, city, state,  email, password, phone } = req.body;
 
-//     const { username, city, state,  email, password, phone } = req.body;
+//         const userExist = await userModel.findOne({ email });
+       
 
-//     const isUserAlready = await userModel.findOne({ email });
+//         if (userExist) {
+//             return res.status(400).json({ message: "Email already exists" });
+//         }
+       
 
-//     if (isUserAlready) {
-//         return res.status(400).json({ message: 'User already exist' });
-//     }
+        
 
-//     const hashedPassword = await userModel.hashPassword(password);
+//         const hashedPassword = await userModel.hashPassword(password);
 
 //     const user = await userService.createUser({
 //         username,
@@ -30,85 +33,31 @@
 //         phone,
 //         password: hashedPassword
 //     });
-//     console.log(req.body);
+//     console.log(user)
 
-//     const token = userModel.generateAuthToken();
+//     const token = user.generateAuthToken();
 
 //     res.status(201).json({ token, user });
 
+//         await newUser.save();
+//         //await sendOTPEmail(email, otp);
 
-// }
+//         res.status(201).json({
+//             msg: "Registration Successful. Please verify your OTP.",
+//             userId: newUser._id.toString()
+//         });
+//     } catch (err) {
+//         console.error("Registration error:", err);
+//         res.status(500).json({ message: "Internal Server Error" });
+//     }
+// };
 
 
- 
-// module.exports.getUserProfile = async (req, res, next) => {
-
-//     res.status(200).json(req.user);
-
-// }
-
-// // module.exports.register = async (req, res) => {
-// //     try {
-// //         const { username, city, state,  email, password, phone } = req.body;
-
-// //         const userExist = await User.findOne({ email });
-       
-
-// //         if (userExist) {
-// //             return res.status(400).json({ message: "Email already exists" });
-// //         }
-       
-
-        
-
-// //         const hashedPassword = await userModel.hashPassword(password);
-
-// //     const user = await userService.createUser({
-// //         username,
-// //         city, 
-// //         state,
-// //         email,
-// //         phone,
-// //         password: hashedPassword
-// //     });
-// //     console.log(user)
-
-// //     const token = user.generateAuthToken();
-
-// //     res.status(201).json({ token, user });
-
-// //         await newUser.save();
-// //         //await sendOTPEmail(email, otp);
-
-// //         res.status(201).json({
-// //             msg: "Registration Successful. Please verify your OTP.",
-// //             userId: newUser._id.toString()
-// //         });
-// //     } catch (err) {
-// //         console.error("Registration error:", err);
-// //         res.status(500).json({ message: "Internal Server Error" });
-// //     }
-// // };
-
-// // module.exports.userp = async (req, res) => {
-// //     try {
-// //         const userData = req.user;
-// //         return res.status(200).json({ userData });
-// //     } catch (error) {
-// //         console.error(`Error from user route ${error}`);
-// //         res.status(500).json({ message: "Internal Server Error" });
-// //     }
-// // };
-
-const userModel = require("../models/user.model");
-const userService = require("../services/auth.service");
-const { validationResult } = require("express-validator");
-const blackTokenModel=require('../models/blackToken.model')
-
-module.exports.registerUser = async (req, res) => {
+module.exports.register = async (req, res) => {
   try {
     console.log("📥 Request body:", req.body);
-    const { username, city, state, email, password, phone } = req.body;
+    const { username, city, state, email, password, phone,otp } = req.body;
+    console.log("Extracted fields:", { username, city, state, email, password, phone, otp });
 
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -128,7 +77,7 @@ module.exports.registerUser = async (req, res) => {
       email,
       phone,
       password:hashedPassword,
-      otp:null,
+      otp
     });
      console.log("Hashed Password Check:", password);
 

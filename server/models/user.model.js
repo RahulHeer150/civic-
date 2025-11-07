@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Username is required'],
-        trim: true,
+        
         minlength: [3, 'Username must be at least 3 characters long']
     },
     city: {
@@ -25,27 +25,21 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
     },
     phone: {
         type: String,
         required: [true, 'Phone number is required'],
         unique: true,
-        match: [/^[0-9]{10}$/, 'Please provide a valid 10-digit phone number']
+       
     },
     password: {
         type: String,
         required: [true, 'Password is required'],
         minlength: [8, 'Password must be at least 8 characters long']
     },
-    isVerified: { 
-        type: Boolean, 
-        default: false 
-    },
     otp: {
         type: String,
-        default: null
-    }
+    },
 }, {
     timestamps: true // Adds createdAt and updatedAt fields
 })
