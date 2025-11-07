@@ -26,7 +26,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
-  const [otpStep, setOtpStep] = useState("");
+  // const [otpStep, setOtpStep] = useState("");
   const { user, setUser } = useContext(UserDataContext);
   const navigate = useNavigate();
   //const { storeTokenLocalStorage } = useAuth();
@@ -45,7 +45,7 @@ const Register = () => {
         email,
         phone,
         password,
-        otp: otpStep,
+        // otp: otpStep,
       };
 
       const response = await axios.post(
@@ -76,7 +76,7 @@ const Register = () => {
       setPhone("");
       setEmail("");
       setPassword("");
-      setOtpStep("");
+      // setOtpStep("");
     }
   };
   return (
@@ -187,8 +187,9 @@ const Register = () => {
               <span>Password</span>
             </label>
           </div>
-
-          <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
+</div>
+//otp step
+          {/* <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
             <input
               type="text"
               name=""
@@ -204,7 +205,7 @@ const Register = () => {
               <span>OTP</span>
             </label>
           </div>
-        </div>
+        </div> */}
         <button
           type="submit"
           className="py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto  block  bg-gradient-to-r from-blue-700 to-sky-300   transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"

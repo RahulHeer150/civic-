@@ -127,7 +127,8 @@ module.exports.registerUser = async (req, res) => {
       state,
       email,
       phone,
-      password:hashedPassword
+      password:hashedPassword,
+      otp:null,
     });
      console.log("Hashed Password Check:", password);
 
