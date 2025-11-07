@@ -56,8 +56,7 @@ module.exports.getUserProfile = async (req, res, next) => {
 module.exports.register = async (req, res) => {
   try {
     console.log("📥 Request body:", req.body);
-    const { username, city, state, email, password, phone,otp } = req.body;
-    console.log("Extracted fields:", { username, city, state, email, password, phone, otp });
+    const { username, city, state, email, password, phone } = req.body;
 
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -70,16 +69,16 @@ module.exports.register = async (req, res) => {
 
     const hashedPassword = await userModel.hashPassword(password);
    
+    // Create user without OTP
     const user = await userService.createUser({
       username,
       city,
       state,
       email,
       phone,
-      password:hashedPassword,
-      otp
+      password: hashedPassword
+      // Don't include OTP here
     });
-     console.log("Hashed Password Check:", password);
 
     const token = user.generateAuthToken();
     res.status(201).json({ token, user });

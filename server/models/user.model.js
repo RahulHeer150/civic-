@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { de } = require('zod/v4/locales')
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -39,6 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     otp: {
         type: String,
+        default: null  // Removed unique constraint to allow multiple users to have null OTP
     },
 }, {
     timestamps: true // Adds createdAt and updatedAt fields
