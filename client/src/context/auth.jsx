@@ -1,25 +1,27 @@
-import React from "react";
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  Children,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState(null);
-  const [issue,setIssue]=useState([]);
+  const [issue, setIssue] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const authorizationToken = `Bearer ${token}`;
+  const [error, setError] = useState(null);
 
+  // Construct authorization header only if token exists
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token && { Authorization: `Bearer ${token}` })
+  };
+
+  // Store token in localStorage when it changes
   useEffect(() => {
-    localStorage.setItem("token", token);
+    if (token) {
+      localStorage.setItem("token", token);
+    }
   }, [token]);
 
   const storeTokenInLocalStorage = (serverToken) => {
@@ -28,85 +30,109 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = () => {
     setToken("");
-    localStorage.removeItem("token");
     setUser(null);
+    setIssue([]);
+    localStorage.removeItem("token");
   };
 
+  // Fetch user data
   const userAuthentication = async () => {
-    setIsLoading(true);
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await fetch(`${URL}/users`, {
+      const response = await fetch(`${URL}/users/profile`, {
         method: "GET",
-        headers: {
-          Authorization: authorizationToken,
-        },
+        headers
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data.userData) {
         setUser(data.userData);
       } else {
-        console.error("Error fetching user data");
+        throw new Error('No user data in response');
       }
     } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+      console.error("Authentication error:", error);
+      setError(error.message);
+      // Optional: logout user on authentication failure
+      logoutUser();
     }
   };
+
+  // Fetch issues data
   const getIssueData = async () => {
     try {
       const response = await fetch(`${URL}/issues`, {
         method: "GET",
-        headers: {
-          Authorization: authorizationToken,
-        },
-      }); 
-      if (response.ok) {
-        const data = await response.json();
-        setIssue(data.issues);
-      }
-      else {
-        console.error("Error fetching issue data");
+        headers
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setIssue(data);
+      } else if (data.issues && Array.isArray(data.issues)) {
+        setIssue(data.issues);
+      } else {
+        throw new Error('Invalid issues data format');
+      }
     } catch (error) {
-      console.error("Error fetching issue data:", error);
-    } 
+      console.error("Error fetching issues:", error);
+      setError(error.message);
+      setIssue([]);
+    }
   };
 
+  // Fetch data when token changes
   useEffect(() => {
-    userAuthentication();
-    getIssueData();
-  }, [authorizationToken]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+      
+      await Promise.all([
+        userAuthentication(),
+        getIssueData()
+      ]);
+      
+      setIsLoading(false);
+    };
 
-  // Determine if the user is an admin based on the user data
-  const isAdmin = user && user.isAdmin === true;
+    fetchData();
+  }, [token]);
 
-  const isLoggedIn = !!token;
+  const contextValue = {
+    isLoggedIn: !!token,
+    storeTokenInLocalStorage,
+    logoutUser,
+    user,
+    issue,
+    isLoading,
+    error,
+    isAdmin: user?.isAdmin || false,
+    token
+  };
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn,
-        storeTokenInLocalStorage,
-        logoutUser,
-        user,
-        issue,
-        authorizationToken,
-        isLoading,
-        isAdmin,
-      }}
-    >
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const authContextValue = useContext(AuthContext);
-  if (!authContextValue) {
-    throw new Error("useAuth used outside of the Provider");
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  return authContextValue;
+  return context;
 };

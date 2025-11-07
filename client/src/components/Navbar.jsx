@@ -11,11 +11,14 @@ import { CgFileDocument } from "react-icons/cg";
 import { FaFileSignature } from 'react-icons/fa6';
 import { FaUserCircle } from "react-icons/fa"; // ✅ Added user profile icon
 import navlogo from "../assets/mainlogo.png"
+import { useAuth } from '../context/auth';
 
 const Navbar = () => {
   const [IsOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const {isLoggedIn,user} = useAuth();
 
   useEffect(() => {
     const handlescroll = () => {
@@ -63,14 +66,31 @@ const Navbar = () => {
 
           {/* ✅ Right Side Profile Icon */}
           <div className="flex items-center gap-4">
-            <Link
-              to="/AuthPage"
-              className="relative group"
-            >
-              <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
-                <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
+             {isLoggedIn && user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-gray-700 font-medium">
+                  {user.username}
+                </span>
+                <Link
+                  to="/dashboard"
+                  className="relative group"
+                >
+                  <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
+                    <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                </Link>
               </div>
-            </Link>
+              ) : (
+              <Link
+                to="/AuthPage"
+                className="relative group flex items-center gap-2"
+              >
+                <span className="text-gray-700 font-medium">Login</span>
+                <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
+                  <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
+                </div>
+              </Link>
+            )}
 
             {/* Hamburger for mobile */}
             <div className='lg:hidden'>
@@ -99,6 +119,11 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
+              {isLoggedIn && user && (
+                <li className="text-gray-800 font-medium">
+                  {user.username}
+                </li>
+              )}
             </ul>
           </div>
         )}
