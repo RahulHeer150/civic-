@@ -72,7 +72,7 @@ const Navbar = () => {
                   {user.username}
                 </span>
                 <Link
-                  to="/dashboard"
+                  to="/userdashboard"
                   className="relative group"
                 >
                   <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
