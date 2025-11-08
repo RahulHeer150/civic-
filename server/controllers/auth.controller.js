@@ -114,11 +114,25 @@ module.exports.loginUser = async (req, res, next) => {
 module.exports.getUserProfile = async (req, res, next) => {
 
     try {
-        const userData = req.user;
+        // Check if req.user exists
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+
+        // Get user data without password
+        const userData = await userModel.findById(req.user._id).select('+password');
+        
+        if (!userData) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
         return res.status(200).json({ userData });
     } catch (error) {
-        console.error(`Error from user route ${error}`);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error(`Error fetching user profile:`, error);
+        return res.status(500).json({ 
+            message: "Internal Server Error",
+            error: error.message 
+        });
     }
 
 }
