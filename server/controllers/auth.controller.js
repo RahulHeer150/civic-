@@ -3,11 +3,6 @@ const userService=require("../services/auth.service")
 const blackTokenModel=require('../models/blackToken.model')
 const {validationResult} = require('express-validator')
  
-module.exports.getUserProfile = async (req, res, next) => {
-
-    res.status(200).json(req.user);
-
-}
 
 // module.exports.register = async (req, res) => {
 //     try {
@@ -118,9 +113,16 @@ module.exports.loginUser = async (req, res, next) => {
 
 module.exports.getUserProfile = async (req, res, next) => {
 
-    res.status(200).json(req.user);
+    try {
+        const userData = req.user;
+        return res.status(200).json({ userData });
+    } catch (error) {
+        console.error(`Error from user route ${error}`);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
 
 }
+
 
 module.exports.logoutUser = async (req, res, next) => {
     res.clearCookie('token');
