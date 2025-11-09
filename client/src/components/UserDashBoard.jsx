@@ -22,7 +22,9 @@ const UserDashBoard = () => {
   if (!user) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <p className="text-gray-500 text-xl">Please login to view your profile.</p>
+        <p className="text-gray-500 text-xl">
+          Please login to view your profile.
+        </p>
       </div>
     );
   }
@@ -49,7 +51,9 @@ const UserDashBoard = () => {
 
           {/* Right section */}
           <div className="p-8 pt-8 lg:w-2/3 flex flex-col justify-center items-center">
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">Profile Details</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-6">
+              Profile Details
+            </h2>
             <div className="flex flex-col gap-6">
               <ProfileItem
                 label="Email"
@@ -88,5 +92,4 @@ const ProfileItem = ({ label, value, icon }) => (
     </div>
   </div>
 );
-  export default UserDashBoard;
-
+export default UserDashBoard;
