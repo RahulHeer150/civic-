@@ -78,5 +78,15 @@ const UserDashBoard = () => {
     </div>
   );
 };
+
+const ProfileItem = ({ label, value, icon }) => (
+  <div className="flex items-center">
+    {icon}
+    <div className="ml-4">
+      <p className="text-gray-600">{label}</p>
+      <p className="font-semibold text-gray-800">{value}</p>
+    </div>
+  </div>
+);
   export default UserDashBoard;
 
