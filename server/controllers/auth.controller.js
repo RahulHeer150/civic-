@@ -139,11 +139,39 @@ module.exports.getUserProfile = async (req, res, next) => {
 
 
 module.exports.logoutUser = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
+     try {
+    // safe optional chaining for cookies and headers
+    const tokenFromCookie = req.cookies?.token || null;
+    const authHeader = req.headers?.authorization;
+    const tokenFromHeader =
+      typeof authHeader === "string" && authHeader.startsWith("Bearer ")
+        ? authHeader.split(" ")[1]
+        : null;
 
-    await blackTokenModel.create({ token });
+    const token = tokenFromCookie || tokenFromHeader || null;
 
-    res.clearCookie('token');
+     // clear cookie regardless (use same options you set when creating it)
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
 
-    res.status(200).json({ message: 'Logout successfully' });
+    // only attempt to blacklist if token exists
+    if (token) {
+      try {
+        await blackTokenModel.create({ token });
+      } catch (err) {
+        // Don't fail logout if blacklist write fails
+        console.warn("Failed to record blacklisted token:", err.message || err);
+      }
+    }
+
+    return res.status(200).json({ success: true, message: "Logged out" });
+    console.log("User logged out successfully");
+
+  } catch (err) {
+    console.error("Logout error:", err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
 }
