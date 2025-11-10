@@ -1,9 +1,20 @@
-import React from 'react'
+import { useEffect } from "react";
+import { useAuth } from "../context/auth";
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
+export const Logout = () => {
+  const { logoutUser } = useAuth(); // Use 'logoutUser' instead of 'LogoutUser'
 
-const Logout = () => {
-  return (
-    <div>Logout</div>
+  useEffect(() => {
+    toast.success("Logout Succesfully");
+    logoutUser();
+  }, [logoutUser]);
+
+  return(
+    <>
+    <Navigate to="/login" />
+    </>
   )
-}
+};
 
-export default Logout
+export default Logout;
