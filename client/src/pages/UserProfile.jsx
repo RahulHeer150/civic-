@@ -42,9 +42,9 @@ const UserProfile = () => {
 
         {/* Footer / Button */}
         <div className="p-4 border-t border-gray-300 flex justify-center">
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-            Logout
-          </button>
+         <Link to="/logout" title="Logout" className={`px-5 py-2 text-base font-semibold leading-7 transition-all duration-200 bg-transparent border border-current rounded-xl font-pj`} role="button">
+                  Logout
+                </Link>
         </div>
       </div>
     </div>
