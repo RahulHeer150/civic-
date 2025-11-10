@@ -104,7 +104,7 @@ const Update_user = () => {
                    id='phone'
                    value={data.Phone}
                    onChange={handleInput}
-                   required
+                  
                    className='w-full bg-white p-4 rounded-[20px] shadow-sm border placeholder:text-gray-500 focus:outlinr-none focus:border-blue-400' />
                 </div>
 
