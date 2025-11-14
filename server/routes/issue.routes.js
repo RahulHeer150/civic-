@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 // all routes below require authentication
 
 // list all issues
-router.get('/',authMiddleware.authUser, issueController.getIssues);
+router.get('/', issueController.getIssues);
 
 // create an issue
 router.post('/create', issueController.createIssue);
