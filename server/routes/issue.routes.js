@@ -12,11 +12,11 @@ router.get('/',authMiddleware.authUser, issueController.getIssues);
 router.post('/create', issueController.createIssue);
 
 // vote (increment)
-router.post('/:id/vote',, issueController.voteIssue);
+router.post('/:id/vote', issueController.voteIssue);
 
 // optional: update/delete/downvote endpoints
 router.put('/:id', issueController.updateIssue);
-router.delete('/:id',authMiddleware.authUser, issueController.deleteIssue);
-router.post('/:id/downvote',authMiddleware.authUser, issueController.downvoteIssue);
+router.delete('/:id', issueController.deleteIssue);
+router.post('/:id/downvote', issueController.downvoteIssue);
 
 module.exports = router;
