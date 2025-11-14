@@ -9,13 +9,13 @@ const authMiddleware = require('../middlewares/auth.middleware');
 router.get('/',authMiddleware.authUser, issueController.getIssues);
 
 // create an issue
-router.post('/create',authMiddleware.authUser, issueController.createIssue);
+router.post('/create', issueController.createIssue);
 
 // vote (increment)
-router.post('/:id/vote',authMiddleware.authUser, issueController.voteIssue);
+router.post('/:id/vote',, issueController.voteIssue);
 
 // optional: update/delete/downvote endpoints
-router.put('/:id',authMiddleware.authUser, issueController.updateIssue);
+router.put('/:id', issueController.updateIssue);
 router.delete('/:id',authMiddleware.authUser, issueController.deleteIssue);
 router.post('/:id/downvote',authMiddleware.authUser, issueController.downvoteIssue);
 
