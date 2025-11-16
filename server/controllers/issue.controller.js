@@ -48,7 +48,8 @@ module.exports.getIssues = async (req, res) => {
 // POST /issues/create
 module.exports.createIssue = async (req, res) => {
   try {
-    const { title, description, location, date, photo } = req.body;
+    const { title, description, location, date } = req.body;
+    const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
     if (!title) {
       return res.status(400).json({ message: 'Title is required' });
@@ -59,7 +60,7 @@ module.exports.createIssue = async (req, res) => {
       description: description || '',
       location: location || '',
       date: date ? new Date(date) : undefined,
-      photo: photo || null,
+      photo: mediaPath || null,
       votesCount: 0
     });
 
