@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const issueController = require('../controllers/issue.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
+const uploadMiddleware = require('../middlewares/upload.middleware');
 
 // all routes below require authentication
 
@@ -9,7 +10,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 router.get('/', issueController.getIssues);
 
 // create an issue
-router.post('/create', issueController.createIssue);
+router.post('/create', issueController.createIssue, uploadMiddleware.single('photo'));
 
 // vote (increment)
 router.post('/:id/vote', issueController.voteIssue);

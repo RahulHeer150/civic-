@@ -16,7 +16,7 @@ const issueSchema = new mongoose.Schema(
       required: [true, "Location is required"],
     },
     media: {
-      type: String, // image filename or URL
+      type: media, // image filename or URL
     },
     votes: {
       type: Number,
