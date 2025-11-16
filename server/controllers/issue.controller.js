@@ -32,6 +32,7 @@
 
 
 const Issue = require('../models/issue.model');
+const issueService = require('../services/issue.service');
 const mongoose = require('mongoose');
 
 // GET /issues
