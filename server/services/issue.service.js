@@ -11,7 +11,7 @@ module.exports.createIssue=async({
             title,
             description,
             location,
-            media:media||null,
+            media:media,
             reportedBy:reportedBy||undefined,
         })
         return issue;

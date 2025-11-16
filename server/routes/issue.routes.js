@@ -10,7 +10,7 @@ const uploadMiddleware = require('../middlewares/upload.middleware');
 router.get('/', issueController.getIssues);
 
 // create an issue
-router.post('/create', issueController.createIssue, uploadMiddleware.single('photo'));
+router.post('/create',uploadMiddleware.single('photo'), issueController.createIssue);
 
 // vote (increment)
 router.post('/:id/vote', issueController.voteIssue);
