@@ -8,6 +8,8 @@ const uploadMiddleware = require('../middlewares/upload.middleware');
 
 // list all issues
 router.get('/', issueController.getIssues);
+router.get('/:id', issueController.getIssueById);
+
 
 // create an issue
 router.post('/create',uploadMiddleware.single('media'), issueController.createIssue);

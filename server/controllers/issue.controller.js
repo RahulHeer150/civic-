@@ -108,6 +108,24 @@ console.log('req.body raw:', req.body);
   }
 };
 
+module.exports.getIssueById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const issue = await Issue.findById(id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    res.status(200).json(issue);
+  } catch (error) {
+    console.error("Error fetching issue:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+
+
 // POST /issues/:id/vote
 module.exports.voteIssue = async (req, res) => {
   try {
