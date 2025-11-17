@@ -83,16 +83,19 @@ module.exports.createIssue = async (req, res) => {
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
     // auth middleware sets req.user
-    const reportedBy = req.user?._id;
+    //const reportedBy = req.user?._id;
 
-    console.log('Creating issue:', { title, description, location, mediaPath, reportedBy });
+    console.log('Creating issue:', { title, description, location, mediaPath});
+
+  console.log('Headers content-type:', req.headers['content-type']);
+console.log('req.file:', req.file);
+console.log('req.body raw:', req.body);
 
     const issue = await issueService.createIssue({
       title,
       description,
       location,
       media: mediaPath,
-      reportedBy
     });
 
     res.status(201).json({
