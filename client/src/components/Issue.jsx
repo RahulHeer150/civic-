@@ -1,6 +1,8 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+
 
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:5001";
 

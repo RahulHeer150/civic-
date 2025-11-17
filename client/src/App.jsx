@@ -25,6 +25,7 @@ import Contact from './pages/Contact'
 import MyActivity from './components/MyActivity'
 import UserDashBoard from './components/UserDashBoard'
 import IssueList from './components/IssueList'
+import Issue from './components/issue'
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
         <Route path='/home' element={<Home/>}/>
         <Route path='/activity' element={<MyActivity/>}/>
         <Route path='/all-issues' element={<IssueList/>}/>
+        <Route path="/issues/:id" element={<Issue />} />
         
 
 
