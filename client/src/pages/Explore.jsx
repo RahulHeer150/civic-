@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { ClipLoader } from 'react-spinners';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { UserDataContext } from '../context/userContext'; // adjust path if needed
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { UserDataContext } from "../context/userContext"; // adjust path if needed
 
-const API = import.meta.env.VITE_API_URL ?? 'http://localhost:5001';
+const API = import.meta.env.VITE_API_URL ?? "http://localhost:5001";
 
 const Explore = () => {
   const [issues, setIssues] = useState([]);
@@ -20,26 +20,30 @@ const Explore = () => {
         setIssues(res.data);
       } catch (err) {
         console.error(err);
-        toast.error('Failed to load issues');
+        toast.error("Failed to load issues");
       } finally {
         setLoading(false);
       }
     };
     fetchIssues();
   }, []);
-   const handleVote = async (issueId) => {
+  const handleVote = async (issueId) => {
     if (voting.has(issueId)) return;
-    setVoting(prev => new Set(prev).add(issueId));
+    setVoting((prev) => new Set(prev).add(issueId));
 
     try {
       const res = await axios.post(`${API}/issues/${issueId}/vote`);
       const newCount = res.data.votesCount ?? 0;
-      setIssues(prev => prev.map(i => i._id === issueId ? { ...i, votesCount: newCount } : i));
+      setIssues((prev) =>
+        prev.map((i) =>
+          i._id === issueId ? { ...i, votesCount: newCount } : i
+        )
+      );
     } catch (err) {
-      console.error('Vote failed', err);
-      toast.error('Could not submit vote');
+      console.error("Vote failed", err);
+      toast.error("Could not submit vote");
     } finally {
-      setVoting(prev => {
+      setVoting((prev) => {
         const s = new Set(prev);
         s.delete(issueId);
         return s;
@@ -47,18 +51,30 @@ const Explore = () => {
     }
   };
 
-
-   if (loading) {
-    return <div className="h-screen flex items-center justify-center"><ClipLoader size={48} color="#4A90E2" /></div>
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <ClipLoader size={48} color="#4A90E2" />
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
       <h1 className="text-3xl font-bold text-center mb-8">Reported Issues</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {issues.map(issue => (
-          <div key={issue._id} className="bg-white rounded-lg shadow overflow-hidden">
-            {issue.photo && <img src={issue.photo} alt={issue.title} className="w-full h-48 object-cover" />}
+        {issues.map((issue) => (
+          <div
+            key={issue._id}
+            className="bg-white rounded-lg shadow overflow-hidden"
+          >
+            {issue.media && (
+              <img
+                src={`${API}${issue.media}`} // <-- FIX
+                alt={issue.title}
+                className="w-full h-48 object-cover"
+              />
+            )}{" "}
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{issue.title}</h2>
               <p className="text-gray-600 mb-3">{issue.description}</p>
@@ -70,12 +86,14 @@ const Explore = () => {
                 >
                   Vote {issue.votesCount || 0}
                 </button>
-                <span className="text-sm text-gray-500">{issue.location ?? '—'}</span>
+                <span className="text-sm text-gray-500">
+                  {issue.location ?? "—"}
+                </span>
               </div>
             </div>
           </div>
         ))}
-             </div>
+      </div>
     </div>
   );
 };
@@ -89,7 +107,6 @@ export default Explore;
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faLocation } from "@fortawesome/free-solid-svg-icons";
-
 
 // const Explore = () => {
 //   const [issues, setIssues] = useState([]);
@@ -136,9 +153,9 @@ export default Explore;
 //         {issues.map((issue) => (
 //           <div key={issue._id} className='bg-white rounded-lg shadow-md overflow-hidden'>
 //             {issue.photo && (
-//               <img 
-//                 src={issue.photo} 
-//                 alt={issue.title} 
+//               <img
+//                 src={issue.photo}
+//                 alt={issue.title}
 //                 className='w-full h-48 object-cover'
 //               />
 //             )}
