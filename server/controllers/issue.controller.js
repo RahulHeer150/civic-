@@ -293,3 +293,29 @@ exports.downvoteIssue = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// 🟢 Resolve an issue (Admin only)
+module.exports.resolveIssue = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find issue
+    const issue = await Issue.findById(id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    // Update status
+    issue.status = "Resolved";
+    await issue.save();
+
+    res.status(200).json({
+      message: "✅ Issue marked as resolved",
+      issue,
+    });
+  } catch (error) {
+    console.error("Error resolving issue:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
