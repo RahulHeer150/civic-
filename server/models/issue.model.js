@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const userModel=require('./user.model');
+const userModel = require("./user.model");
 
 const issueSchema = new mongoose.Schema(
   {
@@ -21,6 +21,11 @@ const issueSchema = new mongoose.Schema(
     votes: {
       type: Number,
       default: 0,
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Resolved"],
+      default: "Pending", // When user reports issue → default status
     },
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
