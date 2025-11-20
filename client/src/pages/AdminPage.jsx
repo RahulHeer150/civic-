@@ -19,7 +19,7 @@ const AdminPage = () => {
           <Link className="bg-blue-400 h-10 w-30 px-10 py-3 text-lg text-white font-semibold rounded-xl gap-10 mr-5">
             Resolve
           </Link>
-          <Link className="bg-gray-400 h-10 w-30 px-10 py-3 text-lg text-white font-semibold rounded-xl">
+          <Link  to="/issues/:id" className="bg-gray-400 h-10 w-30 px-10 py-3 text-lg text-white font-semibold rounded-xl">
             View
           </Link>
 
