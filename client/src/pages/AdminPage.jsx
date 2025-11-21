@@ -38,7 +38,9 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="max-w-screen h-screen mx-10 mt-20 p-5 bg-gray-300 rounded-xl items-center justify-center">
+    <div className="max-w-screen min-h-screen mx-10 mt-20 p-5 bg-gray-300 rounded-xl items-center justify-center pb-20">
+      {/* pb-20 = padding bottom to avoid footer overlap */}
+
       <h1 className="font-bold text-gray-800 text-4xl text-center py-5">
         ALL Reported Issues
       </h1>
@@ -46,7 +48,7 @@ const AdminPage = () => {
       {issues.map((issue) => (
         <div
           key={issue._id}
-          className="w-full p-5 border-2 border-gray-500 rounded-xl flex mb-5"
+          className="w-full p-5 border-2 border-gray-500 rounded-xl flex mb-6 bg-white shadow-md"
         >
           <div className="w-1/2 px-5 py-3 flex h-15 bg-white rounded-xl">
             <div className="h-10 w-10 rounded-full bg-blue-400 flex items-center justify-center text-white">
@@ -70,11 +72,11 @@ const AdminPage = () => {
             </div>
           </div>
 
-          <div className="w-1/2 px-10 py-4 justify-end items-end mx-20 flex">
+          <div className="w-1/2 px-10 py-4 justify-end items-end mx-20 flex gap-4">
             <button
               onClick={() => handleResolve(issue._id)}
               disabled={issue.status === "Resolved"}
-              className={`h-10 w-30 px-10 py-3 text-lg text-white font-semibold rounded-xl mr-5 ${
+              className={`h-10 px-10 py-3 text-lg text-white font-semibold rounded-xl ${
                 issue.status === "Resolved"
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-blue-400"
@@ -85,7 +87,7 @@ const AdminPage = () => {
 
             <Link
               to={`/issues/${issue._id}`}
-              className="bg-gray-400 h-10 w-30 px-10 py-3 text-lg text-white font-semibold rounded-xl"
+              className="bg-gray-400 h-10 px-10 py-3 text-lg text-white font-semibold rounded-xl"
             >
               View
             </Link>
