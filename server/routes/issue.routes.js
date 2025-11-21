@@ -21,6 +21,6 @@ router.post('/:id/vote', issueController.voteIssue);
 router.put('/:id', issueController.updateIssue);
 router.delete('/:id', issueController.deleteIssue);
 router.post('/:id/downvote', issueController.downvoteIssue);
-router.put("/issues/:id/resolve", issueController.resolveIssue);
+router.put("/:id/resolve", issueController.resolveIssue);
 
 module.exports = router;
