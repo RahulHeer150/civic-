@@ -52,7 +52,7 @@ const AdminPage = () => {
         >
           <div className="w-1/2 px-5 py-3 flex h-15 bg-white rounded-xl">
             <div className="h-10 w-10 rounded-full bg-blue-400 flex items-center justify-center text-white">
-              Img
+              <img src={issues.media} alt="" srcset="" />
             </div>
 
             <div>
