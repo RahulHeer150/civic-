@@ -9,7 +9,7 @@ const ReportForm = () => {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
-  const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
