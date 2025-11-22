@@ -96,7 +96,7 @@ const ReportForm = () => {
           <label className="block text-gray-700 mb-2">Photo (optional)</label>
           <input
             type="text"
-            onChange={(e) => setPhoto(e.target.files[0])}
+            onChange={(e) => setPhoto(e.target.files)}
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
