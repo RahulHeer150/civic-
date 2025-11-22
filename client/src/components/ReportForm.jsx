@@ -23,7 +23,7 @@ const ReportForm = () => {
         description,
         location,
         date,
-        photo: null, // or skip if not needed
+        photo, // or skip if not needed
       });
 
       if (response.status === 201) {
@@ -40,7 +40,7 @@ const ReportForm = () => {
       setDescription("");
       setDate("");
       setLocation("");
-      setPhoto(null);
+      setPhoto("");
     }
   };
 
