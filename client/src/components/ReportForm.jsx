@@ -23,7 +23,7 @@ const ReportForm = () => {
       formData.append("description", description);
       formData.append("location", location);
       formData.append("date", date);
-      if (photo) formData.append("photo", photo);
+      if (photo) formData.append("media", photo);
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/issues/create`,
