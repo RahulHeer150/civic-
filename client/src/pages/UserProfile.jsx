@@ -2,9 +2,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { faUser, faChartLine, faUserGear, faClipboardList, faKey } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../context/auth";
 
 const UserProfile = () => {
+   const { user, isLoading } = useAuth(); 
+   useNavigate();
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 mt-20">
       <div className="w-full max-w-lg bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
@@ -13,7 +17,9 @@ const UserProfile = () => {
         {/* Header Section */}
         <div className="flex items-center p-4 border-b border-gray-300">
           <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-          <h2 className="text-lg font-semibold">Header Title</h2>
+          <h2 className="text-lg font-semibold"> {user.username}
+
+          </h2>
         </div>
 
         {/* Content Section */}
