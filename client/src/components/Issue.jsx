@@ -21,7 +21,7 @@ export default function Issue() {
   if (!issue) return <h1>Loading...</h1>;
 
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
+    <div className="min-h-screen p-8 bg-gray-100 mt-20">
       <div className="max-w-3xl mx-auto bg-white shadow rounded p-6">
         {issue.media && (
           <img
