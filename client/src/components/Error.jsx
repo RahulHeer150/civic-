@@ -29,6 +29,7 @@ const Error = () => {
           </div>
         </div>
         
+        
       </section>
     </>
   );
