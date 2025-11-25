@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import CountUp from "react-countup";
+import { useAuth } from "../context/auth";
 
 const JoinSection = () => {
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
+  const {isLoggedIn,user}=useAuth();
 
   useEffect(() => {
     const observer = new window.IntersectionObserver(
@@ -40,7 +42,8 @@ const JoinSection = () => {
           Issues Reported
         </p>
       </div>
-      <button className=" mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3 ">
+      <button className=" mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3 "
+      >
         Join CrowdFix Today
       </button>
     </section>
