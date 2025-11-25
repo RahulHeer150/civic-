@@ -1,11 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
 
 const JoinSection = () => {
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
-  const {isLoggedIn,user}=useAuth();
+
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new window.IntersectionObserver(
@@ -17,11 +20,21 @@ const JoinSection = () => {
       },
       { threshold: 0.4 }
     );
+
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
     return () => observer.disconnect();
   }, []);
+
+  // ⭐ Button click handler
+  const handleJoinClick = () => {
+    if (isLoggedIn) {
+      navigate("/report");
+    } else {
+      navigate("/authpage");
+    }
+  };
 
   return (
     <section
@@ -42,7 +55,10 @@ const JoinSection = () => {
           Issues Reported
         </p>
       </div>
-      <button className=" mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3 "
+
+      <button
+        onClick={handleJoinClick}
+        className="mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3"
       >
         Join CrowdFix Today
       </button>
