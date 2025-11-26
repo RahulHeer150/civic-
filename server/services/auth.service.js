@@ -6,13 +6,27 @@ module.exports.createUser=async({
     if(!username || !city || !state || !email || !phone ||!password){
         throw new Error("All fields are required");
     }
+
+    const existingEmail=await userModel.findOne({email});
+    if(existingEmail){
+        throw new Error("Email is Already registered");
+    }
+
+     const existingPhone=await userModel.findOne({email});
+    if(existingPhone){
+        throw new Error("Mobile Number is already registered is Already registered");
+    }
+
     const user=userModel.create({
        username,
        city,
        state,
        email,
        phone, 
-       password
+       password,
+
+       role:role||"user"
+
        
     })
     return user;
