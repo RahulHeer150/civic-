@@ -51,7 +51,7 @@ const {validationResult} = require('express-validator')
 module.exports.register = async (req, res) => {
   try {
     console.log("📥 Request body:", req.body);
-    const { username, city, state, email, password, phone } = req.body;
+    const { username, city, state, email, password, phone,role } = req.body;
 
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
