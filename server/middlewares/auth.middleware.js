@@ -53,7 +53,12 @@ module.exports.authUser = async (req, res, next) => {
         }
 
         // Attach user to request
-        req.user = user;
+        req.user ={
+          _id:user.id,
+          email:user.email,
+          role:user.role,
+          name:user.username
+        };
         next();
 
     } catch (error) {
