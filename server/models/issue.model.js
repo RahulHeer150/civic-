@@ -27,6 +27,12 @@ const issueSchema = new mongoose.Schema(
       enum: ["Pending", "Resolved"],
       default: "Pending", // When user reports issue → default status
     },
+    role:{
+      type:String,
+      enum:["user","admin"],
+      default:"user",
+
+    },
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
