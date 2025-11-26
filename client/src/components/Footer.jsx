@@ -130,6 +130,13 @@ const Footer = () => {
             </strong>{" "}
             rahulheer344@gmail.com
           </p>
+
+          <p className="text-sm sm:text-lg mb-2">
+            <strong>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </strong>{" "}
+             civc++@gmail.com
+          </p>
         </div>
 
         {/* Bottom line */}
