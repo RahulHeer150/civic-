@@ -71,7 +71,8 @@ module.exports.register = async (req, res) => {
       state,
       email,
       phone,
-      password: hashedPassword
+      password: hashedPassword,
+      role:role||"user"
       // Don't include OTP here
     });
 
