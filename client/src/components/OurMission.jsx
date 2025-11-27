@@ -57,24 +57,23 @@ const OurMission = () => {
         >
           <h2 className="text-4xl font-bold mb-6">Our Mission</h2>
           <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-            At <span className="font-semibold text-blue-600">CrowdFix</span>, our mission is to empower citizens,
-            drive transparency, and use technology to turn issues into solutions.
-            We believe every report matters and every voice counts.
+            At <span className="font-semibold text-blue-600">CivicPlus</span>,
+            our mission is to empower citizens, drive transparency, and use
+            technology to turn issues into solutions. We believe every report
+            matters and every voice counts.
           </p>
           <p className="text-lg text-gray-700 mb-6 leading-relaxed">
             Together, we aim to build cleaner, safer, and stronger communities
             where civic engagement leads to meaningful action.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed">
-            From problems to progress — we are uniting people and technology
-            for real change.
+            From problems to progress — we are uniting people and technology for
+            real change.
           </p>
         </div>
 
         {/* Right Side - Image */}
-        <div
-          className="mission-image w-full md:w-1/2 h-auto bg-gray-100 rounded-2xl flex items-center justify-center border border-gray-200"
-        >
+        <div className="mission-image w-full md:w-1/2 h-auto  rounded-2xl flex items-center justify-center border border-gray-200">
           <img
             src={MissionImg}
             alt="Our Mission"

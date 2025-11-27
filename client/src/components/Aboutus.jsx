@@ -72,9 +72,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import about from "../assets/about.png";
+import about from "../assets/abt.png";
 import underline from "../assets/underline.png";
 import backgroundImage from "../assets/bg-integratedweb-2.svg";
+import OurMission from "./OurMission";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -279,7 +280,9 @@ const Aboutus = () => {
           <ContentSection />
         </div>
       </div>
+          <OurMission/>
     </div>
+  
   );
 };
 
