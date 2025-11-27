@@ -67,12 +67,10 @@
 // };
 // export default Aboutus;
 
-
-
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import about from "../assets/abt.png";
+import about from "../assets/about.png";
 import underline from "../assets/underline.png";
 import backgroundImage from "../assets/bg-integratedweb-2.svg";
 import OurMission from "./OurMission";
@@ -133,13 +131,13 @@ const About = () => {
           scrollTrigger: {
             trigger: aboutRef.current,
             start: "top 85%",
-            toggleActions: "play none none reverse"
+            toggleActions: "play none none reverse",
           },
           y: 60,
           opacity: 0,
           duration: 0.7,
           stagger: 0.12,
-          ease: "power3.out"
+          ease: "power3.out",
         });
       }
     }, aboutRef);
@@ -207,11 +205,11 @@ const ContentSection = () => {
           trigger: contentRef.current,
           start: "top bottom",
           end: "top center",
-          scrub: 1
+          scrub: 1,
         },
         y: 100,
         opacity: 0,
-        duration: 1
+        duration: 1,
       });
     });
 
@@ -231,7 +229,7 @@ const ContentSection = () => {
         src={underline}
         className="absolute top-[-4rem] sm:top-[-4rem] md:top-[-5rem] left-1/2 transform -translate-x-1/2 w-48 sm:w-56 md:w-72"
       />
-      <img src={about} className="pt-10 sm:pt-12 md:pt-20 mx-auto" />
+      <img src={about} className="" />
     </div>
   );
 };
@@ -246,12 +244,12 @@ const Aboutus = () => {
           trigger: layoutRef.current,
           start: "top center",
           end: "bottom center",
-          toggleActions: "play none none reverse"
+          toggleActions: "play none none reverse",
         },
         y: 100,
         opacity: 0,
         duration: 1,
-        stagger: 0.2
+        stagger: 0.2,
       });
     });
 
@@ -280,9 +278,8 @@ const Aboutus = () => {
           <ContentSection />
         </div>
       </div>
-          <OurMission/>
+      <OurMission />
     </div>
-  
   );
 };
 
