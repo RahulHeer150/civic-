@@ -118,7 +118,7 @@ export const AuthProvider = ({ children }) => {
     issue,
     isLoading,
     error,
-    isAdmin: user?.isAdmin || false,
+   isAdmin: user?.role === "admin",
     token
   };
 

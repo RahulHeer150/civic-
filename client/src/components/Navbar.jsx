@@ -7,9 +7,8 @@ import {
   AiOutlineFundProjectionScreen,
   AiOutlineUser,
 } from "react-icons/ai";
-import { CgFileDocument } from "react-icons/cg";
 import { FaFileSignature } from "react-icons/fa6";
-import { FaUserCircle } from "react-icons/fa"; // ✅ Added user profile icon
+import { FaUserCircle } from "react-icons/fa";
 import navlogo from "../assets/mainlogo.png";
 import { useAuth } from "../context/auth";
 
@@ -18,7 +17,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn, user, isAdmin } = useAuth();
 
   useEffect(() => {
     const handlescroll = () => {
@@ -34,6 +33,21 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  // ⭐ Dynamic role-based menu item
+  const roleBasedMenuItem = isAdmin
+    ? {
+        id: "resolve",
+        label: "Resolve Issues",
+        icon: <FaFileSignature className="inline mr-2" />,
+        to: "/admin",
+      }
+    : {
+        id: "report",
+        label: "Report an Issue",
+        icon: <AiOutlineUser className="inline mr-2" />,
+        to: "/Report",
+      };
+
   const MenuItems = [
     {
       id: "home",
@@ -41,12 +55,7 @@ const Navbar = () => {
       icon: <AiOutlineHome className="inline mr-2" />,
       to: "/",
     },
-    {
-      id: "report",
-      label: "Report an Issue",
-      icon: <AiOutlineUser className="inline mr-2" />,
-      to: "/Report",
-    },
+    roleBasedMenuItem, // injected dynamically based on role
     {
       id: "explore-issue",
       label: "Explore Issue",
@@ -93,12 +102,12 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* ✅ Right Side Profile Icon */}
+          {/* Right Side Profile / Login */}
           <div className="flex items-center gap-4">
             {isLoggedIn && user ? (
               <div className="flex items-center gap-3">
                 <span className="text-gray-700 font-medium">
-                  {user.username}
+                  {user.username} {isAdmin && "(Admin)"}
                 </span>
                 <Link to="/userprofile" className="relative group">
                   <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
