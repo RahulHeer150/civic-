@@ -55,6 +55,7 @@ function App() {
         <Route path='/all-issues' element={<IssueList/>}/>
         <Route path="/issues/:id" element={<Issue />} />
         <Route path='/admin' element={<AdminPage/>}/>
+        <Route path='/admin' element={<AdminPage/>}/>
 
         
 
