@@ -145,10 +145,8 @@ const OurMission = () => {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
 
         {/* ---------- LEFT SIDE TEXT BOX ---------- */}
-        <div className="mission-text w-full lg:w-1/2 border-2 border-[#1f4fed] rounded-2xl shadow-lg p-8 bg-white">
-
-          {/* Title + Underline */}
-          <div className="relative inline-block mb-6">
+        <div className="">
+        <div className="relative inline-block mb-6">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
               Our <span className="text-[#1f4fed]">Mission</span>
             </h1>
@@ -160,6 +158,11 @@ const OurMission = () => {
               className="absolute left-0 w-28 sm:w-40 md:w-52 lg:w-60 -bottom-2"
             />
           </div>
+        </div>
+        <div className="mission-text w-full lg:w-1/2 border-2 border-[#1f4fed] rounded-2xl shadow-lg p-8 bg-white">
+
+          {/* Title + Underline */}
+          
 
           <p className="text-lg text-gray-700 mb-6 leading-relaxed">
             At <span className="font-semibold text-blue-600">CivicPlus</span>, our mission is
