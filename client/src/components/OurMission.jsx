@@ -142,17 +142,10 @@ const OurMission = () => {
       ref={sectionRef}
       className="w-full bg-white text-gray-900 py-16 px-4 md:px-10 overflow-hidden"
     >
-      <div className="relative inline-block ">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold pl-10">
+      <div className="relative inline-block sm:pb-10">
+            <h1 className="text-4xl xs:text-6xl sm:text-5xl md:text-6xl font-bold pl-10">
               Our <span className="text-[#1f4fed]">Mission</span>
             </h1>
-
-            {/* underline now sits directly under text */}
-            <img
-              src={underline}
-              alt="underline"
-              className="absolute left-20 w-30 top-5 sm:w-40 md:w-52 lg:w-60 -bottom-2"
-            />
           </div>
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
 
