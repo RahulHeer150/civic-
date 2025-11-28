@@ -348,7 +348,7 @@ const AboutLayout = () => {
           transform: "scaleX(-1)",
         }}
       ></div>
-      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between max-w-6xl mx-auto py-12 px-4 mt-16 mb-0 md:mt-32 md:mb-0 lg:mt-32 lg:mb-24">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between max-w-6xl mx-auto py-12 px-4 mt-16 mb-0  md:mb-0  lg:mb-24">
         <div className="mt-8 lg:mt-0 lg:ml-8 w-5/6 flex-grow lg:w-full order-2 lg:order-1 animate-section">
           <About />
         </div>
