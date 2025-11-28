@@ -142,11 +142,8 @@ const OurMission = () => {
       ref={sectionRef}
       className="w-full bg-white text-gray-900 py-16 px-4 md:px-10 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
-
-        {/* ---------- LEFT SIDE TEXT BOX ---------- */}
-        <div className="relative inline-block mb-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
+      <div className="relative inline-block ">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold pl-10">
               Our <span className="text-[#1f4fed]">Mission</span>
             </h1>
 
@@ -154,9 +151,13 @@ const OurMission = () => {
             <img
               src={underline}
               alt="underline"
-              className="absolute left-0 w-28 sm:w-40 md:w-52 lg:w-60 -bottom-2"
+              className="absolute left-20 w-30 top-5 sm:w-40 md:w-52 lg:w-60 -bottom-2"
             />
           </div>
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10">
+
+        {/* ---------- LEFT SIDE TEXT BOX ---------- */}
+        
         <div className="mission-text w-full lg:w-1/2 border-2 border-[#1f4fed] rounded-2xl shadow-lg p-8 bg-white">
 
           {/* Title + Underline */}
