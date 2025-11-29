@@ -13,6 +13,7 @@ const MyActivity = () => {
     );
   }
 
+  
   // Filter issues for current user
   const userIssues = issue.filter(i => i.userId === user?._id);
   
