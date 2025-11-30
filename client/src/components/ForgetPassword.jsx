@@ -61,7 +61,7 @@ const ForgetPassword = () => {
             >
               {loading ? (
                 <div className="flex justify-center items-center">
-                  <RotatingLines
+                  <ClipLoader
                     strokeColor="white"
                     strokeWidth="5"
                     animationDuration="0.75"
