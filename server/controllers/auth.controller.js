@@ -2,6 +2,8 @@ const userModel=require("../models/user.model")
 const userService=require("../services/auth.service")
 const blackTokenModel=require('../models/blackToken.model')
 const {validationResult} = require('express-validator')
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
  
 
 // module.exports.register = async (req, res) => {
@@ -175,4 +177,89 @@ module.exports.logoutUser = async (req, res, next) => {
     console.error("Logout error:", err);
     return res.status(500).json({ success: false, message: "Server error" });
   }
-}
+} 
+
+module.exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // 1. Find user
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User with this email does not exist" });
+    }
+
+    // 2. Generate reset token and hash it
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // valid for 10 minutes
+    await user.save();
+
+    // 3. Generate reset URL
+    const resetUrl = `${req.protocol}://${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+    // 4. Email HTML
+    const message = `
+      <h3>Password Reset Request</h3>
+      <p>Click below to reset your password:</p>
+      <a href="${resetUrl}" style="padding:10px;background:#007bff;color:#fff;border-radius:5px;text-decoration:none">
+        Reset Password
+      </a>
+      <p>This link expires in 10 minutes.</p>
+    `;
+
+    // 5. Email sender
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      to: email,
+      from: `"CrowdFix Support" <${process.env.EMAIL_USER}>`,
+      subject: "Password Reset Request",
+      html: message,
+    });
+
+    return res.status(200).json({ message: "Reset password link sent to email" });
+
+  } catch (err) {
+    console.error("Forgot Password Error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports.resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    // Hash token to compare with DB
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await userModel.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() }, // Valid token only
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
+    // Update password (model hashes automatically via pre-save hook)
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    return res.status(200).json({ message: "Password reset successful" });
+
+  } catch (err) {
+    console.error("Reset Password Error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
