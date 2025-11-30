@@ -1,14 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { de } = require("zod/v4/locales");
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
       required: [true, "Username is required"],
-
       minlength: [3, "Username must be at least 3 characters long"],
     },
     city: {
@@ -40,13 +38,10 @@ const userSchema = new mongoose.Schema(
     },
     otp: {
       type: String,
-      default: null, // Removed unique constraint to allow multiple users to have null OTP
+      default: null, // Reserved for future mobile verification features
     },
-    role: {
-      type: String,
-      enum: ["user", "admin"],
-      default: "user",
-    },
+
+    // 🔹 NEW: required for forgot password using reset link
     resetPasswordToken: {
       type: String,
       default: null,
@@ -55,20 +50,28 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
+// 🔹 Auto-hash password before saving
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    {
-      _id: this._id,
-      email: this.email,
-      role: this.role,
-      username: this.username,
-    },
+    { _id: this._id, email: this.email, role: this.role, username: this.username },
     process.env.JWT_SECRET,
     { expiresIn: "24h" }
   );
