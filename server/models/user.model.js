@@ -47,6 +47,14 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields
@@ -55,7 +63,12 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    { _id: this._id, email: this.email,role:this.role,username:this.username },
+    {
+      _id: this._id,
+      email: this.email,
+      role: this.role,
+      username: this.username,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "24h" }
   );
