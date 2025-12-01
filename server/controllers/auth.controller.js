@@ -190,7 +190,9 @@ module.exports.forgotPassword = async (req, res) => {
     await user.save();
 
     // 3. Generate reset URL
-    const resetUrl = `${req.protocol}://${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    // 3. Generate reset URL
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    console.log("🔗 Reset URL generated:", resetUrl);
 
     // 4. Email HTML
     const message = `
