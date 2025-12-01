@@ -11,12 +11,42 @@ const ForgetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email) return toast.error("Please enter your email");
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(data.message || "Reset link sent to your email!");
+        setEmail("");
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    } catch (err) {
+      toast.error("Server error. Try again later.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="flex flex-col min-h-screen pt-4 md:pt-20">
       <div className="flex flex-grow flex-col-reverse md:flex-row lg:flex-row w-full max-w-[1160px] pt-16 md:pt-0 mx-auto justify-between items-center mt-[12vh]">
-        {/* left side image  */}
-        <div className="w-full lg:w-1/2 md:w-1/2 flex jsutify-center items-center">
+        
+        {/* Left Image */}
+        <div className="w-full lg:w-1/2 md:w-1/2 flex justify-center items-center">
           <img
             src={ForgotPass}
             alt="forgot password"
@@ -27,7 +57,7 @@ const ForgetPassword = () => {
           />
         </div>
 
-        {/* RIght side - Form  */}
+        {/* Right Form */}
         <div className="w-full lg:w-1/2 md:w-1/2 px-6 lg:px-0 text-black">
           <form
             onSubmit={handleSubmit}
@@ -35,40 +65,28 @@ const ForgetPassword = () => {
           >
             <h1 className="text-4xl font-bold mb-4">Forgot Password</h1>
 
-            <div className="relative h-full w-full">
+            <div className="relative w-full">
               <input
-                type="text"
-                name="email"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder=""
-                className="shadow-xl peer h-full w-full rounded-xl border border-gray-300 bg-transparent px-3 py-3 text-sm text-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-gray-200 placeholder-shown:border-t-gray-200 focus:border-2 focus:border-[#ed1f26] focus:border-t-transparent focus:border-r-transparent focus:border-l-transparent disabled:border-0 disabled:bg-gray-50"
+                className="peer w-full rounded-xl border border-gray-300 px-3 py-3 text-sm text-gray-700 shadow-xl outline-none transition-all focus:border-blue-400"
                 required
               />
-              <label className="pointer-events-none absolute left-3 -top-1.5 flex items-center space-x-2 select-none text-[12px] font-medium leading-tight text-gray-800 transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:-top-1.5 peer-focus:text-[12px] peer-focus:text-[#ed1f26]">
-                <span>
-                  <FontAwesomeIcon icon={faEnvelope} />
-                </span>
-                <span>Email</span>
+              <label className="absolute left-3 -top-1.5 text-gray-500 text-xs transition-all peer-focus:text-blue-600">
+                <FontAwesomeIcon icon={faEnvelope} /> Email
               </label>
             </div>
+
             <button
               type="submit"
-              className={`py-2 px-4 rounded-full mt-6 font-medium text-white w-1/2 mx-auto block bg-gradient-to-r from-blue-700 to-sky-300 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95${
-                loading ? " opacity-50 cursor-not-allowed" : ""
+              className={`py-2 px-4 rounded-full mt-4 font-semibold text-white w-1/2 mx-auto bg-gradient-to-r from-blue-700 to-sky-300 transition duration-200 hover:scale-105 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={loading}
             >
               {loading ? (
-                <div className="flex justify-center items-center">
-                  <ClipLoader
-                    strokeColor="white"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    width="24"
-                    visible={true}
-                  />
-                </div>
+                <ClipLoader color="white" size={22} />
               ) : (
                 "Send Reset Link"
               )}
