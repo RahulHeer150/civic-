@@ -1,30 +1,25 @@
-const userModel=require("../models/user.model")
-const userService=require("../services/auth.service")
-const blackTokenModel=require('../models/blackToken.model')
-const {validationResult} = require('express-validator')
+const userModel = require("../models/user.model");
+const userService = require("../services/auth.service");
+const blackTokenModel = require("../models/blackToken.model");
+const { validationResult } = require("express-validator");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
- 
 
 // module.exports.register = async (req, res) => {
 //     try {
 //         const { username, city, state,  email, password, phone } = req.body;
 
 //         const userExist = await userModel.findOne({ email });
-       
 
 //         if (userExist) {
 //             return res.status(400).json({ message: "Email already exists" });
 //         }
-       
-
-        
 
 //         const hashedPassword = await userModel.hashPassword(password);
 
 //     const user = await userService.createUser({
 //         username,
-//         city, 
+//         city,
 //         state,
 //         email,
 //         phone,
@@ -49,11 +44,10 @@ const nodemailer = require("nodemailer");
 //     }
 // };
 
-
 module.exports.register = async (req, res) => {
   try {
     console.log("📥 Request body:", req.body);
-    const { username, city, state, email, password, phone,role } = req.body;
+    const { username, city, state, email, password, phone, role } = req.body;
 
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
@@ -65,7 +59,7 @@ module.exports.register = async (req, res) => {
     }
 
     const hashedPassword = await userModel.hashPassword(password);
-   
+
     // Create user without OTP
     const user = await userService.createUser({
       username,
@@ -74,7 +68,7 @@ module.exports.register = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      role:role||"user"
+      role: role || "user",
       // Don't include OTP here
     });
 
@@ -87,62 +81,58 @@ module.exports.register = async (req, res) => {
 };
 
 module.exports.loginUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+  const { email, password } = req.body;
 
-    const { email, password } = req.body;
+  const user = await userModel.findOne({ email }).select("+password");
 
-    const user = await userModel.findOne({ email }).select('+password');
+  if (!user) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
 
-    if (!user) {
-        return res.status(401).json({ message: 'Invalid email or password' });
-    }
+  const isMatch = await user.comparePassword(password);
 
-    const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
 
-    if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid email or password' });
-    }
+  const token = user.generateAuthToken();
 
-    const token = user.generateAuthToken();
+  res.cookie("token", token);
 
-    res.cookie('token', token);
-
-    res.status(200).json({ token, user });
-}
+  res.status(200).json({ token, user });
+};
 
 module.exports.getUserProfile = async (req, res, next) => {
-
-    try {
-        // Check if req.user exists
-        if (!req.user) {
-            return res.status(401).json({ message: 'User not authenticated' });
-        }
-
-        // Get user data without password
-        const userData = await userModel.findById(req.user._id).select('+password');
-        
-        if (!userData) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        return res.status(200).json({ userData });
-    } catch (error) {
-        console.error(`Error fetching user profile:`, error);
-        return res.status(500).json({ 
-            message: "Internal Server Error",
-            error: error.message 
-        });
+  try {
+    // Check if req.user exists
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authenticated" });
     }
 
-}
+    // Get user data without password
+    const userData = await userModel.findById(req.user._id).select("+password");
 
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ userData });
+  } catch (error) {
+    console.error(`Error fetching user profile:`, error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
 
 module.exports.logoutUser = async (req, res, next) => {
-     try {
+  try {
     // safe optional chaining for cookies and headers
     const tokenFromCookie = req.cookies?.token || null;
     const authHeader = req.headers?.authorization;
@@ -153,7 +143,7 @@ module.exports.logoutUser = async (req, res, next) => {
 
     const token = tokenFromCookie || tokenFromHeader || null;
 
-     // clear cookie regardless (use same options you set when creating it)
+    // clear cookie regardless (use same options you set when creating it)
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -172,12 +162,11 @@ module.exports.logoutUser = async (req, res, next) => {
 
     return res.status(200).json({ success: true, message: "Logged out" });
     console.log("User logged out successfully");
-
   } catch (err) {
     console.error("Logout error:", err);
     return res.status(500).json({ success: false, message: "Server error" });
   }
-} 
+};
 
 module.exports.forgotPassword = async (req, res) => {
   try {
@@ -186,12 +175,17 @@ module.exports.forgotPassword = async (req, res) => {
     // 1. Find user
     const user = await userModel.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "User with this email does not exist" });
+      return res
+        .status(400)
+        .json({ message: "User with this email does not exist" });
     }
 
     // 2. Generate reset token and hash it
     const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    user.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
     user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // valid for 10 minutes
     await user.save();
 
@@ -224,8 +218,9 @@ module.exports.forgotPassword = async (req, res) => {
       html: message,
     });
 
-    return res.status(200).json({ message: "Reset password link sent to email" });
-
+    return res
+      .status(200)
+      .json({ message: "Reset password link sent to email" });
   } catch (err) {
     console.error("Forgot Password Error:", err);
     return res.status(500).json({ message: "Server error" });
@@ -246,7 +241,9 @@ module.exports.resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset token" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
     }
 
     // Update password (model hashes automatically via pre-save hook)
@@ -257,7 +254,6 @@ module.exports.resetPassword = async (req, res) => {
     await user.save();
 
     return res.status(200).json({ message: "Password reset successful" });
-
   } catch (err) {
     console.error("Reset Password Error:", err);
     return res.status(500).json({ message: "Server error" });
