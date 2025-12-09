@@ -5,25 +5,25 @@ import { motion } from "framer-motion";
 const HowItWorks = () => {
   const items = [
     {
-      icon: <FaLaptop className="text-[3rem] text-blue-950 mb-4" />,
+      icon: <FaLaptop className="text-[3rem] mb-4" />,
       title: "Report",
       description:
         "Identify and report an issue in your community to ensure it gets noticed and addressed by the right authorities. Reporting helps bring attention to problems that matter most to you.",
     },
     {
-      icon: <FaThumbsUp className="text-[3rem] text-blue-950 mb-4" />,
+      icon: <FaThumbsUp className="text-[3rem] mb-4" />,
       title: "Vote",
       description:
         "Engage with the community by voting on the most pressing issues to help prioritize them effectively. Your votes can guide decision-makers to focus on what truly matters.",
     },
     {
-      icon: <FaClipboardList className="text-[3rem] text-blue-950 mb-4" />,
+      icon: <FaClipboardList className="text-[3rem] mb-4" />,
       title: "Track",
       description:
         "Stay informed by tracking the progress and updates on the issues you care about. Transparency ensures that you remain updated on the actions being taken.",
     },
     {
-      icon: <FaCheckCircle className="text-[3rem] text-blue-950 mb-4" />,
+      icon: <FaCheckCircle className="text-[3rem] mb-4" />,
       title: "Solve",
       description:
         "Celebrate as authorized parties take action and resolve the problems for a better community. Witness the positive change brought about through collaboration and action.",
@@ -53,28 +53,36 @@ const HowItWorks = () => {
         understanding how you can make a difference:
       </motion.p>
 
-      {/* Cards Section */}
+      {/* Cards */}
       <div className="flex flex-wrap justify-center gap-8 mt-10">
         {items.map((item, index) => (
           <motion.div
             key={index}
-            className="bg-white border border-gray-200 rounded-2xl p-6 max-w-[300px] shadow-md 
-              hover:shadow-xl transition cursor-pointer"
+            className="group bg-white border border-gray-200 rounded-2xl p-6 max-w-[300px] shadow-md 
+            hover:shadow-2xl hover:bg-blue-900 transition-all duration-300 cursor-pointer"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.06 }}
           >
+            {/* Icon */}
             <motion.div
+              className="text-blue-900 group-hover:text-white transition-all duration-300"
               whileHover={{ scale: 1.2 }}
               transition={{ type: "spring", stiffness: 200 }}
             >
               {item.icon}
             </motion.div>
 
-            <h2 className="text-3xl font-bold text-blue-950 mb-2">{item.title}</h2>
+            {/* Title */}
+            <h2 className="text-3xl font-bold text-blue-900 mb-2 group-hover:text-white transition-all duration-300">
+              {item.title}
+            </h2>
 
-            <p className="text-lg text-gray-600">{item.description}</p>
+            {/* Description */}
+            <p className="text-lg text-gray-600 group-hover:text-gray-200 transition-all duration-300">
+              {item.description}
+            </p>
           </motion.div>
         ))}
       </div>
