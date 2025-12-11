@@ -48,34 +48,7 @@ module.exports.getIssues = async (req, res) => {
 };
 
 // POST /issues/create
-// module.exports.createIssue = async (req, res) => {
-//   try {
-//     const { title, description, location, date } = req.body;
-//     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
-//     if (!title) {
-//       return res.status(400).json({ message: 'Title is required' });
-//     }
-
-//     const issue = new Issue({
-//       title,
-//       description: description || '',
-//       location: location || '',
-//       date: date ? new Date(date) : undefined,
-//       photo: mediaPath || null,
-//       votesCount: 0
-//     });
-
-//     await issue.save();
-//      res.status(201).json({
-//       message: "✅ Issue created successfully",
-//       issue: issue,
-//     });
-//   } catch (err) {
-//     console.error('Error creating issue:', err);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// };
 module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location } = req.body;
