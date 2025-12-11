@@ -34,6 +34,7 @@
 const Issue = require('../models/issue.model');
 const issueService = require('../services/issue.service');
 const mongoose = require('mongoose');
+const getAddressFromCoordinates=require('../services/maps.service')
 
 // GET /issues
 module.exports.getIssues = async (req, res) => {
