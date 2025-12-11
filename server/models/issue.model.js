@@ -12,9 +12,21 @@ const issueSchema = new mongoose.Schema(
       required: [true, "Description is required"],
     },
     location: {
-      type: String,
-      required: [true, "Location is required"],
-    },
+  type: {
+    type: String,
+    enum: ['Point'],
+    default: 'Point'
+  },
+  coordinates: {
+    type: [Number], // [lng, lat]
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true
+  }
+},
+
     media: {
       type: String, // image filename or URL
     },
