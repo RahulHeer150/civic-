@@ -12,20 +12,20 @@ const issueSchema = new mongoose.Schema(
       required: [true, "Description is required"],
     },
     location: {
-  type: {
-    type: String,
-    enum: ['Point'],
-    default: 'Point'
-  },
-  coordinates: {
-    type: [Number], // [lng, lat]
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true
-  }
-},
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number], // [lng, lat]
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+    },
 
     media: {
       type: String, // image filename or URL
@@ -39,7 +39,7 @@ const issueSchema = new mongoose.Schema(
       enum: ["Pending", "Resolved"],
       default: "Pending", // When user reports issue → default status
     },
-   
+
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
