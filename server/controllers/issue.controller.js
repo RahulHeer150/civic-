@@ -1,36 +1,4 @@
 
-
-// // 🟢 Add a new issue (auth required)
-// module.exports.createIssue = async (req, res) => {
-//   try {
-//     const { title, description, location, media } = req.body;
-//     // const userId = req.user?._id;
-
-//     if (!title || !description || !location) {
-//       return res.status(400).json({ message: "All required fields must be filled" });
-//     }
-
-//     const newIssue = new Issue({
-//       title,
-//       description,
-//       location,
-//       media,
-//       // reportedBy: userId,
-//     });
-
-//     const savedIssue = await newIssue.save();
-
-//     res.status(201).json({
-//       message: "✅ Issue created successfully",
-//       issue: savedIssue,
-//     });
-//   } catch (error) {
-//     console.error("Error creating issue:", error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
-
-
 const Issue = require('../models/issue.model');
 const issueService = require('../services/issue.service');
 const mongoose = require('mongoose');
@@ -48,39 +16,83 @@ module.exports.getIssues = async (req, res) => {
 };
 
 // POST /issues/create
-
 module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location } = req.body;
 
-    // multer sets req.file when media is uploaded
+    if (!location) {
+      return res.status(400).json({ message: "Location field is required" });
+    }
+
+    // Convert "lat,lng" → numbers
+    const [lat, lng] = location.split(",").map(Number);
+
+    if (!lat || !lng) {
+      return res.status(400).json({ message: "Invalid GPS location format" });
+    }
+
+    // Convert lat/lng → address
+    const geo = await getAddressFromCoordinates(lat, lng);
+
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // auth middleware sets req.user
-    //const reportedBy = req.user?._id;
-
-    console.log('Creating issue:', { title, description, location, mediaPath});
-
-  console.log('Headers content-type:', req.headers['content-type']);
-console.log('req.file:', req.file);
-console.log('req.body raw:', req.body);
-
-    const issue = await issueService.createIssue({
+    const issue = await Issue.create({
       title,
       description,
-      location,
+      location: {
+        type: "Point",
+        coordinates: [lng, lat],
+        address: geo.address,
+        city: geo.city,
+        state: geo.state,
+        postalCode: geo.postalCode,
+      },
       media: mediaPath,
     });
 
     res.status(201).json({
-      message: "✅ Issue created successfully",
-      issue: issue,
+      message: "Issue reported successfully",
+      issue,
     });
   } catch (err) {
-    console.error('Error creating issue:', err);
-    res.status(500).json({ message: err.message || 'Server error' });
+    console.error("Error creating issue:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
+
+
+// module.exports.createIssue = async (req, res) => {
+//   try {
+//     const { title, description, location } = req.body;
+
+//     // multer sets req.file when media is uploaded
+//     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+//     // auth middleware sets req.user
+//     //const reportedBy = req.user?._id;
+
+//     console.log('Creating issue:', { title, description, location, mediaPath});
+
+//   console.log('Headers content-type:', req.headers['content-type']);
+// console.log('req.file:', req.file);
+// console.log('req.body raw:', req.body);
+
+//     const issue = await issueService.createIssue({
+//       title,
+//       description,
+//       location,
+//       media: mediaPath,
+//     });
+
+//     res.status(201).json({
+//       message: "✅ Issue created successfully",
+//       issue: issue,
+//     });
+//   } catch (err) {
+//     console.error('Error creating issue:', err);
+//     res.status(500).json({ message: err.message || 'Server error' });
+//   }
+// };
 
 module.exports.getIssueById = async (req, res) => {
   try {
@@ -146,6 +158,7 @@ module.exports.voteIssue = async (req, res) => {
 //     res.status(500).json({ message: "Server error while creating issue", error });
 //   }
 // };
+
 
 // 🔵 Get all issues (public)
 // exports.getIssues = async (req, res) => {
