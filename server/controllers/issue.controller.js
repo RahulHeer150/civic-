@@ -32,7 +32,7 @@ module.exports.createIssue = async (req, res) => {
     }
 
     // Get address using Google API
-    const address = await getAddressFromCoordinates(lat, lng);
+    const geo = await getAddressFromCoordinates(lat, lng);
 
     // Handle uploaded media file
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
