@@ -21,19 +21,20 @@ module.exports.createIssue = async (req, res) => {
     const { title, description, location } = req.body;
 
     if (!location) {
-      return res.status(400).json({ message: "Location field is required" });
+      return res.status(400).json({ message: "Location is required" });
     }
 
-    // Convert "lat,lng" → numbers
+    // Split "lat, lng" into numbers
     const [lat, lng] = location.split(",").map(Number);
 
     if (!lat || !lng) {
-      return res.status(400).json({ message: "Invalid GPS location format" });
+      return res.status(400).json({ message: "Invalid location format. Expected 'lat, lng'" });
     }
 
-    // Convert lat/lng → address
-    const geo = await getAddressFromCoordinates(lat, lng);
+    // Get address using Google API
+    const address = await getAddressFromCoordinates(lat, lng);
 
+    // Handle uploaded media file
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
     const issue = await Issue.create({
@@ -42,21 +43,19 @@ module.exports.createIssue = async (req, res) => {
       location: {
         type: "Point",
         coordinates: [lng, lat],
-        address: geo.address,
-        city: geo.city,
-        state: geo.state,
-        postalCode: geo.postalCode,
+        address: address || "Unknown Address",  // Fallback to avoid mongoose error
       },
       media: mediaPath,
     });
 
     res.status(201).json({
-      message: "Issue reported successfully",
+      message: "Issue created successfully",
       issue,
     });
+
   } catch (err) {
     console.error("Error creating issue:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 
