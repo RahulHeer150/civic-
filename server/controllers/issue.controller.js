@@ -43,7 +43,10 @@ module.exports.createIssue = async (req, res) => {
       location: {
         type: "Point",
         coordinates: [lng, lat],
-        address: address || "Unknown Address",  // Fallback to avoid mongoose error
+        address: geo.address,
+        city: geo.city,
+        state: geo.state,
+        postalCode: geo.postalCode,
       },
       media: mediaPath,
     });

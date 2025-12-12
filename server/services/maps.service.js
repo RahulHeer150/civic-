@@ -23,23 +23,29 @@ const axios = require("axios");
 
 const getAddressFromCoordinates = async (lat, lng) => {
   try {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
-    const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
-    );
-
+    const response = await axios.get(url);
     const result = response.data.results[0];
-    if (!result) return {};
 
+    if (!result) {
+      return {
+        address: "Unknown Address",
+        city: "",
+        state: "",
+        postalCode: ""
+      };
+    }
+
+    // Extract address components
     let city = "";
     let state = "";
     let postalCode = "";
 
-    result.address_components.forEach((comp) => {
-      if (comp.types.includes("locality")) city = comp.long_name;
-      if (comp.types.includes("administrative_area_level_1")) state = comp.long_name;
-      if (comp.types.includes("postal_code")) postalCode = comp.long_name;
+    result.address_components.forEach((component) => {
+      if (component.types.includes("locality")) city = component.long_name;
+      if (component.types.includes("administrative_area_level_1")) state = component.long_name;
+      if (component.types.includes("postal_code")) postalCode = component.long_name;
     });
 
     return {
@@ -50,10 +56,15 @@ const getAddressFromCoordinates = async (lat, lng) => {
     };
 
   } catch (error) {
-    console.error("Geocoding error:", error.message);
-    return {};
+    console.error("Geocoding Error:", error.message);
+
+    return {
+      address: "Unknown Address",
+      city: "",
+      state: "",
+      postalCode: ""
+    };
   }
 };
 
 module.exports = getAddressFromCoordinates;
-
