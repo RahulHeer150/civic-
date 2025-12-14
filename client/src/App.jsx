@@ -28,6 +28,7 @@ import IssueList from './components/IssueList'
 import Issue from './components/issue'
 import AdminPage from './pages/AdminPage'
 import Aboutus from './components/Aboutus'
+import AdminExplore from './pages/AdminExplore'
 
 
 function App() {
@@ -58,6 +59,8 @@ function App() {
         <Route path="/issues/:id" element={<Issue />} />
         <Route path='/admin' element={<AdminPage/>}/>
         <Route path='/about' element={<Aboutus/>}/>
+        <Route path="/admin/issues" element={<AdminExplore />} />
+
 
         
 
