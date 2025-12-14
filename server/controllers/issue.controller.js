@@ -27,25 +27,31 @@ module.exports.getMyIssues = async (req, res) => {
 };
 
 // POST /issues/create
+
+
 module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location } = req.body;
 
-    if (!location) {
-      return res.status(400).json({ message: "Location is required" });
+    if (!title || !description || !location) {
+      return res.status(400).json({
+        message: "Title, description and location are required",
+      });
     }
 
-    // Split "lat, lng" into numbers
+    // Expect frontend to send: "lat,lng"
     const [lat, lng] = location.split(",").map(Number);
 
-    if (!lat || !lng) {
-      return res.status(400).json({ message: "Invalid location format. Expected 'lat, lng'" });
+    if (isNaN(lat) || isNaN(lng)) {
+      return res.status(400).json({
+        message: "Invalid location format. Use 'lat,lng'",
+      });
     }
 
-    // Get address using Google API
+    // ✅ Get full address object
     const geo = await getAddressFromCoordinates(lat, lng);
 
-    // Handle uploaded media file
+    // Media upload
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
     const issue = await Issue.create({
@@ -55,23 +61,25 @@ module.exports.createIssue = async (req, res) => {
         type: "Point",
         coordinates: [lng, lat],
         address: geo.address,
-        city: geo.city,
-        state: geo.state,
-        postalCode: geo.postalCode,
       },
       media: mediaPath,
+      reportedBy: req.user?._id, // REQUIRED for MyActivity
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Issue created successfully",
       issue,
     });
 
-  } catch (err) {
-    console.error("Error creating issue:", err);
-    res.status(500).json({ message: "Server Error", error: err.message });
+  } catch (error) {
+    console.error("Create Issue Error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 };
+
 
 
 // module.exports.createIssue = async (req, res) => {
