@@ -18,7 +18,7 @@ router.post('/:id/vote', issueController.voteIssue);
 
 // optional: update/delete/downvote endpoints
 router.put('/:id', issueController.updateIssue);
-router.delete('/:id', issueController.deleteIssue);
+router.delete('/:id', authMiddleware.authUser,authMiddleware.isAdmin, issueController.deleteIssue);
 router.post('/:id/downvote', issueController.downvoteIssue);
 router.put("/:id/resolve", issueController.resolveIssue);
 

@@ -242,26 +242,28 @@ exports.updateIssue = async (req, res) => {
 };
 
 // 🔴 Delete issue (auth required — only reporter can delete)
-exports.deleteIssue = async (req, res) => {
+module.exports.deleteIssue = async (req, res) => {
   try {
     const { id } = req.params;
-    const issue = await IssueModel.findById(id);
 
-    if (!issue) return res.status(404).json({ message: "Issue not found" });
-
-    // only the user who reported the issue can delete it
-    if (issue.reportedBy.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Access denied" });
+    const issue = await Issue.findById(id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
     }
 
     await issue.deleteOne();
 
-    res.status(200).json({ message: "🗑️ Issue deleted successfully" });
+    return res.status(200).json({
+      success: true,
+      message: "Issue deleted successfully",
+    });
+
   } catch (error) {
-    console.error("Error deleting issue:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Delete Issue Error:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // 🟡 Upvote an issue (auth optional — can make it required if you want)
 // module.exports.voteIssue = async (req, res) => {
