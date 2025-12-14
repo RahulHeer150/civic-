@@ -26,6 +26,12 @@ const getAddressFromCoordinates = async (lat, lng) => {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
     const response = await axios.get(url);
+
+    // 🔴 STEP 4 DEBUG LOGS (ADD THESE)
+    console.log("GEOCODE STATUS:", response.data.status);
+    console.log("GEOCODE RESULTS LENGTH:", response.data.results?.length);
+    console.log("GEOCODE FIRST RESULT:", response.data.results?.[0]);
+
     const result = response.data.results[0];
 
     if (!result) {
