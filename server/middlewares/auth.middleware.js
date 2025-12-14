@@ -69,6 +69,17 @@ module.exports.authUser = async (req, res, next) => {
   }
 };
 
+module.exports.isAdmin = (req, res, next) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "Admin access only",
+    });
+  }
+  next();
+};
+
+
 // const userModel = require("../models/user.model")
 // const jwt = require('jsonwebtoken')
 // const blackToken = require("../models/blackToken.model")
