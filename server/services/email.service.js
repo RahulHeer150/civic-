@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
  */
 const sendEmail = async ({ to, subject, html }) => {
   await transporter.sendMail({
-    from: `"CrowdFix Support" <${process.env.EMAIL_USER}>`,
+    from: `"CivicPlus Support" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     html,
