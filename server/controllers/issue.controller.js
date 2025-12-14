@@ -303,27 +303,67 @@ exports.downvoteIssue = async (req, res) => {
 };
 
 // 🟢 Resolve an issue (Admin only)
+const { sendEmail } = require("../services/email.service");
+const User = require("../models/user.model");
+
 module.exports.resolveIssue = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Find issue
-    const issue = await Issue.findById(id);
+    const issue = await Issue.findById(id).populate("reportedBy");
     if (!issue) {
       return res.status(404).json({ message: "Issue not found" });
     }
 
-    // Update status
     issue.status = "Resolved";
     await issue.save();
 
+    // 📧 Send email to user
+    if (issue.reportedBy?.email) {
+      await sendEmail({
+        to: issue.reportedBy.email,
+        subject: "✅ Your issue has been resolved",
+        html: `
+          <h2>Good news!</h2>
+          <p>Your reported issue <strong>${issue.title}</strong> has been resolved.</p>
+          <p>Thank you for helping improve your community.</p>
+          <br/>
+          <p>– CrowdFix Team</p>
+        `,
+      });
+    }
+
     res.status(200).json({
-      message: "✅ Issue marked as resolved",
+      message: "Issue resolved & user notified",
       issue,
     });
   } catch (error) {
-    console.error("Error resolving issue:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Resolve Issue Error:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 };
+
+// module.exports.resolveIssue = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     // Find issue
+//     const issue = await Issue.findById(id);
+//     if (!issue) {
+//       return res.status(404).json({ message: "Issue not found" });
+//     }
+
+//     // Update status
+//     issue.status = "Resolved";
+//     await issue.save();
+
+//     res.status(200).json({
+//       message: "✅ Issue marked as resolved",
+//       issue,
+//     });
+//   } catch (error) {
+//     console.error("Error resolving issue:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 
