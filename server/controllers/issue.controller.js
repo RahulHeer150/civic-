@@ -15,6 +15,17 @@ module.exports.getIssues = async (req, res) => {
   }
 };
 
+module.exports.getMyIssues = async (req, res) => {
+  try {
+    const issues = await Issue.find({ reportedBy: req.user._id })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(issues);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // POST /issues/create
 module.exports.createIssue = async (req, res) => {
   try {

@@ -43,6 +43,7 @@ const issueSchema = new mongoose.Schema(
     reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     voters: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     // fallback counter if you don't want to use voters array
