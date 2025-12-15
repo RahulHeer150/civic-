@@ -29,91 +29,91 @@ module.exports.getMyIssues = async (req, res) => {
 // POST /issues/create
 
 
-module.exports.createIssue = async (req, res) => {
-  try {
-    const { title, description, location } = req.body;
-
-    if (!title || !description || !location) {
-      return res.status(400).json({
-        message: "Title, description and location are required",
-      });
-    }
-
-    // Expect frontend to send: "lat,lng"
-    const [lat, lng] = location.split(",").map(Number);
-
-    if (isNaN(lat) || isNaN(lng)) {
-      return res.status(400).json({
-        message: "Invalid location format. Use 'lat,lng'",
-      });
-    }
-
-    // ✅ Get full address object
-    const geo = await getAddressFromCoordinates(lat, lng);
-
-    // Media upload
-    const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
-
-    const issue = await Issue.create({
-      title,
-      description,
-      location: {
-        type: "Point",
-        coordinates: [lng, lat],
-        address: geo.address,
-      },
-      media: mediaPath,
-      reportedBy: req.user?._id, // REQUIRED for MyActivity
-    });
-
-    return res.status(201).json({
-      message: "Issue created successfully",
-      issue,
-    });
-
-  } catch (error) {
-    console.error("Create Issue Error:", error);
-    return res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
-  }
-};
-
-
-
 // module.exports.createIssue = async (req, res) => {
 //   try {
 //     const { title, description, location } = req.body;
 
-//     // multer sets req.file when media is uploaded
+//     if (!title || !description || !location) {
+//       return res.status(400).json({
+//         message: "Title, description and location are required",
+//       });
+//     }
+
+//     // Expect frontend to send: "lat,lng"
+//     const [lat, lng] = location.split(",").map(Number);
+
+//     if (isNaN(lat) || isNaN(lng)) {
+//       return res.status(400).json({
+//         message: "Invalid location format. Use 'lat,lng'",
+//       });
+//     }
+
+//     // ✅ Get full address object
+//     const geo = await getAddressFromCoordinates(lat, lng);
+
+//     // Media upload
 //     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
-//     // auth middleware sets req.user
-//     //const reportedBy = req.user?._id;
-
-//     console.log('Creating issue:', { title, description, location, mediaPath});
-
-//   console.log('Headers content-type:', req.headers['content-type']);
-// console.log('req.file:', req.file);
-// console.log('req.body raw:', req.body);
-
-//     const issue = await issueService.createIssue({
+//     const issue = await Issue.create({
 //       title,
 //       description,
-//       location,
+//       location: {
+//         type: "Point",
+//         coordinates: [lng, lat],
+//         address: geo.address,
+//       },
 //       media: mediaPath,
+//       reportedBy: req.user?._id, // REQUIRED for MyActivity
 //     });
 
-//     res.status(201).json({
-//       message: "✅ Issue created successfully",
-//       issue: issue,
+//     return res.status(201).json({
+//       message: "Issue created successfully",
+//       issue,
 //     });
-//   } catch (err) {
-//     console.error('Error creating issue:', err);
-//     res.status(500).json({ message: err.message || 'Server error' });
+
+//   } catch (error) {
+//     console.error("Create Issue Error:", error);
+//     return res.status(500).json({
+//       message: "Server error",
+//       error: error.message,
+//     });
 //   }
 // };
+
+
+
+module.exports.createIssue = async (req, res) => {
+  try {
+    const { title, description, location } = req.body;
+
+    // multer sets req.file when media is uploaded
+    const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // auth middleware sets req.user
+    //const reportedBy = req.user?._id;
+
+    console.log('Creating issue:', { title, description, location, mediaPath});
+
+  console.log('Headers content-type:', req.headers['content-type']);
+console.log('req.file:', req.file);
+console.log('req.body raw:', req.body);
+
+    const issue = await issueService.createIssue({
+      title,
+      description,
+      location,
+      media: mediaPath,
+    });
+
+    res.status(201).json({
+      message: "✅ Issue created successfully",
+      issue: issue,
+    });
+  } catch (err) {
+    console.error('Error creating issue:', err);
+    res.status(500).json({ message: err.message || 'Server error' });
+  }
+};
 
 module.exports.getIssueById = async (req, res) => {
   try {
