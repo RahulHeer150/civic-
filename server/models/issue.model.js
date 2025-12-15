@@ -11,11 +11,11 @@ const issueSchema = new mongoose.Schema(
       type: String,
       required: [true, "Description is required"],
     },
-   location: {
-  type: String,
-  required: [true, "Location is required"],
-  trim: true,
-},
+    location: {
+      type: String,
+      required: [true, "Location is required"],
+      trim: true,
+    },
 
     media: {
       type: String, // image filename or URL
