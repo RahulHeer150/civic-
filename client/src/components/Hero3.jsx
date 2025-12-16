@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const JoinSection = () => {
   const sectionRef = useRef(null);
@@ -27,13 +28,14 @@ const JoinSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ⭐ Button click handler
+  // 🔒 PROTECTED JOIN BUTTON
   const handleJoinClick = () => {
-    if (isLoggedIn) {
-      navigate("/report");
-    } else {
-      navigate("/authpage");
+    if (!isLoggedIn) {
+      toast.error("Please login or register to continue");
+      return;
     }
+
+    navigate("/report");
   };
 
   return (
@@ -56,9 +58,10 @@ const JoinSection = () => {
         </p>
       </div>
 
+      {/* 🔒 Protected Button */}
       <button
         onClick={handleJoinClick}
-        className="mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-[#fff] bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-#0056b3"
+        className="mx-5 px-[12px] py-[24px] text-xl font-bold rounded-xl text-white bg-[#007bff] cursor-pointer transition-all justify-center hover:bg-[#0056b3]"
       >
         Join CrowdFix Today
       </button>
