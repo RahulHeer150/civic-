@@ -104,10 +104,14 @@ const Footer = () => {
               Home
             </li>
             <li className="mb-2 text-sm sm:text-lg hover:underline">
-              Report-Issue
+              <Link to="/report" className="hover:underline">
+                Report Issue
+              </Link>
             </li>
             <li className="mb-2 text-sm sm:text-lg hover:underline">
-              Syllabus
+              <Link to="/explore" className="hover:underline">
+                Explore Issue
+              </Link>
             </li>
             <li className="mb-2 text-sm sm:text-lg hover:underline">
               AboutUs
@@ -135,7 +139,7 @@ const Footer = () => {
             <strong>
               <FontAwesomeIcon icon={faEnvelope} />
             </strong>{" "}
-             civc++@gmail.com
+             civic++@gmail.com
           </p>
         </div>
 
