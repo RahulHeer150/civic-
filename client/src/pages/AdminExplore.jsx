@@ -38,28 +38,42 @@ const AdminExplore = () => {
 
   // 🗑️ Delete Issue (Admin only)
   const handleDelete = async (issueId, e) => {
-    e.preventDefault(); // prevent card click
+    e.preventDefault();
     e.stopPropagation();
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this issue?"
+      "Are you sure you want to permanently delete this issue?"
     );
     if (!confirmDelete) return;
 
     try {
       setDeletingId(issueId);
 
-      await axios.delete(`${API}/issues/${issueId}`, {
+      const res = await axios.delete(`${API}/issues/${issueId}`, {
         headers: authHeader(),
       });
 
-      // Remove from UI
-      setIssues((prev) => prev.filter((i) => i._id !== issueId));
-      toast.success("Issue deleted successfully");
+      if (res.data?.success) {
+        setIssues((prev) => prev.filter((i) => i._id !== issueId));
+        toast.success(
+          res.data.message || "Issue deleted successfully"
+        );
+      } else {
+        toast.error("Delete failed");
+      }
 
     } catch (error) {
-      console.error(error);
-      toast.error("Delete failed (Admin only)");
+      console.error("Delete error:", error);
+
+      if (error.response?.status === 401) {
+        toast.error("Unauthorized. Please login again.");
+      } else if (error.response?.status === 403) {
+        toast.error("Access denied. Admin only.");
+      } else {
+        toast.error(
+          error.response?.data?.message || "Failed to delete issue"
+        );
+      }
     } finally {
       setDeletingId(null);
     }
@@ -75,7 +89,7 @@ const AdminExplore = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 pt-28">
       <h1 className="text-3xl font-bold text-center mb-8">
         Admin – Manage Issues
       </h1>
@@ -105,10 +119,11 @@ const AdminExplore = () => {
                 {issue.description}
               </p>
 
+              {/* 📍 Location */}
               <div className="flex items-center gap-2 text-gray-600 text-sm mb-4">
-                        <FaMapMarkerAlt className="text-blue-600 text-sm" />
-                        <span>{issue.location || "—"}</span>
-                      </div>
+                <FaMapMarkerAlt className="text-blue-600 text-sm" />
+                <span>{issue.location || "—"}</span>
+              </div>
 
               <p className="text-xs mb-3">
                 Status:{" "}
@@ -133,13 +148,29 @@ const AdminExplore = () => {
                   View
                 </Link>
 
-                {/* DELETE */}
+                {/* DELETE (Disabled if Resolved) */}
                 <button
                   onClick={(e) => handleDelete(issue._id, e)}
-                  disabled={deletingId === issue._id}
-                  className="flex-1 px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 disabled:opacity-60"
+                  disabled={
+                    deletingId === issue._id ||
+                    issue.status === "Resolved"
+                  }
+                  className={`flex-1 px-3 py-2 rounded-lg text-white 
+                    ${
+                      issue.status === "Resolved"
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-red-500 hover:bg-red-600"
+                    }
+                    disabled:opacity-60`}
+                  title={
+                    issue.status === "Resolved"
+                      ? "Resolved issues cannot be deleted"
+                      : "Delete issue"
+                  }
                 >
-                  {deletingId === issue._id ? "Deleting..." : "Delete"}
+                  {deletingId === issue._id
+                    ? "Deleting..."
+                    : "Delete"}
                 </button>
               </div>
             </div>
