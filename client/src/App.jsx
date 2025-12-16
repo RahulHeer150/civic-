@@ -2,6 +2,7 @@ import { BrowserRouter , Route , Routes } from 'react-router-dom'
 import React from 'react'
 import './index.css'
 
+
 import Home from './pages/Home'
 import How_it_works from './pages/How_it_works'
 import Explore from './pages/Explore'
@@ -40,6 +41,7 @@ function App() {
     <BrowserRouter>
         <Navbar/>
       <Routes>
+
         <Route path='/Register' element={<AuthPage/>}/>
          <Route path='/Authpage' element={<AuthPage/>}/>
         <Route path='/Login' element={<AuthPage/>}/>
