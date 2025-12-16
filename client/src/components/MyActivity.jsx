@@ -47,10 +47,11 @@ const MyActivity = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center p-6">
-      <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl p-6">
+  <div className="min-h-screen bg-gray-100 flex justify-center px-4 pt-24 sm:pt-28">
+    <div className="w-full max-w-5xl bg-white shadow-lg rounded-xl p-6">
 
-        <h1 className="text-2xl font-bold mb-6">My Activity</h1>
+      <h1 className="text-2xl font-bold mb-6">My Activity</h1>
+
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -89,7 +90,7 @@ const MyActivity = () => {
                 </p>
 
                 <p className="text-sm text-gray-500 mt-1">
-                  Location: {issue.location?.address || "N/A"}
+                  Location: {issue.location || "N/A"}
                 </p>
               </div>
             ))}
