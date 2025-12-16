@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+
+// 🔐 Auth helper
+const isLoggedIn = () => !!localStorage.getItem("token");
 
 const ReportForm = () => {
   const navigate = useNavigate();
@@ -13,80 +16,64 @@ const ReportForm = () => {
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
+  // 🔒 Optional: protect direct URL access
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      toast.warn("Please login or register to report an issue");
+      navigate("/login"); // optional redirect
+    }
+  }, [navigate]);
 
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("title", title);
-  //     formData.append("description", description);
-  //     formData.append("location", location);
-  //     formData.append("date", date);
-  //     if (photo) formData.append("media", photo);
-
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}/issues/create`,
-  //       formData,
-  //       { headers: { "Content-Type": "multipart/form-data" } }
-  //     );
-
-  //     if (response.status === 201) {
-  //       toast.success("Issue reported successfully!");
-  //       navigate("/explore");
-  //     }
-  //   } catch (error) {
-  //     console.error("Report error:", error);
-  //     toast.error(error.response?.data?.message || "Failed to submit report");
-  //   } finally {
-  //     setLoading(false);
-  //     setTitle("");
-  //     setDescription("");
-  //     setLocation("");
-  //     setDate("");
-  //     setPhoto(null);
-  //   }
-  // };
+  // 🔒 PROTECTED SUBMIT
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
 
-  try {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.error("Please login first");
-      setLoading(false);
+    // 🔐 BLOCK UNAUTHENTICATED USERS
+    if (!isLoggedIn()) {
+      toast.error("Please login or register to report an issue");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("location", location);
-    formData.append("date", date);
-    if (photo) formData.append("media", photo);
+    setLoading(true);
 
-    const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/issues/create`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const token = localStorage.getItem("token");
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("location", location);
+      formData.append("date", date);
+      if (photo) formData.append("media", photo);
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/issues/create`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("Issue reported successfully!");
+      navigate("/explore");
+
+    } catch (err) {
+      console.error("Report error:", err);
+
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        navigate("/login");
+      } else {
+        toast.error(
+          err.response?.data?.message || "Failed to submit report"
+        );
       }
-    );
-
-    toast.success("Issue reported successfully!");
-    navigate("/explore");
-
-  } catch (err) {
-    console.error(err);
-    toast.error(err.response?.data?.message || "Failed to submit report");
-  } finally {
-    setLoading(false);
-  }
-};
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-300 p-6 rounded-2xl">
@@ -96,7 +83,7 @@ const ReportForm = () => {
       >
         <h2 className="text-2xl font-bold mb-4">Report an Incident</h2>
 
-        {/* Title Input (User-defined issue name) */}
+        {/* Title */}
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Issue Title</label>
           <input
@@ -105,6 +92,7 @@ const ReportForm = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
 
@@ -116,6 +104,7 @@ const ReportForm = () => {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             rows="3"
+            required
           ></textarea>
         </div>
 
@@ -128,6 +117,7 @@ const ReportForm = () => {
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Enter exact location"
             className="w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
 
@@ -139,12 +129,15 @@ const ReportForm = () => {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            required
           />
         </div>
 
-        {/* Photo Upload */}
+        {/* Photo */}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Photo (optional)</label>
+          <label className="block text-gray-700 mb-2">
+            Photo (optional)
+          </label>
           <input
             type="file"
             accept="image/*"
@@ -153,7 +146,7 @@ const ReportForm = () => {
           />
         </div>
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
