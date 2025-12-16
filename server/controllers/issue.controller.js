@@ -363,60 +363,62 @@ module.exports.resolveIssue = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const issue = await Issue.findById(id).populate("reportedBy");
+    // ✅ MUST populate reportedBy
+    const issue = await Issue.findById(id).populate(
+      "reportedBy",
+      "email name"
+    );
+
     if (!issue) {
       return res.status(404).json({ message: "Issue not found" });
     }
 
+    // 🔍 DEBUG (TEMPORARY)
+    console.log("Reported By:", issue.reportedBy);
+
+    if (issue.status === "Resolved") {
+      return res.status(400).json({ message: "Issue already resolved" });
+    }
+
+    // ✅ Update status
     issue.status = "Resolved";
     await issue.save();
 
-    // 📧 Send email to user
-    if (issue.reportedBy?.email) {
-      await sendEmail({
-        to: issue.reportedBy.email,
-        subject: "✅ Your issue has been resolved",
-        html: `
-          <h2>Good news!</h2>
-          <p>Your reported issue <strong>${issue.title}</strong> has been resolved.</p>
-          <p>Thank you for helping improve your community.</p>
-          <br/>
-          <p>– CivicPlus Team</p>
-        `,
-      });
+    // ✅ Email logic
+    if (!issue.reportedBy?.email) {
+      console.error("❌ User email not found");
+    } else {
+      console.log("📧 Sending email to:", issue.reportedBy.email);
+
+      try {
+        await sendEmail({
+          to: issue.reportedBy.email,
+          subject: "Your issue has been resolved | CivicPlus",
+          html: `
+            <h2>Issue Resolved ✅</h2>
+            <p>Hello ${issue.reportedBy.name || "User"},</p>
+            <p>Your reported issue <b>${issue.title}</b> has been resolved.</p>
+            <p><b>Location:</b> ${issue.location}</p>
+            <p>Thank you for contributing to CivicPlus.</p>
+            <br/>
+            <p>– CivicPlus Team</p>
+          `,
+        });
+
+        console.log("✅ Email sent successfully");
+      } catch (mailError) {
+        console.error("❌ Email send failed:", mailError);
+      }
     }
 
+    // ✅ Send response LAST
     res.status(200).json({
-      message: "Issue resolved & user notified",
-      issue,
+      message: "Issue resolved and email process completed",
     });
+
   } catch (error) {
     console.error("Resolve Issue Error:", error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Failed to resolve issue" });
   }
 };
-
-// module.exports.resolveIssue = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     // Find issue
-//     const issue = await Issue.findById(id);
-//     if (!issue) {
-//       return res.status(404).json({ message: "Issue not found" });
-//     }
-
-//     // Update status
-//     issue.status = "Resolved";
-//     await issue.save();
-
-//     res.status(200).json({
-//       message: "✅ Issue marked as resolved",
-//       issue,
-//     });
-//   } catch (error) {
-//     console.error("Error resolving issue:", error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// };
 

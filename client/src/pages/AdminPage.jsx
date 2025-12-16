@@ -20,10 +20,25 @@ const AdminPage = () => {
     fetchIssues();
   }, []);
 
-  // Resolve issue
+  // Resolve issue (✅ FIXED)
   const handleResolve = async (id) => {
     try {
-      const res = await axios.put(`http://localhost:5001/issues/${id}/resolve`);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Admin login required");
+        return;
+      }
+
+      const res = await axios.put(
+        `http://localhost:5001/issues/${id}/resolve`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Update UI immediately
       setIssues((prev) =>
@@ -34,7 +49,10 @@ const AdminPage = () => {
 
       console.log(res.data.message);
     } catch (error) {
-      console.error("Error resolving issue:", error);
+      console.error(
+        "Error resolving issue:",
+        error.response?.data || error.message
+      );
     }
   };
 
