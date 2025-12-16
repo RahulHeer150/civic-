@@ -220,10 +220,15 @@ import { Link } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:5001";
 
-// ✅ Helper: attach token only if present
+// 🔐 Helper: attach token only if present
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+// 🔐 Auth check
+const isLoggedIn = () => {
+  return !!localStorage.getItem("token");
 };
 
 const Explore = () => {
@@ -235,7 +240,7 @@ const Explore = () => {
     const fetchIssues = async () => {
       try {
         const res = await axios.get(`${API}/issues`, {
-          headers: getAuthHeaders(), // ✅ FIX
+          headers: getAuthHeaders(),
         });
         setIssues(res.data);
       } catch (err) {
@@ -248,8 +253,15 @@ const Explore = () => {
     fetchIssues();
   }, []);
 
+  // 🔒 SECURED VOTE FUNCTION
   const handleVote = async (issueId, event) => {
-    event.preventDefault(); // prevent link navigation on vote
+    event.preventDefault(); // prevent card navigation
+
+    // ❌ BLOCK UNAUTHENTICATED USERS
+    if (!isLoggedIn()) {
+      toast.warn("Please login or register to vote on issues");
+      return;
+    }
 
     if (voting.has(issueId)) return;
 
@@ -260,7 +272,7 @@ const Explore = () => {
         `${API}/issues/${issueId}/vote`,
         {},
         {
-          headers: getAuthHeaders(), // ✅ FIX
+          headers: getAuthHeaders(),
         }
       );
 
@@ -271,9 +283,17 @@ const Explore = () => {
           i._id === issueId ? { ...i, votesCount: newCount } : i
         )
       );
+
+      toast.success("Vote submitted successfully");
+
     } catch (err) {
       console.error("Vote failed", err);
-      toast.error("Could not submit vote");
+
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+      } else {
+        toast.error("Could not submit vote");
+      }
     } finally {
       setVoting((prev) => {
         const s = new Set(prev);
@@ -330,11 +350,10 @@ const Explore = () => {
                   Vote {issue.votesCount || 0}
                 </button>
 
-                {/* ✅ FIXED LOCATION DISPLAY */}
-               <span className="flex items-center gap-1 text-md text-gray-500">
- <FaMapMarkerAlt className="text-blue-600 text-md" />
-  <span>{issue.location || "—"}</span>
-</span>
+                <span className="flex items-center gap-1 text-md text-gray-500">
+                  <FaMapMarkerAlt className="text-blue-600 text-md" />
+                  <span>{issue.location || "—"}</span>
+                </span>
               </div>
             </div>
           </Link>
