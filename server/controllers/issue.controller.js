@@ -256,43 +256,43 @@ module.exports.deleteIssue = async (req, res) => {
       return res.status(404).json({ message: "Issue not found" });
     }
 
-   // 🗑️ delete uploaded image (if exists)
+    // 🗑️ delete image
     if (issue.media) {
-      const imagePath = path.join(__dirname, "..", issue.media);
-      fs.unlink(imagePath, (err) => {
-        if (err) console.warn("Image delete failed:", err.message);
-      });
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        "uploads",
+        path.basename(issue.media)
+      );
+
+      fs.unlink(imagePath, () => {});
     }
 
-
-    // 📧 Notify user
+    // 📧 email user
     if (issue.reportedBy?.email) {
       await sendEmail({
         to: issue.reportedBy.email,
-        subject: "Your reported issue has been removed",
+        subject: "Your issue has been removed",
         html: `
           <p>Hello <b>${issue.reportedBy.username}</b>,</p>
-          <p>Your reported issue titled <b>"${issue.title}"</b> has been reviewed by admin and removed.</p>
-          <p>If you believe this is a mistake, please contact support.</p>
-          <br/>
-          <p>— CivicPlus Team</p>
+          <p>Your issue <b>"${issue.title}"</b> was removed by admin.</p>
         `,
       });
     }
 
-    // 🗑️ Delete issue
     await issue.deleteOne();
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      message: "Issue deleted and user notified",
+      message: "Issue deleted permanently",
     });
 
   } catch (error) {
     console.error("Delete Issue Error:", error);
-    return res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 // module.exports.deleteIssue = async (req, res) => {
 //   try {
