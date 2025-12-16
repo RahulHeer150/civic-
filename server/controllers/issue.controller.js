@@ -2,6 +2,7 @@
 const Issue = require('../models/issue.model');
 const issueService = require('../services/issue.service');
 const mongoose = require('mongoose');
+const path = require("path");
 const fs=require("fs")
 const { sendEmail } = require("../services/email.service");
 const getAddressFromCoordinates=require('../services/maps.service')
@@ -256,42 +257,49 @@ module.exports.deleteIssue = async (req, res) => {
       return res.status(404).json({ message: "Issue not found" });
     }
 
-    // 🗑️ delete image
+    // 🗑️ DELETE MEDIA FILE (FIXED)
     if (issue.media) {
-      const imagePath = path.join(
-        __dirname,
-        "..",
-        "uploads",
-        path.basename(issue.media)
-      );
+      const filename = path.basename(issue.media);
+      const filePath = path.join(process.cwd(), "uploads", filename);
 
-      fs.unlink(imagePath, () => {});
+      try {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log("🗑️ File deleted:", filePath);
+        } else {
+          console.warn("⚠️ File not found:", filePath);
+        }
+      } catch (fileErr) {
+        console.error("❌ File delete error:", fileErr.message);
+      }
     }
 
-    // 📧 email user
+    // 📧 EMAIL USER
     if (issue.reportedBy?.email) {
       await sendEmail({
         to: issue.reportedBy.email,
         subject: "Your issue has been removed",
         html: `
-          <p>Hello <b>${issue.reportedBy.username}</b>,</p>
+          <p>Hello <b>${issue.reportedBy.username || "User"}</b>,</p>
           <p>Your issue <b>"${issue.title}"</b> was removed by admin.</p>
         `,
       });
     }
 
-    await issue.deleteOne();
+    // 🗑️ DELETE ISSUE FROM DB
+    await Issue.findByIdAndDelete(id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Issue deleted permanently",
     });
 
   } catch (error) {
-    console.error("Delete Issue Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("❌ Delete Issue Error:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 // module.exports.deleteIssue = async (req, res) => {
