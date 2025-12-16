@@ -215,6 +215,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:5001";
@@ -330,9 +331,10 @@ const Explore = () => {
                 </button>
 
                 {/* ✅ FIXED LOCATION DISPLAY */}
-                <span className="text-sm text-gray-500">
-                  {issue.location  || "—"}
-                </span>
+               <span className="flex items-center gap-1 text-md text-gray-500">
+ <FaMapMarkerAlt className="text-blue-600 text-md" />
+  <span>{issue.location || "—"}</span>
+</span>
               </div>
             </div>
           </Link>
