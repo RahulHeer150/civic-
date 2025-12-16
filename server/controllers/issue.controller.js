@@ -247,17 +247,23 @@ exports.updateIssue = async (req, res) => {
 
 // 🔴 Delete issue (auth required — only reporter can delete)
 
-
 module.exports.deleteIssue = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const issue = await Issue.findById(id).populate("reportedBy");
+    // ✅ MUST populate reportedBy for email
+    const issue = await Issue.findById(id).populate(
+      "reportedBy",
+      "email username name"
+    );
+
     if (!issue) {
       return res.status(404).json({ message: "Issue not found" });
     }
 
-    // 🗑️ DELETE MEDIA FILE (FIXED)
+    /* ===============================
+       🗑️ DELETE MEDIA FILE (SAFE)
+    =============================== */
     if (issue.media) {
       const filename = path.basename(issue.media);
       const filePath = path.join(process.cwd(), "uploads", filename);
@@ -265,33 +271,51 @@ module.exports.deleteIssue = async (req, res) => {
       try {
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath);
-          console.log("🗑️ File deleted:", filePath);
+          console.log("🗑️ Media deleted:", filePath);
         } else {
-          console.warn("⚠️ File not found:", filePath);
+          console.warn("⚠️ Media not found:", filePath);
         }
       } catch (fileErr) {
-        console.error("❌ File delete error:", fileErr.message);
+        console.error("❌ Media delete error:", fileErr.message);
       }
     }
 
-    // 📧 EMAIL USER
-    if (issue.reportedBy?.email) {
-      await sendEmail({
-        to: issue.reportedBy.email,
-        subject: "Your issue has been removed",
-        html: `
-          <p>Hello <b>${issue.reportedBy.username || "User"}</b>,</p>
-          <p>Your issue <b>"${issue.title}"</b> was removed by admin.</p>
-        `,
-      });
+    /* ===============================
+       📧 EMAIL NOTIFICATION (SAME LOGIC AS resolveIssue)
+    =============================== */
+    if (!issue.reportedBy?.email) {
+      console.error("❌ User email not found, skipping email");
+    } else {
+      console.log("📧 Sending delete email to:", issue.reportedBy.email);
+
+      try {
+        await sendEmail({
+          to: issue.reportedBy.email,
+          subject: "Your issue has been removed | CivicPlus",
+          html: `
+            <h2>Issue Removed ❌</h2>
+            <p>Hello <b>${issue.reportedBy.name || issue.reportedBy.username || "User"}</b>,</p>
+            <p>Your reported issue titled <b>"${issue.title}"</b> has been removed by the administrator.</p>
+            <p>If you believe this was a mistake, you may contact the support team.</p>
+            <br/>
+            <p>– CivicPlus Team</p>
+          `,
+        });
+
+        console.log("✅ Delete email sent successfully");
+      } catch (mailError) {
+        console.error("❌ Email send failed:", mailError.message);
+      }
     }
 
-    // 🗑️ DELETE ISSUE FROM DB
+    /* ===============================
+       🗑️ DELETE ISSUE FROM DB
+    =============================== */
     await Issue.findByIdAndDelete(id);
 
     return res.status(200).json({
       success: true,
-      message: "Issue deleted permanently",
+      message: "Issue deleted permanently and user notified",
     });
 
   } catch (error) {
@@ -299,6 +323,7 @@ module.exports.deleteIssue = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 
