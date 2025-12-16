@@ -13,40 +13,80 @@ const ReportForm = () => {
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("title", title);
+  //     formData.append("description", description);
+  //     formData.append("location", location);
+  //     formData.append("date", date);
+  //     if (photo) formData.append("media", photo);
+
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}/issues/create`,
+  //       formData,
+  //       { headers: { "Content-Type": "multipart/form-data" } }
+  //     );
+
+  //     if (response.status === 201) {
+  //       toast.success("Issue reported successfully!");
+  //       navigate("/explore");
+  //     }
+  //   } catch (error) {
+  //     console.error("Report error:", error);
+  //     toast.error(error.response?.data?.message || "Failed to submit report");
+  //   } finally {
+  //     setLoading(false);
+  //     setTitle("");
+  //     setDescription("");
+  //     setLocation("");
+  //     setDate("");
+  //     setPhoto(null);
+  //   }
+  // };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("location", location);
-      formData.append("date", date);
-      if (photo) formData.append("media", photo);
+  try {
+    const token = localStorage.getItem("token");
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/issues/create`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-
-      if (response.status === 201) {
-        toast.success("Issue reported successfully!");
-        navigate("/explore");
-      }
-    } catch (error) {
-      console.error("Report error:", error);
-      toast.error(error.response?.data?.message || "Failed to submit report");
-    } finally {
+    if (!token) {
+      toast.error("Please login first");
       setLoading(false);
-      setTitle("");
-      setDescription("");
-      setLocation("");
-      setDate("");
-      setPhoto(null);
+      return;
     }
-  };
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("location", location);
+    formData.append("date", date);
+    if (photo) formData.append("media", photo);
+
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/issues/create`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    toast.success("Issue reported successfully!");
+    navigate("/explore");
+
+  } catch (err) {
+    console.error(err);
+    toast.error(err.response?.data?.message || "Failed to submit report");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-300 p-6 rounded-2xl">
