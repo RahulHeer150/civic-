@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5001";
@@ -104,9 +105,10 @@ const AdminExplore = () => {
                 {issue.description}
               </p>
 
-              <p className="text-xs text-gray-500 mb-2">
-                📍 {issue.location?.address || "Unknown location"}
-              </p>
+              <div className="flex items-center gap-2 text-gray-600 text-sm mb-4">
+                        <FaMapMarkerAlt className="text-blue-600 text-sm" />
+                        <span>{issue.location || "—"}</span>
+                      </div>
 
               <p className="text-xs mb-3">
                 Status:{" "}

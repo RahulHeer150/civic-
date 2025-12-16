@@ -2,6 +2,8 @@
 const Issue = require('../models/issue.model');
 const issueService = require('../services/issue.service');
 const mongoose = require('mongoose');
+const fs=require("fs")
+const { sendEmail } = require("../services/email.service");
 const getAddressFromCoordinates=require('../services/maps.service')
 
 // GET /issues
@@ -243,20 +245,47 @@ exports.updateIssue = async (req, res) => {
 };
 
 // 🔴 Delete issue (auth required — only reporter can delete)
+
+
 module.exports.deleteIssue = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const issue = await Issue.findById(id);
+    const issue = await Issue.findById(id).populate("reportedBy");
     if (!issue) {
       return res.status(404).json({ message: "Issue not found" });
     }
 
+   // 🗑️ delete uploaded image (if exists)
+    if (issue.media) {
+      const imagePath = path.join(__dirname, "..", issue.media);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.warn("Image delete failed:", err.message);
+      });
+    }
+
+
+    // 📧 Notify user
+    if (issue.reportedBy?.email) {
+      await sendEmail({
+        to: issue.reportedBy.email,
+        subject: "Your reported issue has been removed",
+        html: `
+          <p>Hello <b>${issue.reportedBy.username}</b>,</p>
+          <p>Your reported issue titled <b>"${issue.title}"</b> has been reviewed by admin and removed.</p>
+          <p>If you believe this is a mistake, please contact support.</p>
+          <br/>
+          <p>— CivicPlus Team</p>
+        `,
+      });
+    }
+
+    // 🗑️ Delete issue
     await issue.deleteOne();
 
     return res.status(200).json({
       success: true,
-      message: "Issue deleted successfully",
+      message: "Issue deleted and user notified",
     });
 
   } catch (error) {
@@ -264,6 +293,28 @@ module.exports.deleteIssue = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+// module.exports.deleteIssue = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const issue = await Issue.findById(id);
+//     if (!issue) {
+//       return res.status(404).json({ message: "Issue not found" });
+//     }
+
+//     await issue.deleteOne();
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Issue deleted successfully",
+//     });
+
+//   } catch (error) {
+//     console.error("Delete Issue Error:", error);
+//     return res.status(500).json({ message: "Server error" });
+//   }
+// };
 
 
 // 🟡 Upvote an issue (auth optional — can make it required if you want)
@@ -306,7 +357,6 @@ exports.downvoteIssue = async (req, res) => {
 };
 
 // 🟢 Resolve an issue (Admin only)
-const { sendEmail } = require("../services/email.service");
 const User = require("../models/user.model");
 
 module.exports.resolveIssue = async (req, res) => {
@@ -331,7 +381,7 @@ module.exports.resolveIssue = async (req, res) => {
           <p>Your reported issue <strong>${issue.title}</strong> has been resolved.</p>
           <p>Thank you for helping improve your community.</p>
           <br/>
-          <p>– CrowdFix Team</p>
+          <p>– CivicPlus Team</p>
         `,
       });
     }

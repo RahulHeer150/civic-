@@ -12,7 +12,7 @@ const getAuthHeaders = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export default function Issue() {
+const Issue=() =>{
   const { id } = useParams();
   const [issue, setIssue] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -127,3 +127,4 @@ export default function Issue() {
     </div>
   );
 }
+ export default Issue;

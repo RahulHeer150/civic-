@@ -1,25 +1,40 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const issueController = require('../controllers/issue.controller');
-const authMiddleware = require('../middlewares/auth.middleware');
-const uploadMiddleware = require('../middlewares/upload.middleware');
 
-// all routes below require authentication
+const issueController = require("../controllers/issue.controller");
+const authMiddleware = require("../middlewares/auth.middleware");
+const uploadMiddleware = require("../middlewares/upload.middleware");
 
-// list all issues
-router.get('/', issueController.getIssues);
+// 🔓 Public
+router.get("/", issueController.getIssues);
+router.get("/:id", issueController.getIssueById);
+
+// 🔐 User
 router.get("/myissue", authMiddleware.authUser, issueController.getMyIssues);
-router.get('/:id', issueController.getIssueById);
-// create an issue
-router.post('/create',authMiddleware.authUser, uploadMiddleware.single('media'), issueController.createIssue);
 
-// vote (increment)
-router.post('/:id/vote', issueController.voteIssue);
+router.post(
+  "/create",
+  authMiddleware.authUser,
+  uploadMiddleware.single("media"),
+  issueController.createIssue
+);
 
-// optional: update/delete/downvote endpoints
-router.put('/:id', issueController.updateIssue);
-router.delete('/:id', authMiddleware.authUser,authMiddleware.isAdmin, issueController.deleteIssue);
-router.post('/:id/downvote', issueController.downvoteIssue);
-router.put("/:id/resolve", issueController.resolveIssue);
+router.post("/:id/vote", authMiddleware.authUser, issueController.voteIssue);
+router.post("/:id/downvote", authMiddleware.authUser, issueController.downvoteIssue);
+
+// 🛡️ Admin only
+router.delete(
+  "/:id",
+  authMiddleware.authUser,
+  authMiddleware.isAdmin,
+  issueController.deleteIssue
+);
+
+router.put(
+  "/:id/resolve",
+  authMiddleware.authUser,
+  authMiddleware.isAdmin,
+  issueController.resolveIssue
+);
 
 module.exports = router;
