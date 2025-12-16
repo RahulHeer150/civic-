@@ -103,6 +103,7 @@ console.log('req.body raw:', req.body);
       description,
       location,
       media: mediaPath,
+    reportedBy: req.user?._id,
     });
 
     res.status(201).json({
