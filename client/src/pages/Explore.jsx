@@ -331,7 +331,7 @@ const Explore = () => {
 
                 {/* ✅ FIXED LOCATION DISPLAY */}
                 <span className="text-sm text-gray-500">
-                  {issue.location?.address || "—"}
+                  {issue.location  || "—"}
                 </span>
               </div>
             </div>

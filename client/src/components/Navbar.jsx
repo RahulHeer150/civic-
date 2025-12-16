@@ -41,6 +41,7 @@ const Navbar = () => {
         icon: <FaFileSignature className="inline mr-2" />,
         to: "/admin",
       }
+      
     : {
         id: "report",
         label: "Report an Issue",
