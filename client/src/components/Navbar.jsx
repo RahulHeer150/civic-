@@ -57,12 +57,12 @@ const Navbar = () => {
       to: "/",
     },
     roleBasedMenuItem, // injected dynamically based on role
-    {
-      id: "explore-issue",
-      label: "Explore Issue",
-      icon: <AiOutlineFundProjectionScreen className="inline mr-2" />,
-      to: "/Explore",
-    },
+     {
+    id: "explore-issue",
+    label: "Explore Issue",
+    icon: <AiOutlineFundProjectionScreen className="inline mr-2" />,
+    to: isAdmin ? "/admin/issues" : "/Explore", // ✅ ONLY CHANGE
+  },
     {
       id: "How it Works",
       label: "How it works",
