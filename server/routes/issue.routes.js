@@ -7,9 +7,8 @@ const uploadMiddleware = require("../middlewares/upload.middleware");
 
 // 🔓 Public
 router.get("/", issueController.getIssues);
-router.get("/:id", issueController.getIssueById);
 
-// 🔐 User
+// 🔐 User (STATIC ROUTES FIRST)
 router.get("/myissue", authMiddleware.authUser, issueController.getMyIssues);
 
 router.post(
@@ -36,5 +35,8 @@ router.put(
   authMiddleware.isAdmin,
   issueController.resolveIssue
 );
+
+// 🔓 Public (DYNAMIC ROUTES LAST)
+router.get("/:id", issueController.getIssueById);
 
 module.exports = router;
