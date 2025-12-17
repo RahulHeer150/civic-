@@ -1,33 +1,22 @@
 const mongoose = require("mongoose");
-require("./user.model");
 
 const issueSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: [true, "Issue title is required"],
-    },
-    description: {
-      type: String,
-      required: [true, "Description is required"],
-    },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+
     location: {
       type: String,
-      required: [true, "Location is required"],
+      required: true,
       trim: true,
     },
 
-    media: {
-      type: String, // image filename or URL
-    },
-    votes: {
-      type: Number,
-      default: 0,
-    },
+    media: String,
+
     status: {
       type: String,
       enum: ["Pending", "Resolved"],
-      default: "Pending", // When user reports issue → default status
+      default: "Pending",
     },
 
     reportedBy: {
@@ -35,11 +24,13 @@ const issueSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    voters: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    // fallback counter if you don't want to use voters array
-    votesCount: { type: Number, default: 0 },
+
+    votesCount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
-const IssueModel = mongoose.model("Issue", issueSchema);
-module.exports = IssueModel;
+
+module.exports = mongoose.model("Issue", issueSchema);
