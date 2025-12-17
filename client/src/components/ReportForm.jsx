@@ -58,7 +58,6 @@ const ReportForm = () => {
 
       toast.success("Issue reported successfully!");
       navigate("/explore");
-
     } catch (err) {
       console.error("Report error:", err);
 
@@ -66,9 +65,7 @@ const ReportForm = () => {
         toast.error("Session expired. Please login again.");
         navigate("/login");
       } else {
-        toast.error(
-          err.response?.data?.message || "Failed to submit report"
-        );
+        toast.error(err.response?.data?.message || "Failed to submit report");
       }
     } finally {
       setLoading(false);
@@ -135,9 +132,7 @@ const ReportForm = () => {
 
         {/* Photo */}
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">
-            Photo (optional)
-          </label>
+          <label className="block text-gray-700 mb-2">Photo (optional)</label>
           <input
             type="file"
             accept="image/*"
