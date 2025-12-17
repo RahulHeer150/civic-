@@ -5,6 +5,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
 const issueRoutes=require('./routes/issue.routes')
+const analyticsRoutes = require("./routes/analytics.routes");
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,10 @@ connectDB();
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+
+app.use("/analytics", analyticsRoutes);
+
 
 // ✅ Mount routes
 
