@@ -29,6 +29,8 @@ import Issue from "./components/Issue";
 import AdminPage from "./pages/AdminPage";
 import Aboutus from "./components/Aboutus";
 import AdminExplore from "./pages/AdminExplore";
+import AdminAnalytics from "./pages/AdminAnalytics";
+
 
 function App() {
   return (
@@ -57,7 +59,7 @@ function App() {
         <Route path="/admin/issues" element={<AdminExplore />} />
         <Route
           path="/admin/analytics"
-          element={isAdmin ? <AdminAnalytics /> : <Navigate to="/" />}
+          element={<AdminAnalytics/>}
         />
 
         <Route path="/forget-pass" element={<ForgotPassword />} />
