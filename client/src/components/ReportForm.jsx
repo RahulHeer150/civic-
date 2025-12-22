@@ -82,147 +82,133 @@ const completedSteps =
 const progressPercentage = Math.round(
   (completedSteps / totalSteps) * 100
 );
+return (
+  <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-20 px-4">
 
-  return (
-  <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 pt-24 pb-24 px-4">
+    <div className="max-w-5xl mx-auto flex gap-6">
 
-    {/* 🔵 FIXED PROGRESS BAR */}
-    <div className="fixed top-0 left-0 w-full bg-white shadow z-50">
-      <div className="max-w-3xl mx-auto px-4 py-3">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-semibold text-gray-700">
-            Report Progress
-          </span>
-          <span className="text-sm font-bold text-blue-600">
-            {progressPercentage}%
-          </span>
-        </div>
-
-        {/* Progress Track */}
-        <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+      {/* 🟢 LEFT VERTICAL PROGRESS BAR */}
+      <div className="relative w-6 flex justify-center">
+        <div className="sticky top-28 h-[420px] w-2 bg-gray-300 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-300"
-            style={{ width: `${progressPercentage}%` }}
+            className="absolute bottom-0 w-full bg-green-500 transition-all duration-500"
+            style={{ height: `${progressPercentage}%` }}
           />
         </div>
+
+        {/* Percentage Label */}
+        <span className="absolute -left-6 top-24 text-sm font-bold text-green-600 rotate-[-90deg]">
+          {progressPercentage}%
+        </span>
+      </div>
+
+      {/* 📄 FORM CONTENT */}
+      <div className="flex-1">
+
+        {/* HEADER */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
+            Report an Issue
+          </h1>
+          <p className="mt-4 text-gray-600 text-lg">
+            Complete each section below to submit your issue.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* ISSUE TITLE */}
+          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+            title ? "border-green-500" : "border-gray-300"
+          }`}>
+            <h3 className="text-lg font-semibold mb-3">Issue Title</h3>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* DESCRIPTION */}
+          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+            description ? "border-green-500" : "border-gray-300"
+          }`}>
+            <h3 className="text-lg font-semibold mb-3">Description</h3>
+            <textarea
+              rows="4"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* LOCATION */}
+          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+            location ? "border-green-500" : "border-gray-300"
+          }`}>
+            <h3 className="text-lg font-semibold mb-3">Location</h3>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              required
+              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* DATE */}
+          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+            date ? "border-green-500" : "border-gray-300"
+          }`}>
+            <h3 className="text-lg font-semibold mb-3">Date</h3>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* PHOTO */}
+          <div className={`bg-white rounded-2xl shadow-md p-6 mb-24 border-l-4 ${
+            photo ? "border-green-500" : "border-gray-300"
+          }`}>
+            <h3 className="text-lg font-semibold mb-3">Upload Photo (Optional)</h3>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              className="w-full border rounded-xl p-3"
+            />
+          </div>
+
+          {/* 🔵 FIXED SUBMIT BUTTON */}
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full py-4 rounded-2xl text-lg font-semibold text-white shadow-lg
+                ${
+                  loading
+                    ? "bg-gray-400"
+                    : "bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02]"
+                }
+              `}
+            >
+              {loading ? "Submitting..." : "Submit Issue"}
+            </button>
+          </div>
+
+        </form>
       </div>
     </div>
-
-    {/* PAGE HEADER */}
-    <div className="max-w-3xl mx-auto text-center mb-12">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
-        Report an Issue
-      </h1>
-      <p className="mt-4 text-gray-600 text-lg">
-        Complete each section below to submit your issue.
-      </p>
-    </div>
-
-    {/* FORM */}
-    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-6">
-
-      {/* CARD: TITLE */}
-      <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-        title ? "border-green-500" : "border-gray-300"
-      }`}>
-        <h3 className="text-lg font-semibold text-gray-700 mb-3">
-          Issue Title
-        </h3>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          placeholder="e.g. Broken road"
-          className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
-        />
-      </div>
-
-      {/* CARD: DESCRIPTION */}
-      <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-        description ? "border-green-500" : "border-gray-300"
-      }`}>
-        <h3 className="text-lg font-semibold text-gray-700 mb-3">
-          Description
-        </h3>
-        <textarea
-          rows="4"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          placeholder="Describe the issue..."
-          className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
-        />
-      </div>
-
-      {/* CARD: LOCATION */}
-      <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-        location ? "border-green-500" : "border-gray-300"
-      }`}>
-        <h3 className="text-lg font-semibold text-gray-700 mb-3">
-          Location
-        </h3>
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-          placeholder="Exact location"
-          className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
-        />
-      </div>
-
-      {/* CARD: DATE */}
-      <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-        date ? "border-green-500" : "border-gray-300"
-      }`}>
-        <h3 className="text-lg font-semibold text-gray-700 mb-3">
-          Date of Issue
-        </h3>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-          className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
-        />
-      </div>
-
-      {/* CARD: PHOTO */}
-      <div className={`bg-white rounded-2xl shadow-md p-6 mb-24 border-l-4 ${
-        photo ? "border-green-500" : "border-gray-300"
-      }`}>
-        <h3 className="text-lg font-semibold text-gray-700 mb-3">
-          Upload Photo (Optional)
-        </h3>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setPhoto(e.target.files[0])}
-          className="w-full border rounded-xl p-3"
-        />
-      </div>
-
-      {/* 🔵 FIXED SUBMIT BUTTON (UNCHANGED) */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4">
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-4 rounded-2xl text-lg font-semibold text-white shadow-lg transition-all
-            ${
-              loading
-                ? "bg-gray-400"
-                : "bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02]"
-            }
-          `}
-        >
-          {loading ? "Submitting..." : "Submit Issue"}
-        </button>
-      </div>
-
-    </form>
   </div>
 );
+
 
 };
 
