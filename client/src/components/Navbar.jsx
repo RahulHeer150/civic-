@@ -12,6 +12,7 @@ import { FaUserCircle } from "react-icons/fa";
 import navlogo from "../assets/mainlogo.png";
 import { useAuth } from "../context/auth";
 
+
 const Navbar = () => {
   const [IsOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
