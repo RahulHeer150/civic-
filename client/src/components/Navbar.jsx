@@ -12,7 +12,6 @@ import { FaUserCircle } from "react-icons/fa";
 import navlogo from "../assets/mainlogo.png";
 import { useAuth } from "../context/auth";
 
-
 const Navbar = () => {
   const [IsOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -42,7 +41,6 @@ const Navbar = () => {
         icon: <FaFileSignature className="inline mr-2" />,
         to: "/admin",
       }
-      
     : {
         id: "report",
         label: "Report an Issue",
@@ -58,12 +56,12 @@ const Navbar = () => {
       to: "/",
     },
     roleBasedMenuItem, // injected dynamically based on role
-     {
-    id: "explore-issue",
-    label: "Explore Issue",
-    icon: <AiOutlineFundProjectionScreen className="inline mr-2" />,
-    to: isAdmin ? "/admin/issues" : "/Explore", // ✅ ONLY CHANGE
-  },
+    {
+      id: "explore-issue",
+      label: "Explore Issue",
+      icon: <AiOutlineFundProjectionScreen className="inline mr-2" />,
+      to: isAdmin ? "/admin/issues" : "/Explore", // ✅ ONLY CHANGE
+    },
     {
       id: "How it Works",
       label: "How it works",
