@@ -1,173 +1,167 @@
-import React, { useEffect, useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import {
-  AiFillStar,
-  AiOutlineHome,
-  AiOutlineFundProjectionScreen,
-  AiOutlineUser,
-} from "react-icons/ai";
-import { FaFileSignature } from "react-icons/fa6";
-import { FaUserCircle } from "react-icons/fa";
-import navlogo from "../assets/mainlogo.png";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/auth";
+import navlogo from "../assets/mainlogo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
-  const [IsOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [isScrolled, setIsScrolled] = useState(false);
-
+  const location = useLocation();
   const { isLoggedIn, user, isAdmin } = useAuth();
 
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+
+  const [navbarBg, setNavbarBg] = useState("bg-transparent");
+  const [textColor, setTextColor] = useState("text-white");
+  const [padding, setPadding] = useState("py-4");
+  const [underlineColor, setUnderlineColor] = useState("before:bg-white");
+
+  const dropdownRef = useRef(null);
+
+  // 🔁 Scroll + Route based navbar styling
   useEffect(() => {
-    const handlescroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      if (window.scrollY > 50 || location.pathname !== "/") {
+        setNavbarBg("bg-white shadow-md");
+        setTextColor("text-sky-600");
+        setPadding("py-2");
+        setUnderlineColor("before:bg-sky-600");
+      } else {
+        setNavbarBg("bg-transparent");
+        setTextColor("text-white");
+        setPadding("py-4");
+        setUnderlineColor("before:bg-white");
+      }
     };
 
-    window.addEventListener("scroll", handlescroll);
-    return () => window.removeEventListener("scroll", handlescroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+  // 🔒 Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsResourcesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handlemenuClick = (sectionId) => {
-    setActiveSection(sectionId);
-    setIsOpen(false);
-  };
-
-  // ⭐ Dynamic role-based menu item
-  const roleBasedMenuItem = isAdmin
-    ? {
-        id: "resolve",
-        label: "Resolve Issues",
-        icon: <FaFileSignature className="inline mr-2" />,
-        to: "/admin",
-      }
-    : {
-        id: "report",
-        label: "Report an Issue",
-        icon: <AiOutlineUser className="inline mr-2" />,
-        to: "/Report",
-      };
-
-  const MenuItems = [
-    {
-      id: "home",
-      label: "Home",
-      icon: <AiOutlineHome className="inline mr-2" />,
-      to: "/",
-    },
-    roleBasedMenuItem, // injected dynamically based on role
-    {
-      id: "explore-issue",
-      label: "Explore Issue",
-      icon: <AiOutlineFundProjectionScreen className="inline mr-2" />,
-      to: isAdmin ? "/admin/issues" : "/Explore", // ✅ ONLY CHANGE
-    },
-    {
-      id: "How it Works",
-      label: "How it works",
-      icon: <AiFillStar className="inline mr-2" />,
-      to: "/howitworks",
-    },
-  ];
+  // ⭐ Role based links (UNCHANGED LOGIC)
+  const roleLink = isAdmin
+    ? { label: "Resolve Issues", to: "/admin" }
+    : { label: "Report Issue", to: "/report" };
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 w-full mb-5 shadow-lg shadow-black/20 rounded-lg z-50 transition duration-300 px-[7vw] md:px-[12vw] lg:px-[10vw] bg-[#f1faff] ${
-          isScrolled ? "shadow-lg shadow-black" : "bg-[#f1faff]"
-        }`}
-      >
-        <div className="text-white py-3 px-1 flex flex-row justify-between items-center">
-          {/* Left side Logo */}
-          <img src={navlogo} alt="logo" className="h-13" />
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${navbarBg} ${padding}`}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between">
 
-          {/* Center Menu */}
-          <ul className="hidden lg:flex space-x-8 text-black ml-8 text-xl font-bold">
-            {MenuItems.map((item) => (
-              <li
-                key={item.id}
-                className={`cursor-pointer hover:text-sky-400 ${
-                  activeSection === item.id ? "text-sky-500" : ""
-                }`}
+          {/* LOGO */}
+          <Link to="/">
+            <img src={navlogo} alt="logo" className="h-12" />
+          </Link>
+
+          {/* MOBILE HAMBURGER */}
+          <div className="lg:hidden">
+            <button onClick={() => setIsHamburgerOpen(true)}>
+              <svg className={`w-7 h-7 ${textColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+
+          {/* DESKTOP MENU */}
+          <div className="hidden lg:flex items-center gap-10">
+
+            {[
+              { label: "Home", to: "/" },
+              roleLink,
+              { label: "Explore", to: isAdmin ? "/admin/issues" : "/explore" },
+              { label: "How it Works", to: "/howitworks" },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`relative font-medium ${textColor}
+                before:content-[''] before:absolute before:left-0 before:-bottom-1
+                before:h-[2px] before:w-full before:scale-x-0
+                hover:before:scale-x-100 before:origin-left
+                transition-all duration-300 ${underlineColor}`}
               >
-                <Link
-                  className="flex items-center gap-2 border-transparent pb-2 hover:text-sky-400 transition-all duration-300"
-                  to={item.to}
-                  onClick={() => handlemenuClick(item.id)}
-                >
-                  {item.icon}
-                  {item.label}
-                </Link>
-              </li>
+                {item.label}
+              </Link>
             ))}
-          </ul>
 
-          {/* Right Side Profile / Login */}
-          <div className="flex items-center gap-4">
-            {isLoggedIn && user ? (
-              <div className="flex items-center gap-3">
-                <span className="text-gray-700 font-medium">
-                  {user.username} {isAdmin && "(Admin)"}
+            {/* USER / AUTH BUTTONS */}
+            {isLoggedIn ? (
+              <>
+                <span className={`font-medium ${textColor}`}>
+                  {user?.username} {isAdmin && "(Admin)"}
                 </span>
-                <Link to="/userprofile" className="relative group">
-                  <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
-                    <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
-                  </div>
+                <Link to="/userprofile" className={`${textColor}`}>
+                  Profile
                 </Link>
-              </div>
+              </>
             ) : (
               <Link
                 to="/AuthPage"
-                className="relative group flex items-center gap-2"
+                className={`px-5 py-2 border rounded-xl font-semibold
+                ${textColor} hover:bg-sky-500 hover:text-white transition`}
               >
-                <span className="text-gray-700 font-medium">Login</span>
-                <div className="w-11 h-11 rounded-full bg-sky-100 flex items-center justify-center hover:bg-sky-200 transition-all duration-300 shadow-md">
-                  <FaUserCircle className="text-gray-600 text-2xl group-hover:scale-110 transition-transform duration-300" />
-                </div>
+                Login
               </Link>
             )}
-
-            {/* Hamburger for mobile */}
-            <div className="lg:hidden">
-              {IsOpen ? (
-                <FiX
-                  className="text-3xl text-sky-400 cursor-pointer"
-                  onClick={() => setIsOpen(false)}
-                />
-              ) : (
-                <FiMenu
-                  className="text-3xl text-sky-400 cursor-pointer"
-                  onClick={() => setIsOpen(true)}
-                />
-              )}
-            </div>
           </div>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {IsOpen && (
-          <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-4/5 bg-opacity-50 backdrop-filter backdrop-blur-lg z-50 rounded-lg shadow-lg">
-            <ul className="flex flex-col items-center space-y-4 py-4 text-white">
-              {MenuItems.map((item) => (
-                <li key={item.id} className="cursor-pointer">
-                  <Link
-                    className="flex items-center gap-2 border-b-4 border-transparent hover:border-white hover:text-gray-300 transition-all duration-200"
-                    to={item.to}
-                    onClick={() => handlemenuClick(item.id)}
-                  >
-                    {item.icon}
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              {isLoggedIn && user && (
-                <li className="text-gray-800 font-medium">{user.username}</li>
-              )}
-            </ul>
-          </div>
-        )}
-      </nav>
-    </>
+      {/* MOBILE SLIDE MENU */}
+      <div
+        className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300
+        ${isHamburgerOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="flex justify-end p-6">
+          <button onClick={() => setIsHamburgerOpen(false)}>
+            ✕
+          </button>
+        </div>
+
+        <nav className="flex flex-col items-center gap-6 font-semibold text-sky-600">
+          <Link to="/" onClick={() => setIsHamburgerOpen(false)}>Home</Link>
+          <Link to={roleLink.to} onClick={() => setIsHamburgerOpen(false)}>
+            {roleLink.label}
+          </Link>
+          <Link to={isAdmin ? "/admin/issues" : "/explore"} onClick={() => setIsHamburgerOpen(false)}>
+            Explore
+          </Link>
+          <Link to="/howitworks" onClick={() => setIsHamburgerOpen(false)}>
+            How it Works
+          </Link>
+
+          {isLoggedIn ? (
+            <>
+              <Link to="/userprofile" onClick={() => setIsHamburgerOpen(false)}>
+                Profile
+              </Link>
+              <Link to="/logout" onClick={() => setIsHamburgerOpen(false)}>
+                Logout
+              </Link>
+            </>
+          ) : (
+            <Link to="/AuthPage" onClick={() => setIsHamburgerOpen(false)}>
+              Login
+            </Link>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 };
 
