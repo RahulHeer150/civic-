@@ -58,8 +58,6 @@ const ReportForm = () => {
       toast.success("Issue reported successfully!");
       navigate("/explore");
     } catch (err) {
-      console.error("Report error:", err);
-
       if (err.response?.status === 401) {
         toast.error("Session expired. Please login again.");
         navigate("/login");
@@ -71,145 +69,144 @@ const ReportForm = () => {
     }
   };
 
+  // 🟢 Progress calculation (UI only)
   const totalSteps = 5;
-const completedSteps =
-  (title ? 1 : 0) +
-  (description ? 1 : 0) +
-  (location ? 1 : 0) +
-  (date ? 1 : 0) +
-  (photo ? 1 : 0);
+  const completedSteps =
+    (title ? 1 : 0) +
+    (description ? 1 : 0) +
+    (location ? 1 : 0) +
+    (date ? 1 : 0) +
+    (photo ? 1 : 0);
 
-const progressPercentage = Math.round(
-  (completedSteps / totalSteps) * 100
-);
-return (
-  <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-20 px-4">
+  const progressPercentage = Math.round(
+    (completedSteps / totalSteps) * 100
+  );
 
-    <div className="max-w-5xl mx-auto flex gap-6">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-20 px-4 pb-40">
+      <div className="max-w-5xl mx-auto flex gap-6">
 
-      {/* 🟢 LEFT VERTICAL PROGRESS BAR */}
-      <div className="relative w-6 flex justify-center">
-        <div className="sticky top-28 h-[420px] w-2 bg-gray-300 rounded-full overflow-hidden">
-          <div
-            className="absolute bottom-0 w-full bg-green-500 transition-all duration-500"
-            style={{ height: `${progressPercentage}%` }}
-          />
+        {/* 🟢 LEFT VERTICAL PROGRESS BAR */}
+        <div className="relative w-6 flex justify-center">
+          <div className="sticky top-32 h-[420px] w-2 bg-gray-300 rounded-full overflow-hidden">
+            <div
+              className="absolute bottom-0 w-full bg-green-500 transition-all duration-500"
+              style={{ height: `${progressPercentage}%` }}
+            />
+          </div>
+          <span className="absolute -left-6 top-32 text-sm font-bold text-green-600 rotate-[-90deg]">
+            {progressPercentage}%
+          </span>
         </div>
 
-        {/* Percentage Label */}
-        <span className="absolute -left-6 top-24 text-sm font-bold text-green-600 rotate-[-90deg]">
-          {progressPercentage}%
-        </span>
+        {/* 📄 FORM CONTENT */}
+        <div className="flex-1">
+          {/* HEADER */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
+              Report an Issue
+            </h1>
+            <p className="mt-4 text-gray-600 text-lg">
+              Complete each section below to submit your issue.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* ISSUE TITLE */}
+            <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+              title ? "border-green-500" : "border-gray-300"
+            }`}>
+              <label className="block font-semibold mb-2">Issue Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+              description ? "border-green-500" : "border-gray-300"
+            }`}>
+              <label className="block font-semibold mb-2">Description</label>
+              <textarea
+                rows="4"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* LOCATION */}
+            <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+              location ? "border-green-500" : "border-gray-300"
+            }`}>
+              <label className="block font-semibold mb-2">Location</label>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* DATE */}
+            <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+              date ? "border-green-500" : "border-gray-300"
+            }`}>
+              <label className="block font-semibold mb-2">Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* PHOTO */}
+            <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
+              photo ? "border-green-500" : "border-gray-300"
+            }`}>
+              <label className="block font-semibold mb-2">
+                Upload Photo (Optional)
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setPhoto(e.target.files[0])}
+                className="w-full border rounded-xl p-3"
+              />
+            </div>
+          </form>
+        </div>
       </div>
 
-      {/* 📄 FORM CONTENT */}
-      <div className="flex-1">
-
-        {/* HEADER */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800">
-            Report an Issue
-          </h1>
-          <p className="mt-4 text-gray-600 text-lg">
-            Complete each section below to submit your issue.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-
-          {/* ISSUE TITLE */}
-          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-            title ? "border-green-500" : "border-gray-300"
-          }`}>
-            <h3 className="text-lg font-semibold mb-3">Issue Title</h3>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* DESCRIPTION */}
-          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-            description ? "border-green-500" : "border-gray-300"
-          }`}>
-            <h3 className="text-lg font-semibold mb-3">Description</h3>
-            <textarea
-              rows="4"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* LOCATION */}
-          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-            location ? "border-green-500" : "border-gray-300"
-          }`}>
-            <h3 className="text-lg font-semibold mb-3">Location</h3>
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              required
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* DATE */}
-          <div className={`bg-white rounded-2xl shadow-md p-6 border-l-4 ${
-            date ? "border-green-500" : "border-gray-300"
-          }`}>
-            <h3 className="text-lg font-semibold mb-3">Date</h3>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {/* PHOTO */}
-          <div className={`bg-white rounded-2xl shadow-md p-6 mb-24 border-l-4 ${
-            photo ? "border-green-500" : "border-gray-300"
-          }`}>
-            <h3 className="text-lg font-semibold mb-3">Upload Photo (Optional)</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setPhoto(e.target.files[0])}
-              className="w-full border rounded-xl p-3"
-            />
-          </div>
-
-          {/* 🔵 FIXED SUBMIT BUTTON */}
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full py-4 rounded-2xl text-lg font-semibold text-white shadow-lg
-                ${
-                  loading
-                    ? "bg-gray-400"
-                    : "bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02]"
-                }
-              `}
-            >
-              {loading ? "Submitting..." : "Submit Issue"}
-            </button>
-          </div>
-
-        </form>
+      {/* 🔵 FIXED SUBMIT BUTTON (NO OVERFLOW) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-3xl px-4">
+        <button
+          type="submit"
+          form="report-form"
+          disabled={loading}
+          onClick={handleSubmit}
+          className={`w-full py-4 rounded-2xl text-lg font-semibold text-white shadow-lg transition-all
+            ${
+              loading
+                ? "bg-gray-400"
+                : "bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-[1.02]"
+            }
+          `}
+        >
+          {loading ? "Submitting..." : "Submit Issue"}
+        </button>
       </div>
     </div>
-  </div>
-);
-
-
+  );
 };
 
 export default ReportForm;
