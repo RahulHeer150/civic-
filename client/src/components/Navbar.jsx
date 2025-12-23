@@ -11,34 +11,27 @@ const Navbar = () => {
 
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-
-  const [navbarBg, setNavbarBg] = useState("bg-transparent");
-  const [textColor, setTextColor] = useState("text-white");
-  const [padding, setPadding] = useState("py-4");
-  const [underlineColor, setUnderlineColor] = useState("before:bg-white");
-
   const dropdownRef = useRef(null);
 
-  // 🔁 Scroll + Route based navbar styling
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50 || location.pathname !== "/") {
-        setNavbarBg("bg-white shadow-md");
-        setTextColor("text-sky-600");
-        setPadding("py-2");
-        setUnderlineColor("before:bg-sky-600");
-      } else {
-        setNavbarBg("bg-transparent");
-        setTextColor("text-white");
-        setPadding("py-4");
-        setUnderlineColor("before:bg-white");
-      }
-    };
+  const isScrolledOrNotHome =
+    typeof window !== "undefined" &&
+    (window.scrollY > 50 || location.pathname !== "/");
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [location.pathname]);
+  const navbarBg = isScrolledOrNotHome ? "bg-white shadow-md" : "bg-transparent";
+  const textColor = isScrolledOrNotHome ? "text-sky-600" : "text-white";
+  const padding = isScrolledOrNotHome ? "py-2" : "py-4";
+  const underlineColor = isScrolledOrNotHome
+    ? "before:bg-sky-600"
+    : "before:bg-white";
+
+  // 🔁 Scroll handling
+  useEffect(() => {
+    const onScroll = () => {
+      setDummy((prev) => !prev);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // 🔒 Close dropdown on outside click
   useEffect(() => {
@@ -51,7 +44,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // ⭐ Role based links (UNCHANGED LOGIC)
+  // ⭐ Role-based link (UNCHANGED)
   const roleLink = isAdmin
     ? { label: "Resolve Issues", to: "/admin" }
     : { label: "Report Issue", to: "/report" };
@@ -64,22 +57,23 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
 
           {/* LOGO */}
-          <Link to="/">
+          <Link to="/" className="flex items-center">
             <img src={navlogo} alt="logo" className="h-12" />
           </Link>
 
           {/* MOBILE HAMBURGER */}
-          <div className="lg:hidden">
-            <button onClick={() => setIsHamburgerOpen(true)}>
-              <svg className={`w-7 h-7 ${textColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
+          <button
+            className={`lg:hidden ${textColor}`}
+            onClick={() => setIsHamburgerOpen(true)}
+            aria-label="Open menu"
+          >
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
 
           {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center gap-10">
-
+          <nav className="hidden lg:flex items-center gap-10">
             {[
               { label: "Home", to: "/" },
               roleLink,
@@ -90,22 +84,24 @@ const Navbar = () => {
                 key={item.label}
                 to={item.to}
                 className={`relative font-medium ${textColor}
-                before:content-[''] before:absolute before:left-0 before:-bottom-1
-                before:h-[2px] before:w-full before:scale-x-0
-                hover:before:scale-x-100 before:origin-left
-                transition-all duration-300 ${underlineColor}`}
+                  before:content-[''] before:absolute before:left-0 before:-bottom-1
+                  before:h-[2px] before:w-full before:scale-x-0
+                  hover:before:scale-x-100 before:origin-left
+                  transition-all duration-300 ${underlineColor}`}
               >
                 {item.label}
               </Link>
             ))}
 
-            {/* USER / AUTH BUTTONS */}
             {isLoggedIn ? (
               <>
                 <span className={`font-medium ${textColor}`}>
                   {user?.username} {isAdmin && "(Admin)"}
                 </span>
-                <Link to="/userprofile" className={`${textColor}`}>
+                <Link
+                  to="/userprofile"
+                  className={`font-medium ${textColor}`}
+                >
                   Profile
                 </Link>
               </>
@@ -118,17 +114,20 @@ const Navbar = () => {
                 Login
               </Link>
             )}
-          </div>
+          </nav>
         </div>
       </div>
 
       {/* MOBILE SLIDE MENU */}
       <div
-        className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300
+        className={`fixed inset-0 z-40 bg-white transform transition-transform duration-300
         ${isHamburgerOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex justify-end p-6">
-          <button onClick={() => setIsHamburgerOpen(false)}>
+          <button
+            onClick={() => setIsHamburgerOpen(false)}
+            aria-label="Close menu"
+          >
             ✕
           </button>
         </div>
@@ -138,7 +137,10 @@ const Navbar = () => {
           <Link to={roleLink.to} onClick={() => setIsHamburgerOpen(false)}>
             {roleLink.label}
           </Link>
-          <Link to={isAdmin ? "/admin/issues" : "/explore"} onClick={() => setIsHamburgerOpen(false)}>
+          <Link
+            to={isAdmin ? "/admin/issues" : "/explore"}
+            onClick={() => setIsHamburgerOpen(false)}
+          >
             Explore
           </Link>
           <Link to="/howitworks" onClick={() => setIsHamburgerOpen(false)}>
