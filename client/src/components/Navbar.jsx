@@ -5,7 +5,7 @@ import navlogo from "../assets/mainlogo.png";
 
 const Navbar = () => {
   const location = useLocation();
-  const { isLoggedIn, user, isAdmin } = useAuth();
+ const { isLoggedIn, user, isAdmin, isLoading } = useAuth();
 
   if (isLoading) {
   return null; // or loader
@@ -17,15 +17,16 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   // ✅ FIX: Proper scroll state
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+useEffect(() => {
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 50);
+  };
 
-    handleScroll(); // run once on mount
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  handleScroll(); // IMPORTANT
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [location.pathname, isLoggedIn]); // 👈 KEY FIX
 
   // ✅ Close dropdown on outside click (safe)
   useEffect(() => {
@@ -121,6 +122,58 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
+      {/* MOBILE SLIDE MENU */}
+<div
+  className={`fixed inset-0 z-40 bg-white transform transition-transform duration-300 lg:hidden
+  ${isHamburgerOpen ? "translate-x-0" : "-translate-x-full"}`}
+>
+  <div className="flex justify-end p-6">
+    <button
+      className="text-2xl"
+      onClick={() => setIsHamburgerOpen(false)}
+      aria-label="Close menu"
+    >
+      ✕
+    </button>
+  </div>
+
+  <nav className="flex flex-col items-center gap-6 font-semibold text-sky-600 mt-10">
+    <Link to="/" onClick={() => setIsHamburgerOpen(false)}>
+      Home
+    </Link>
+
+    <Link to={roleLink.to} onClick={() => setIsHamburgerOpen(false)}>
+      {roleLink.label}
+    </Link>
+
+    <Link
+      to={isAdmin ? "/admin/issues" : "/explore"}
+      onClick={() => setIsHamburgerOpen(false)}
+    >
+      Explore
+    </Link>
+
+    <Link to="/howitworks" onClick={() => setIsHamburgerOpen(false)}>
+      How it Works
+    </Link>
+
+    {isLoggedIn ? (
+      <>
+        <Link to="/userprofile" onClick={() => setIsHamburgerOpen(false)}>
+          Profile
+        </Link>
+        <Link to="/logout" onClick={() => setIsHamburgerOpen(false)}>
+          Logout
+        </Link>
+      </>
+    ) : (
+      <Link to="/AuthPage" onClick={() => setIsHamburgerOpen(false)}>
+        Login
+      </Link>
+    )}
+  </nav>
+</div>
+
     </header>
   );
 };
