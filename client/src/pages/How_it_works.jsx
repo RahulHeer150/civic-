@@ -31,11 +31,12 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="p-4 text-center mt-20">
+    // ✅ FIX: padding-top instead of margin-top
+    <section className="pt-[96px] md:pt-[112px] px-4 text-center">
       
       {/* Heading */}
       <motion.h1
-        className="text-4xl text-blue-950 mb-4 font-bold font-sans"
+        className="text-4xl text-blue-950 mb-4 font-bold"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -44,46 +45,37 @@ const HowItWorks = () => {
       </motion.h1>
 
       <motion.p
-        className="text-[1.2rem] text-black mb-4 px-10"
+        className="text-[1.1rem] text-gray-700 mb-6 max-w-4xl mx-auto"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
-        Our platform is designed to bring communities together to identify, prioritize, 
-        and resolve pressing issues efficiently. Here's a step-by-step guide to understanding how you can make a difference:
+        Our platform is designed to bring communities together to identify, prioritize,
+        and resolve pressing issues efficiently. Here's how you can make a difference:
       </motion.p>
 
       {/* Cards */}
-      <div className="flex flex-wrap justify-center gap-8 mt-10">
+      <div className="flex flex-wrap justify-center gap-8 mt-12">
         {items.map((item, index) => (
           <motion.div
             key={index}
-            className="group bg-white border border-gray-200 rounded-2xl p-6 max-w-[300px] shadow-md 
-            hover:bg-blue-900 hover:shadow-xl transition-all duration-300 cursor-pointer"
+            className="group bg-white border border-gray-200 rounded-2xl p-6 max-w-[300px]
+            shadow-md hover:bg-blue-900 hover:shadow-xl transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
           >
-            {/* Scale inner content on hover */}
             <motion.div
-              className="flex flex-col items-center transition-all duration-300 text-blue-900 group-hover:text-white"
-              whileHover={{ scale: 1.08 }} // scale ONLY the content
+              className="flex flex-col items-center text-blue-900 group-hover:text-white transition-all duration-300"
+              whileHover={{ scale: 1.08 }}
             >
-              {/* Icon */}
-              <motion.div
-                transition={{ type: "spring", stiffness: 250 }}
-                className="mb-4"
-              >
-                {item.icon}
-              </motion.div>
+              <div className="mb-4">{item.icon}</div>
 
-              {/* Title */}
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className="text-2xl font-bold mb-2">
                 {item.title}
               </h2>
 
-              {/* Description */}
-              <p className="text-lg text-gray-600 group-hover:text-gray-200">
+              <p className="text-base text-gray-600 group-hover:text-gray-200">
                 {item.description}
               </p>
             </motion.div>
@@ -91,10 +83,10 @@ const HowItWorks = () => {
         ))}
       </div>
 
-      {/* Extra Section */}
-      <div className="mt-16">
+      {/* Join Us */}
+      <div className="mt-20">
         <motion.h2
-          className="text-2xl text-blue-600 mb-2"
+          className="text-2xl text-blue-600 mb-3 font-semibold"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
@@ -103,15 +95,17 @@ const HowItWorks = () => {
         </motion.h2>
 
         <motion.p
-          className="text-md px-10 m-auto md:py-4 max-w-4xl"
+          className="text-md max-w-4xl mx-auto text-gray-700"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2 }}
         >
-          Be part of a proactive community committed to making impactful changes. Whether you're reporting issues, voting, or tracking progress—your participation builds a better future.
+          Be part of a proactive community committed to making impactful changes.
+          Whether you're reporting issues, voting, or tracking progress—your participation
+          builds a better future.
         </motion.p>
       </div>
-    </div>
+    </section>
   );
 };
 
