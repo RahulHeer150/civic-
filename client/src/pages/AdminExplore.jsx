@@ -42,7 +42,7 @@ const AdminExplore = () => {
     e.stopPropagation();
 
     const confirmDelete = window.confirm(
-      "Are you sure you want to permanently delete this issue?"
+      "Are you sure you want to permanently delete this issue?",
     );
     if (!confirmDelete) return;
 
@@ -55,13 +55,10 @@ const AdminExplore = () => {
 
       if (res.data?.success) {
         setIssues((prev) => prev.filter((i) => i._id !== issueId));
-        toast.success(
-          res.data.message || "Issue deleted successfully"
-        );
+        toast.success(res.data.message || "Issue deleted successfully");
       } else {
         toast.error("Delete failed");
       }
-
     } catch (error) {
       console.error("Delete error:", error);
 
@@ -70,9 +67,7 @@ const AdminExplore = () => {
       } else if (error.response?.status === 403) {
         toast.error("Access denied. Admin only.");
       } else {
-        toast.error(
-          error.response?.data?.message || "Failed to delete issue"
-        );
+        toast.error(error.response?.data?.message || "Failed to delete issue");
       }
     } finally {
       setDeletingId(null);
@@ -111,9 +106,7 @@ const AdminExplore = () => {
 
             {/* 📄 Content */}
             <div className="p-4">
-              <h2 className="text-xl font-semibold mb-1">
-                {issue.title}
-              </h2>
+              <h2 className="text-xl font-semibold mb-1">{issue.title}</h2>
 
               <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                 {issue.description}
@@ -152,8 +145,7 @@ const AdminExplore = () => {
                 <button
                   onClick={(e) => handleDelete(issue._id, e)}
                   disabled={
-                    deletingId === issue._id ||
-                    issue.status === "Resolved"
+                    deletingId === issue._id || issue.status === "Resolved"
                   }
                   className={`flex-1 px-3 py-2 rounded-lg text-white 
                     ${
@@ -168,9 +160,7 @@ const AdminExplore = () => {
                       : "Delete issue"
                   }
                 >
-                  {deletingId === issue._id
-                    ? "Deleting..."
-                    : "Delete"}
+                  {deletingId === issue._id ? "Deleting..." : "Delete"}
                 </button>
               </div>
             </div>
