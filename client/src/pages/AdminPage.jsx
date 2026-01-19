@@ -37,21 +37,21 @@ const AdminPage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       // Update UI immediately
       setIssues((prev) =>
         prev.map((issue) =>
-          issue._id === id ? { ...issue, status: "Resolved" } : issue
-        )
+          issue._id === id ? { ...issue, status: "Resolved" } : issue,
+        ),
       );
 
       console.log(res.data.message);
     } catch (error) {
       console.error(
         "Error resolving issue:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -61,12 +61,11 @@ const AdminPage = () => {
     activeTab === "all"
       ? issues
       : activeTab === "pending"
-      ? issues.filter((i) => i.status === "Pending")
-      : issues.filter((i) => i.status === "Resolved");
+        ? issues.filter((i) => i.status === "Pending")
+        : issues.filter((i) => i.status === "Resolved");
 
   return (
     <div className="max-w-screen min-h-screen mx-10 mt-20 p-5 bg-gray-300 rounded-xl items-center justify-center pb-20">
-
       {/* ---------- TOP TAB MENU ---------- */}
       <div className="flex justify-center space-x-10 mb-6 text-xl font-semibold">
         <button
@@ -96,8 +95,8 @@ const AdminPage = () => {
         {activeTab === "all"
           ? "ALL Reported Issues"
           : activeTab === "pending"
-          ? "Pending Issues"
-          : "Resolved Issues"}
+            ? "Pending Issues"
+            : "Resolved Issues"}
       </h1>
 
       {/* ---------- ISSUE LIST ---------- */}
