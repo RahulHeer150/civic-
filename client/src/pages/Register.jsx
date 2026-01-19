@@ -55,7 +55,7 @@ const Register = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.status === 201) {
@@ -187,9 +187,9 @@ const Register = () => {
               <span>Password</span>
             </label>
           </div>
-</div>
-//otp step
-          {/* <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
+        </div>
+        //otp step
+        {/* <div className="relative h-11 w-full col-start-1 col-span-2 md:col-span-1">
             <input
               type="text"
               name=""
