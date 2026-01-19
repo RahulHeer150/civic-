@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  LineChart, Line, XAxis, YAxis, Tooltip,
-  PieChart, Pie, Cell,
-  BarChart, Bar
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
 } from "recharts";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
@@ -19,22 +26,25 @@ const AdminAnalytics = () => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API}/analytics/summary`, { headers: authHeader() })
-      .then(res => setSummary(res.data));
+    axios
+      .get(`${API}/analytics/summary`, { headers: authHeader() })
+      .then((res) => setSummary(res.data));
 
-    axios.get(`${API}/analytics/monthly`, { headers: authHeader() })
-      .then(res => setMonthly(res.data));
+    axios
+      .get(`${API}/analytics/monthly`, { headers: authHeader() })
+      .then((res) => setMonthly(res.data));
 
-    axios.get(`${API}/analytics/status`, { headers: authHeader() })
-      .then(res => setStatus(res.data));
+    axios
+      .get(`${API}/analytics/status`, { headers: authHeader() })
+      .then((res) => setStatus(res.data));
 
-    axios.get(`${API}/analytics/locations`, { headers: authHeader() })
-      .then(res => setLocations(res.data));
+    axios
+      .get(`${API}/analytics/locations`, { headers: authHeader() })
+      .then((res) => setLocations(res.data));
   }, []);
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-
       <h1 className="text-3xl font-bold mb-6">📊 Admin Analytics</h1>
 
       {/* 🔹 SUMMARY CARDS */}
@@ -55,7 +65,6 @@ const AdminAnalytics = () => {
 
       {/* 🔹 CHARTS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
         {/* LINE CHART */}
         <div className="bg-white p-4 rounded shadow">
           <h3 className="mb-2 font-semibold">Issues per Month</h3>
@@ -90,7 +99,6 @@ const AdminAnalytics = () => {
             <Bar dataKey="count" fill="#6366F1" />
           </BarChart>
         </div>
-
       </div>
     </div>
   );
