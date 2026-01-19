@@ -210,7 +210,6 @@
 
 // export default Explore;
 
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -273,19 +272,18 @@ const Explore = () => {
         {},
         {
           headers: getAuthHeaders(),
-        }
+        },
       );
 
       const newCount = res.data.votesCount ?? 0;
 
       setIssues((prev) =>
         prev.map((i) =>
-          i._id === issueId ? { ...i, votesCount: newCount } : i
-        )
+          i._id === issueId ? { ...i, votesCount: newCount } : i,
+        ),
       );
 
       toast.success("Vote submitted successfully");
-
     } catch (err) {
       console.error("Vote failed", err);
 
@@ -313,9 +311,7 @@ const Explore = () => {
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Reported Issues
-      </h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Reported Issues</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
         {issues.map((issue) => (
@@ -333,13 +329,9 @@ const Explore = () => {
             )}
 
             <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">
-                {issue.title}
-              </h2>
+              <h2 className="text-xl font-semibold mb-2">{issue.title}</h2>
 
-              <p className="text-gray-600 mb-3">
-                {issue.description}
-              </p>
+              <p className="text-gray-600 mb-3">{issue.description}</p>
 
               <div className="flex items-center justify-between">
                 <button
