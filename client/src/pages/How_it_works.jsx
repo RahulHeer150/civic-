@@ -1,5 +1,10 @@
 import React from "react";
-import { FaLaptop, FaThumbsUp, FaClipboardList, FaCheckCircle } from "react-icons/fa";
+import {
+  FaLaptop,
+  FaThumbsUp,
+  FaClipboardList,
+  FaCheckCircle,
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const HowItWorks = () => {
@@ -33,7 +38,6 @@ const HowItWorks = () => {
   return (
     // ✅ FIX: padding-top instead of margin-top
     <section className="pt-[96px] md:pt-[112px] px-4 text-center">
-      
       {/* Heading */}
       <motion.h1
         className="text-4xl text-blue-950 mb-4 font-bold"
@@ -50,8 +54,9 @@ const HowItWorks = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
-        Our platform is designed to bring communities together to identify, prioritize,
-        and resolve pressing issues efficiently. Here's how you can make a difference:
+        Our platform is designed to bring communities together to identify,
+        prioritize, and resolve pressing issues efficiently. Here's how you can
+        make a difference:
       </motion.p>
 
       {/* Cards */}
@@ -71,9 +76,7 @@ const HowItWorks = () => {
             >
               <div className="mb-4">{item.icon}</div>
 
-              <h2 className="text-2xl font-bold mb-2">
-                {item.title}
-              </h2>
+              <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
 
               <p className="text-base text-gray-600 group-hover:text-gray-200">
                 {item.description}
@@ -100,9 +103,9 @@ const HowItWorks = () => {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2 }}
         >
-          Be part of a proactive community committed to making impactful changes.
-          Whether you're reporting issues, voting, or tracking progress—your participation
-          builds a better future.
+          Be part of a proactive community committed to making impactful
+          changes. Whether you're reporting issues, voting, or tracking
+          progress—your participation builds a better future.
         </motion.p>
       </div>
     </section>
