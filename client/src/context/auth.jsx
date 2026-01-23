@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       localStorage.setItem("token", token);
     }
-    
+  
   }, [token]);
 
   const storeTokenInLocalStorage = (serverToken) => {
