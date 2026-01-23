@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-const URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+const URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export const AuthContext = createContext();
 
@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   // Construct authorization header only if token exists
   const headers = {
-    'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` })
+    "Content-Type": "application/json",
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
   // Store token in localStorage when it changes
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     setToken("");
     setUser(null);
     setIssue([]);
-    setIsLoading(false); 
+    setIsLoading(false);
     localStorage.removeItem("token");
   };
 
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(`${URL}/users/profile`, {
         method: "GET",
-        headers
+        headers,
       });
 
       if (!response.ok) {
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       if (data.userData) {
         setUser(data.userData);
       } else {
-        throw new Error('No user data in response');
+        throw new Error("No user data in response");
       }
     } catch (error) {
       console.error("Authentication error:", error);
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch(`${URL}/issues`, {
         method: "GET",
-        headers
+        headers,
       });
 
       if (!response.ok) {
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       } else if (data.issues && Array.isArray(data.issues)) {
         setIssue(data.issues);
       } else {
-        throw new Error('Invalid issues data format');
+        throw new Error("Invalid issues data format");
       }
     } catch (error) {
       console.error("Error fetching issues:", error);
@@ -99,12 +99,9 @@ export const AuthProvider = ({ children }) => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
-      
-      await Promise.all([
-        userAuthentication(),
-        getIssueData()
-      ]);
-      
+
+      await Promise.all([userAuthentication(), getIssueData()]);
+
       setIsLoading(false);
     };
 
@@ -119,14 +116,12 @@ export const AuthProvider = ({ children }) => {
     issue,
     isLoading,
     error,
-   isAdmin: user?.role === "admin",
-    token
+    isAdmin: user?.role === "admin",
+    token,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
@@ -137,7 +132,6 @@ export const useAuth = () => {
   }
   return context;
 };
-
 
 // import React, { createContext, useContext, useState, useEffect } from "react";
 // import axios from 'axios';
