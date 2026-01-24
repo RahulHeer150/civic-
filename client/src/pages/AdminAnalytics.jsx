@@ -88,7 +88,7 @@ const AdminAnalytics = () => {
             <Tooltip />
           </PieChart>
         </div>
-      
+
         {/* BAR CHART */}
         <div className="bg-white p-4 rounded shadow col-span-2">
           <h3 className="mb-2 font-semibold">Top Locations</h3>
