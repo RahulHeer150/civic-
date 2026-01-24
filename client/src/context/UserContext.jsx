@@ -1,4 +1,3 @@
-
 import React, { createContext, useState } from "react";
 
 // provide a safe default so useContext(...) never returns undefined
