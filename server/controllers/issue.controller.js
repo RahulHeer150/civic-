@@ -1,11 +1,10 @@
-
-const Issue = require('../models/issue.model');
-const issueService = require('../services/issue.service');
-const mongoose = require('mongoose');
+const Issue = require("../models/issue.model");
+const issueService = require("../services/issue.service");
+const mongoose = require("mongoose");
 const path = require("path");
-const fs=require("fs")
+const fs = require("fs");
 const { sendEmail } = require("../services/email.service");
-const getAddressFromCoordinates=require('../services/maps.service')
+const getAddressFromCoordinates = require("../services/maps.service");
 
 // GET /issues
 module.exports.getIssues = async (req, res) => {
@@ -13,15 +12,16 @@ module.exports.getIssues = async (req, res) => {
     const issues = await Issue.find().sort({ createdAt: -1 });
     res.json(issues);
   } catch (err) {
-    console.error('Error fetching issues:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error fetching issues:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 module.exports.getMyIssues = async (req, res) => {
   try {
-    const issues = await Issue.find({ reportedBy: req.user._id })
-      .sort({ createdAt: -1 });
+    const issues = await Issue.find({ reportedBy: req.user._id }).sort({
+      createdAt: -1,
+    });
 
     res.status(200).json(issues);
   } catch (error) {
@@ -30,7 +30,6 @@ module.exports.getMyIssues = async (req, res) => {
 };
 
 // POST /issues/create
-
 
 // module.exports.createIssue = async (req, res) => {
 //   try {
@@ -83,8 +82,6 @@ module.exports.getMyIssues = async (req, res) => {
 //   }
 // };
 
-
-
 module.exports.createIssue = async (req, res) => {
   try {
     const { title, description, location } = req.body;
@@ -95,18 +92,18 @@ module.exports.createIssue = async (req, res) => {
     // auth middleware sets req.user
     //const reportedBy = req.user?._id;
 
-    console.log('Creating issue:', { title, description, location, mediaPath});
+    console.log("Creating issue:", { title, description, location, mediaPath });
 
-  console.log('Headers content-type:', req.headers['content-type']);
-console.log('req.file:', req.file);
-console.log('req.body raw:', req.body);
+    console.log("Headers content-type:", req.headers["content-type"]);
+    console.log("req.file:", req.file);
+    console.log("req.body raw:", req.body);
 
     const issue = await issueService.createIssue({
       title,
       description,
       location,
       media: mediaPath,
-    reportedBy: req.user?._id,
+      reportedBy: req.user?._id,
     });
 
     res.status(201).json({
@@ -114,8 +111,8 @@ console.log('req.body raw:', req.body);
       issue: issue,
     });
   } catch (err) {
-    console.error('Error creating issue:', err);
-    res.status(500).json({ message: err.message || 'Server error' });
+    console.error("Error creating issue:", err);
+    res.status(500).json({ message: err.message || "Server error" });
   }
 };
 
@@ -135,22 +132,20 @@ module.exports.getIssueById = async (req, res) => {
   }
 };
 
-
-
 // POST /issues/:id/vote
 module.exports.voteIssue = async (req, res) => {
   try {
     const { id } = req.params;
     const issue = await Issue.findById(id);
-    if (!issue) return res.status(404).json({ message: 'Issue not found' });
+    if (!issue) return res.status(404).json({ message: "Issue not found" });
 
     issue.votesCount = (issue.votesCount || 0) + 1;
     await issue.save();
 
     res.json({ _id: issue._id, votesCount: issue.votesCount });
   } catch (err) {
-    console.error('Error voting on issue:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error voting on issue:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -183,7 +178,6 @@ module.exports.voteIssue = async (req, res) => {
 //     res.status(500).json({ message: "Server error while creating issue", error });
 //   }
 // };
-
 
 // 🔵 Get all issues (public)
 // exports.getIssues = async (req, res) => {
@@ -254,7 +248,7 @@ module.exports.deleteIssue = async (req, res) => {
     // ✅ MUST populate reportedBy for email
     const issue = await Issue.findById(id).populate(
       "reportedBy",
-      "email username name"
+      "email username name",
     );
 
     if (!issue) {
@@ -317,15 +311,11 @@ module.exports.deleteIssue = async (req, res) => {
       success: true,
       message: "Issue deleted permanently and user notified",
     });
-
   } catch (error) {
     console.error("❌ Delete Issue Error:", error);
     return res.status(500).json({ message: "Server error" });
   }
 };
-
-
-
 
 // module.exports.deleteIssue = async (req, res) => {
 //   try {
@@ -349,7 +339,6 @@ module.exports.deleteIssue = async (req, res) => {
 //   }
 // };
 
-
 // 🟡 Upvote an issue (auth optional — can make it required if you want)
 // module.exports.voteIssue = async (req, res) => {
 //   try {
@@ -366,7 +355,6 @@ module.exports.deleteIssue = async (req, res) => {
 //     return res.status(500).json({ message: 'Server error' });
 //   }
 // };
-
 
 // 🔻 Downvote an issue (auth optional)
 exports.downvoteIssue = async (req, res) => {
@@ -397,10 +385,7 @@ module.exports.resolveIssue = async (req, res) => {
     const { id } = req.params;
 
     // ✅ MUST populate reportedBy
-    const issue = await Issue.findById(id).populate(
-      "reportedBy",
-      "email name"
-    );
+    const issue = await Issue.findById(id).populate("reportedBy", "email name");
 
     if (!issue) {
       return res.status(404).json({ message: "Issue not found" });
@@ -448,10 +433,8 @@ module.exports.resolveIssue = async (req, res) => {
     res.status(200).json({
       message: "Issue resolved and email process completed",
     });
-
   } catch (error) {
     console.error("Resolve Issue Error:", error);
     res.status(500).json({ message: "Failed to resolve issue" });
   }
 };
-
