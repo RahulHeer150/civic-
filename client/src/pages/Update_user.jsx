@@ -146,7 +146,6 @@ const Update_user = () => {
       </div>
     </>
   );
-  
 };
 
 export default Update_user;
