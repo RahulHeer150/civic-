@@ -6,6 +6,7 @@ const AdminPage = () => {
   const [issues, setIssues] = useState([]);
   const [activeTab, setActiveTab] = useState("all"); // all, pending, resolved
 
+  
   // Fetch all issues
   useEffect(() => {
     const fetchIssues = async () => {
