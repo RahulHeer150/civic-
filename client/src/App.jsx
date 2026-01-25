@@ -59,11 +59,9 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/About" element={<About />} />
         <Route path="/Register" element={<Register />} />
-
-//Admin Routes
+        //Admin Routes
         <Route path="/admin/issues" element={<AdminExplore />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
-        
       </Routes>
       <Footer />
     </BrowserRouter>
