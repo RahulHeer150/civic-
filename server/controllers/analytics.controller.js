@@ -27,7 +27,7 @@ exports.getMonthlyStats = async (req, res) => {
           count: { $sum: 1 },
         },
       },
-      { $sort: { "_id": 1 } },
+      { $sort: { _id: 1 } },
     ]);
 
     res.json(data);
