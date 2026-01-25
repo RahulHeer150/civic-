@@ -60,7 +60,7 @@ function App() {
         <Route path="/About" element={<About />} />
         <Route path="/Register" element={<Register />} />
 
-
+//Admin Routes
         <Route path="/admin/issues" element={<AdminExplore />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
         
