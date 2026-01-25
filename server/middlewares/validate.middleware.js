@@ -1,4 +1,4 @@
-const { z } = require('zod'); // Ensure Zod is imported
+const { z } = require("zod"); // Ensure Zod is imported
 
 const validate = (schema) => async (req, res, next) => {
   try {
