@@ -39,7 +39,7 @@ const getAddressFromCoordinates = async (lat, lng) => {
         address: "Unknown Address",
         city: "",
         state: "",
-        postalCode: ""
+        postalCode: "",
       };
     }
 
@@ -50,17 +50,18 @@ const getAddressFromCoordinates = async (lat, lng) => {
 
     result.address_components.forEach((component) => {
       if (component.types.includes("locality")) city = component.long_name;
-      if (component.types.includes("administrative_area_level_1")) state = component.long_name;
-      if (component.types.includes("postal_code")) postalCode = component.long_name;
+      if (component.types.includes("administrative_area_level_1"))
+        state = component.long_name;
+      if (component.types.includes("postal_code"))
+        postalCode = component.long_name;
     });
 
     return {
       address: result.formatted_address,
       city,
       state,
-      postalCode
+      postalCode,
     };
-
   } catch (error) {
     console.error("Geocoding Error:", error.message);
 
@@ -68,7 +69,7 @@ const getAddressFromCoordinates = async (lat, lng) => {
       address: "Unknown Address",
       city: "",
       state: "",
-      postalCode: ""
+      postalCode: "",
     };
   }
 };
