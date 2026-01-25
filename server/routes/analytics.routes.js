@@ -8,6 +8,11 @@ const { authUser, isAdmin } = require("../middlewares/auth.middleware");
 router.get("/summary", authUser, isAdmin, analyticsController.getSummary);
 router.get("/monthly", authUser, isAdmin, analyticsController.getMonthlyStats);
 router.get("/status", authUser, isAdmin, analyticsController.getStatusStats);
-router.get("/locations", authUser, isAdmin, analyticsController.getLocationStats);
+router.get(
+  "/locations",
+  authUser,
+  isAdmin,
+  analyticsController.getLocationStats,
+);
 
 module.exports = router;
