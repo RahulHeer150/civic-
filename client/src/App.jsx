@@ -55,14 +55,15 @@ function App() {
         <Route path="/issues/:id" element={<Issue />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/about" element={<Aboutus />} />
-
-
-        <Route path="/admin/issues" element={<AdminExplore />} />
-        <Route path="/admin/analytics" element={<AdminAnalytics />} />
         <Route path="/forget-pass" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/About" element={<About />} />
         <Route path="/Register" element={<Register />} />
+
+
+        <Route path="/admin/issues" element={<AdminExplore />} />
+        <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        
       </Routes>
       <Footer />
     </BrowserRouter>
