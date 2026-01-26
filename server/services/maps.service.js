@@ -57,7 +57,7 @@ const getAddressFromCoordinates = async (lat, lng) => {
     });
 
 
-    
+  
     return {
       address: result.formatted_address,
       city,
