@@ -73,3 +73,4 @@ exports.getLocationStats = async (req, res) => {
     res.status(500).json({ message: "Location analytics error" });
   }
 };
+
