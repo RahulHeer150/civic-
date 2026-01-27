@@ -203,7 +203,7 @@ module.exports.forgotPassword = async (req, res) => {
       </a>
       <p>This link expires in 10 minutes.</p>
     `;
-    
+
 
     // 5. Email sender
     const transporter = nodemailer.createTransport({
@@ -261,4 +261,5 @@ module.exports.resetPassword = async (req, res) => {
     console.error("Reset Password Error:", err);
     return res.status(500).json({ message: "Server error" });
   }
+  
 };
