@@ -261,5 +261,5 @@ module.exports.resetPassword = async (req, res) => {
     console.error("Reset Password Error:", err);
     return res.status(500).json({ message: "Server error" });
   }
-  
+
 };
