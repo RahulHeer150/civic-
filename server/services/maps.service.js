@@ -56,7 +56,6 @@ const getAddressFromCoordinates = async (lat, lng) => {
         postalCode = component.long_name;
     });
 
-
     return {
       address: result.formatted_address,
       city,
