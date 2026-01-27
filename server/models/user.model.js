@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // 🔹 Auto-hash password before saving
@@ -71,9 +71,14 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    { _id: this._id, email: this.email, role: this.role, username: this.username },
+    {
+      _id: this._id,
+      email: this.email,
+      role: this.role,
+      username: this.username,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: "24h" }
+    { expiresIn: "24h" },
   );
   return token;
 };
