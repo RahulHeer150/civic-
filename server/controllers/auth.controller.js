@@ -151,7 +151,6 @@ module.exports.logoutUser = async (req, res, next) => {
     });
   
 
-
     // only attempt to blacklist if token exists
     if (token) {
       try {
