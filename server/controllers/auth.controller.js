@@ -143,14 +143,12 @@ module.exports.logoutUser = async (req, res, next) => {
 
     const token = tokenFromCookie || tokenFromHeader || null;
 
-
-        // clear cookie regardless (use same options you set when creating it)
+    // clear cookie regardless (use same options you set when creating it)
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
-    
 
     // only attempt to blacklist if token exists
     if (token) {
@@ -205,7 +203,6 @@ module.exports.forgotPassword = async (req, res) => {
       </a>
       <p>This link expires in 10 minutes.</p>
     `;
-
 
     // 5. Email sender
     const transporter = nodemailer.createTransport({
@@ -263,5 +260,4 @@ module.exports.resetPassword = async (req, res) => {
     console.error("Reset Password Error:", err);
     return res.status(500).json({ message: "Server error" });
   }
-
 };
