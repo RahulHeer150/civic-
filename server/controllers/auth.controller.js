@@ -150,7 +150,6 @@ module.exports.logoutUser = async (req, res, next) => {
       sameSite: "strict",
     });
     
-
     // only attempt to blacklist if token exists
     if (token) {
       try {
