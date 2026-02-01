@@ -143,6 +143,7 @@ module.exports.logoutUser = async (req, res, next) => {
 
     const token = tokenFromCookie || tokenFromHeader || null;
 
+    
         // clear cookie regardless (use same options you set when creating it)
     res.clearCookie("token", {
       httpOnly: true,
@@ -150,7 +151,7 @@ module.exports.logoutUser = async (req, res, next) => {
       sameSite: "strict",
     });
     
-    
+
     // only attempt to blacklist if token exists
     if (token) {
       try {
