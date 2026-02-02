@@ -143,7 +143,6 @@ module.exports.logoutUser = async (req, res, next) => {
         : null;
 
     const token = tokenFromCookie || tokenFromHeader || null;
-
     // clear cookie regardless (use same options you set when creating it)
     res.clearCookie("token", {
       httpOnly: true,
