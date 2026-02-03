@@ -130,7 +130,7 @@ module.exports.getUserProfile = async (req, res, next) => {
     });
   }
 };
-
+\
 module.exports.logoutUser = async (req, res, next) => {
   try {
     // safe optional chaining for cookies and headers
