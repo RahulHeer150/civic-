@@ -128,7 +128,6 @@ module.exports.getUserProfile = async (req, res, next) => {
       message: "Internal Server Error",
       error: error.message,
     });
-
   }
 };
 
