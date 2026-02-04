@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
+
 // module.exports.register = async (req, res) => {
 //     try {
 //         const { username, city, state,  email, password, phone } = req.body;
