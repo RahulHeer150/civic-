@@ -15,6 +15,7 @@ module.exports.authUser = async (req, res, next) => {
     if (!token && req.cookies?.token) {
       token = req.cookies.token;
     }
+
     // 3️⃣ If still no token → unauthorized
     if (!token) {
       return res.status(401).json({
@@ -60,6 +61,7 @@ module.exports.authUser = async (req, res, next) => {
     if (error.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token expired." });
     }
+    
 
     return res.status(401).json({
       success: false,
