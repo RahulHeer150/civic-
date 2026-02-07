@@ -62,7 +62,7 @@ module.exports.authUser = async (req, res, next) => {
       return res.status(401).json({ message: "Token expired." });
     }
   
-    
+  
     return res.status(401).json({
       success: false,
       message: "Invalid token."
