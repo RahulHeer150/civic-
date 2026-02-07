@@ -15,6 +15,7 @@ module.exports.authUser = async (req, res, next) => {
     if (!token && req.cookies?.token) {
       token = req.cookies.token;
     }
+
     
     // 3️⃣ If still no token → unauthorized
     if (!token) {
