@@ -4,6 +4,7 @@
 
 // const Aboutus = () => {
 //   return (
+
 //     <div className="flex flex-col min-h-screen  p-10 mt-10 bg-[#d5def0]">
 //        <div className='relative flex justify-center items-center flex-col text-center sm:text-left mb-10 mt-6' data-aos="zoom-out" data-aos-duration="1000">
 //             <h1 className='text-4xl md:text-5xl lg:text-6xl font-bold flex items-center justify-center sm:justify-start text-center'>
@@ -86,6 +87,7 @@ const AboutItem = ({ title, isOpen, onClick, content }) => {
       setContentHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px");
     }
   }, [isOpen]);
+  
 
   return (
     // add the about-item class so the parent animation can target all items
