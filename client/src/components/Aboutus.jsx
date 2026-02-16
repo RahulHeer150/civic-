@@ -88,7 +88,6 @@ const AboutItem = ({ title, isOpen, onClick, content }) => {
     }
   }, [isOpen]);
   
-
   return (
     // add the about-item class so the parent animation can target all items
     <div className="mb-4 about-item">
