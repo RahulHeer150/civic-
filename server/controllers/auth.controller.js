@@ -52,6 +52,7 @@ module.exports.register = async (req, res) => {
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
+    
 
     const isUserAlready = await userModel.findOne({ email });
     if (isUserAlready) {
