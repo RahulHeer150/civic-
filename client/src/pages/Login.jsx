@@ -14,7 +14,7 @@ const Login = () => {
   const { setUser } = useContext(UserDataContext);
   const navigate = useNavigate();
 
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
