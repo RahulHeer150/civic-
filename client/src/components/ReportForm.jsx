@@ -146,7 +146,7 @@ const ReportForm = () => {
           type="submit"
           disabled={loading}
           className={`w-full ${
-            loading ? "bg-gray-500" : "bg-blue-500 hover:bg-blue-600"
+            loading ? "bg-gray-500" : "bg-blue-500 hover:bg-black"
           } text-white p-2 rounded`}
         >
           {loading ? "Submitting..." : "Submit Report"}
