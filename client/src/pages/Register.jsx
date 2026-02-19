@@ -16,6 +16,7 @@ import { UserDataContext } from "../context/userContext";
 import { useContext } from "react";
 import { ClipLoader } from "react-spinners";
 
+
 // Import the loader component
 const Register = () => {
   const [username, setUsername] = useState("");
