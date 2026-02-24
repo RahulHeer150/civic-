@@ -7,6 +7,7 @@ import How_it_works from "./pages/How_it_works";
 import Explore from "./pages/Explore";
 import UserProfile from "./pages/UserProfile";
 import Login from "./pages/Login";
+import ContactUs from "./pages/ContactUs";
 import ForgotPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/Reset_password";
 //import AuthPage from './pages/AuthPage'
@@ -58,6 +59,7 @@ function App() {
         <Route path="/forget-pass" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/About" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/Register" element={<Register />} />
         //Admin Routes
         <Route path="/admin/issues" element={<AdminExplore />} />
