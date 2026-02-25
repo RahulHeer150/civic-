@@ -7,7 +7,7 @@ import How_it_works from "./pages/How_it_works";
 import Explore from "./pages/Explore";
 import UserProfile from "./pages/UserProfile";
 import Login from "./pages/Login";
-import ContactUs from "./pages/ContactUs";
+//import ContactUs from "./pages/ContactUs";
 import ForgotPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/Reset_password";
 //import AuthPage from './pages/AuthPage'
@@ -22,7 +22,6 @@ import About from "./pages/About";
 import Report_page from "./pages/Report_page";
 import AuthPage from "./pages/AuthPage";
 import Logout from "./components/Logout";
-import Contact from "./pages/Contact";
 import MyActivity from "./components/MyActivity";
 import UserDashBoard from "./components/UserDashBoard";
 import IssueList from "./components/IssueList";
@@ -48,7 +47,6 @@ function App() {
         <Route path="/report" element={<Report_page />} />
         <Route path="explore" element={<Explore />} />
         <Route path="/howitworks" element={<How_it_works />} />
-        <Route path="/contactus" element={<Contact />} />
         <Route path="/Error" element={<Error />} />
         <Route path="/home" element={<Home />} />
         <Route path="/activity" element={<MyActivity />} />
@@ -59,7 +57,7 @@ function App() {
         <Route path="/forget-pass" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/About" element={<About />} />
-        <Route path="/contact" element={<ContactUs />} />
+        {/* <Route path="/contact" element={<ContactUs />} /> */}
         <Route path="/Register" element={<Register />} />
         //Admin Routes
         <Route path="/admin/issues" element={<AdminExplore />} />
