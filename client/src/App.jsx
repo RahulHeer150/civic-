@@ -31,7 +31,7 @@ import Aboutus from "./components/Aboutus";
 import AdminExplore from "./pages/AdminExplore";
 import AdminAnalytics from "./pages/AdminAnalytics";
 
-function App() {
+const App=() => {
   return (
     <BrowserRouter>
       <Navbar />
