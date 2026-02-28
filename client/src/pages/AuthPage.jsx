@@ -7,7 +7,6 @@ const AuthPage = ({ setIsLoggedIn, image }) => {
   const location = useLocation();
   const path = location.pathname;
 
-
   // Determine the active button based on the current URL path
   const activeButton = path === "/register" ? "register" : "login";
 
