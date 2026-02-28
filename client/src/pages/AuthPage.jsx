@@ -10,7 +10,6 @@ const AuthPage = ({ setIsLoggedIn, image }) => {
   // Determine the active button based on the current URL path
   const activeButton = path === "/register" ? "register" : "login";
 
-  
   return (
     <div className="flex flex-col min-h-screen pt-4  md:pt-20 ">
       <div className="flex-grow flex flex-col-reverse md:flex-row lg:flex-row w-full max-w-[1160px] pt-16 md:pt-0 lg:pt-0 mx-auto justify-between items-center mt-[12vh]">
