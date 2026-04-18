@@ -84,38 +84,64 @@ module.exports.getMyIssues = async (req, res) => {
 
 module.exports.createIssue = async (req, res) => {
   try {
-    const { title, description, location } = req.body;
+    const { title, description, latitude, longitude } = req.body;
 
-    // multer sets req.file when media is uploaded
+    // ✅ Validation
+    if (!title || !description || !latitude || !longitude) {
+      return res.status(400).json({
+        message: "Title, description, latitude and longitude are required",
+      });
+    }
+
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+
+    if (isNaN(lat) || isNaN(lng)) {
+      return res.status(400).json({
+        message: "Invalid latitude or longitude",
+      });
+    }
+
+    // ✅ Handle media upload
     const mediaPath = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // auth middleware sets req.user
-    //const reportedBy = req.user?._id;
+    // ✅ OPTIONAL: Get readable address
+    let address = "";
+    try {
+      const geo = await getAddressFromCoordinates(lat, lng);
+      address = geo?.address || "";
+    } catch (err) {
+      console.warn("Address fetch failed:", err.message);
+    }
 
-    console.log("Creating issue:", { title, description, location, mediaPath });
-
-    console.log("Headers content-type:", req.headers["content-type"]);
-    console.log("req.file:", req.file);
-    console.log("req.body raw:", req.body);
-
+    // ✅ IMPORTANT: Send GeoJSON to service
     const issue = await issueService.createIssue({
       title,
       description,
-      location,
+      location: {
+        type: "Point",
+        coordinates: [lng, lat], // ⚠️ IMPORTANT ORDER
+        address: address,
+      },
       media: mediaPath,
       reportedBy: req.user?._id,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
+      success: true,
       message: "✅ Issue created successfully",
-      issue: issue,
+      issue,
     });
+
   } catch (err) {
     console.error("Error creating issue:", err);
-    res.status(500).json({ message: err.message || "Server error" });
+
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Server error",
+    });
   }
 };
-
 module.exports.getIssueById = async (req, res) => {
   try {
     const { id } = req.params;
