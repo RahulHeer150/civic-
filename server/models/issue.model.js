@@ -6,10 +6,17 @@ const issueSchema = new mongoose.Schema(
     description: { type: String, required: true },
 
     location: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+  type: {
+    type: String,
+    enum: ["Point"],
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+  address: String // optional (human readable)
+},
 
     media: String,
 
