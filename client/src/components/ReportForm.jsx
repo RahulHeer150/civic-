@@ -11,26 +11,57 @@ const ReportForm = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+
+  // ✅ NEW STATES
+  const [location, setLocation] = useState(null); // lat/lng
+  const [locationText, setLocationText] = useState(""); // display text
+  const [showLocationOptions, setShowLocationOptions] = useState(false);
+
   const [date, setDate] = useState("");
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🔒 Optional: protect direct URL access
+  // 🔒 Protect route
   useEffect(() => {
     if (!isLoggedIn()) {
       toast.warn("Please login or register to report an issue");
-      navigate("/login"); // optional redirect
+      navigate("/login");
     }
   }, [navigate]);
 
-  // 🔒 PROTECTED SUBMIT
+  // ✅ GET CURRENT LOCATION
+  const handleUseCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        setLocation({ lat, lng });
+
+        // Show readable text (you can replace with address later)
+        setLocationText(`Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`);
+
+        setShowLocationOptions(false);
+        toast.success("Location detected!");
+      },
+      () => {
+        toast.error("Location permission denied");
+      }
+    );
+  };
+
+  // 🔥 SUBMIT FUNCTION
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔐 BLOCK UNAUTHENTICATED USERS
     if (!isLoggedIn()) {
       toast.error("Please login or register to report an issue");
+      return;
+    }
+
+    // ✅ location validation
+    if (!location) {
+      toast.error("Please select location");
       return;
     }
 
@@ -42,8 +73,10 @@ const ReportForm = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("location", location);
+      formData.append("latitude", location.lat);
+      formData.append("longitude", location.lng);
       formData.append("date", date);
+
       if (photo) formData.append("media", photo);
 
       await axios.post(
@@ -58,6 +91,7 @@ const ReportForm = () => {
 
       toast.success("Issue reported successfully!");
       navigate("/explore");
+
     } catch (err) {
       console.error("Report error:", err);
 
@@ -85,7 +119,7 @@ const ReportForm = () => {
           <label className="block text-gray-700 mb-2">Issue Title</label>
           <input
             type="text"
-            placeholder="Enter issue title (e.g., Road damage, Street light not working...)"
+            placeholder="Enter issue title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
@@ -105,17 +139,30 @@ const ReportForm = () => {
           ></textarea>
         </div>
 
-        {/* Location */}
-        <div className="mb-4">
+        {/* ✅ NEW LOCATION UI */}
+        <div className="mb-4 relative">
           <label className="block text-gray-700 mb-2">Location</label>
+
           <input
             type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter exact location"
-            className="w-full p-2 border border-gray-300 rounded"
-            required
+            value={locationText}
+            placeholder="Click to use current location"
+            onFocus={() => setShowLocationOptions(true)}
+            readOnly
+            className="w-full p-2 border border-gray-300 rounded cursor-pointer"
           />
+
+          {showLocationOptions && (
+            <div className="absolute w-full bg-white border mt-1 rounded shadow z-10">
+              <button
+                type="button"
+                onClick={handleUseCurrentLocation}
+                className="w-full text-left px-3 py-2 hover:bg-gray-100"
+              >
+                📍 Use my current location
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Date */}
