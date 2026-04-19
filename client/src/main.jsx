@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "leaflet/dist/leaflet.css";
 import UserContext from "./context/userContext.jsx";
 import { AuthProvider } from "./context/auth.jsx";
 

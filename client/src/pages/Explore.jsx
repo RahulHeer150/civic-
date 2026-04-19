@@ -132,7 +132,13 @@ const Explore = () => {
 
                 <span className="flex items-center gap-1 text-md text-gray-500">
                   <FaMapMarkerAlt className="text-blue-600 text-md" />
-                  <span>{issue.location || "—"}</span>
+                  <span>
+  {issue.location?.address
+    ? issue.location.address
+    : issue.location?.coordinates
+    ? `${issue.location.coordinates[1]}, ${issue.location.coordinates[0]}`
+    : "—"}
+</span>
                 </span>
               </div>
             </div>
