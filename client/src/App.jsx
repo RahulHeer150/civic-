@@ -30,6 +30,8 @@ import AdminPage from "./pages/AdminPage";
 import Aboutus from "./components/Aboutus";
 import AdminExplore from "./pages/AdminExplore";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminMap from "./pages/AdminMap";
+
 
 const App=() => {
   return (

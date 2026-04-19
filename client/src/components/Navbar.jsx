@@ -153,8 +153,8 @@ useEffect(() => {
       Explore
     </Link>
 
-    <Link to="/howitworks" onClick={() => setIsHamburgerOpen(false)}>
-      How it Works
+    <Link to="/admin/map" onClick={() => setIsHamburgerOpen(false)}>
+      Open Map
     </Link>
 
     {isLoggedIn ? (

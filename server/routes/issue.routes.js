@@ -15,29 +15,28 @@ router.post(
   "/create",
   authMiddleware.authUser,
   uploadMiddleware.single("media"),
-  issueController.createIssue,
+  issueController.createIssue
 );
 
+// ✅ FIX: ADD NEARBY HERE (BEFORE :id)
+router.get("/nearby", issueController.getNearbyIssues);
+
 router.post("/:id/vote", authMiddleware.authUser, issueController.voteIssue);
-router.post(
-  "/:id/downvote",
-  authMiddleware.authUser,
-  issueController.downvoteIssue,
-);
+router.post("/:id/downvote", authMiddleware.authUser, issueController.downvoteIssue);
 
 // 🛡️ Admin only
 router.delete(
   "/:id",
   authMiddleware.authUser,
   authMiddleware.isAdmin,
-  issueController.deleteIssue,
+  issueController.deleteIssue
 );
 
 router.put(
   "/:id/resolve",
   authMiddleware.authUser,
   authMiddleware.isAdmin,
-  issueController.resolveIssue,
+  issueController.resolveIssue
 );
 
 // 🔓 Public (DYNAMIC ROUTES LAST)

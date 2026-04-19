@@ -142,6 +142,36 @@ module.exports.createIssue = async (req, res) => {
     });
   }
 };
+
+module.exports.getNearbyIssues = async (req, res) => {
+  try {
+    const { lat, lng } = req.query;
+
+    if (!lat || !lng) {
+      return res.status(400).json({
+        message: "Latitude and longitude required",
+      });
+    }
+
+    const issues = await Issue.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [parseFloat(lng), parseFloat(lat)],
+          },
+          $maxDistance: 5000, // 5 km
+        },
+      },
+    });
+
+    res.json(issues);
+  } catch (err) {
+    console.error("Nearby error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports.getIssueById = async (req, res) => {
   try {
     const { id } = req.params;
