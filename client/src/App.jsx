@@ -62,6 +62,7 @@ const App=() => {
         //Admin Routes
         <Route path="/admin/issues" element={<AdminExplore />} />
         <Route path="/admin/analytics" element={<AdminAnalytics />} />
+        <Route path="/admin/map" element={<AdminMap />} />
       </Routes>
       <Footer />
     </BrowserRouter>
