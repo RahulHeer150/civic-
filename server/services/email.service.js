@@ -7,14 +7,24 @@ const sendEmail = async ({ to, subject, html }) => {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
-  await transporter.sendMail({
-    from: `"CivicPlus Support" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    html,
-  });
+  try {
+    const info = await transporter.sendMail({
+      from: `"CivicPlus Support" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
+    console.log("✅ Email sent successfully:", info.response);
+    return info;
+  } catch (error) {
+    console.error("❌ Email send failed:", error.message);
+    throw error;
+  }
 };
 
 module.exports = { sendEmail };
