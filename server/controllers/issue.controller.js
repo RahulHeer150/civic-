@@ -164,6 +164,7 @@ module.exports.getNearbyIssues = async (req, res) => {
         },
       },
     });
+    
 
     res.json(issues);
   } catch (err) {
