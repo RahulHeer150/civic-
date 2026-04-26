@@ -31,7 +31,6 @@ app.use("/analytics", analyticsRoutes);
 // ✅ Mount routes
 
 app.use('/users', authRoutes);
-
 app.use("/issues",issueRoutes)
 
 const PORT = process.env.PORT || 5001;
