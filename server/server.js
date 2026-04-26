@@ -10,6 +10,7 @@ const analyticsRoutes = require("./routes/analytics.routes");
 dotenv.config();
 const app = express();
 
+
 // ✅ Middleware
 app.use(cors());
 app.use(express.json());
