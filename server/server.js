@@ -26,8 +26,6 @@ app.get('/', (req, res) => {
 });
 
 app.use("/analytics", analyticsRoutes);
-
-
 // ✅ Mount routes
 
 app.use('/users', authRoutes);
