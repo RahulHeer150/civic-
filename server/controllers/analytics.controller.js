@@ -36,7 +36,7 @@ exports.getMonthlyStats = async (req, res) => {
   }
 };
 
-new
+
 // 🔹 STATUS DISTRIBUTION (PIE)
 exports.getStatusStats = async (req, res) => {
   try {
