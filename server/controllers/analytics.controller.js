@@ -36,7 +36,6 @@ exports.getMonthlyStats = async (req, res) => {
   }
 };
 
-
 // 🔹 STATUS DISTRIBUTION (PIE)
 exports.getStatusStats = async (req, res) => {
   try {
@@ -54,6 +53,7 @@ exports.getStatusStats = async (req, res) => {
     res.status(500).json({ message: "Status analytics error" });
   }
 };
+
 
 // 🔹 LOCATION BASED ANALYTICS (BAR)
 exports.getLocationStats = async (req, res) => {
