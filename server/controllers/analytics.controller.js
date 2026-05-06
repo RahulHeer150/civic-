@@ -53,7 +53,6 @@ exports.getStatusStats = async (req, res) => {
   }
 };
 
-
 // 🔹 LOCATION BASED ANALYTICS (BAR)
 exports.getLocationStats = async (req, res) => {
   try {
