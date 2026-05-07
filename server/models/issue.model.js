@@ -4,19 +4,18 @@ const issueSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-
     location: {
-  type: {
-    type: String,
-    enum: ["Point"],
-    required: true,
-  },
-  coordinates: {
-    type: [Number],
-    required: true,
-  },
-  address: String // optional (human readable)
-},
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+      address: String, // optional (human readable)
+    },
 
     media: String,
 
@@ -37,7 +36,7 @@ const issueSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 issueSchema.index({ location: "2dsphere" });
