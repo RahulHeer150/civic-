@@ -42,3 +42,4 @@ const issueSchema = new mongoose.Schema(
 issueSchema.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("Issue", issueSchema);
+
