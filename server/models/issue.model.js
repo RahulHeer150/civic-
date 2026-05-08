@@ -32,7 +32,6 @@ const issueSchema = new mongoose.Schema(
       required: true,
     },
 
-
     votesCount: {
       type: Number,
       default: 0,
