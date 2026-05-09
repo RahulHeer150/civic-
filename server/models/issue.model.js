@@ -17,7 +17,6 @@ const issueSchema = new mongoose.Schema(
       address: String, // optional (human readable)
     },
 
-    
     media: String,
 
     status: {
