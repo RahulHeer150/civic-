@@ -18,7 +18,6 @@ const issueSchema = new mongoose.Schema(
     },
 
 
-    
     media: String,
 
     status: {
