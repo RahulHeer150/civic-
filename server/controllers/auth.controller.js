@@ -62,8 +62,6 @@ module.exports.register = async (req, res) => {
 
 
 
-
-
     // Create user without OTP
     const user = await userService.createUser({
       username,
