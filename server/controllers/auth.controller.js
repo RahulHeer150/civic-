@@ -73,6 +73,10 @@ module.exports.register = async (req, res) => {
       // Don't include OTP here
     });
 
+
+
+    
+
     const token = user.generateAuthToken();
     res.status(201).json({ token, user });
   } catch (error) {
