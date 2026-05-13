@@ -75,7 +75,7 @@ module.exports.register = async (req, res) => {
 
 
 
-  
+
     const token = user.generateAuthToken();
     res.status(201).json({ token, user });
   } catch (error) {
