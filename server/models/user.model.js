@@ -69,6 +69,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+
+
+
+
+
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
     {
