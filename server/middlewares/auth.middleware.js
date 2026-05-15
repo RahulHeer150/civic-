@@ -19,7 +19,7 @@ module.exports.authUser = async (req, res, next) => {
     // 3️⃣ If still no token → unauthorized
     if (!token) {
       return res.status(401).json({
-        success: false,
+        success: false, 
         message: "Access denied. No token provided."
       });
     }
