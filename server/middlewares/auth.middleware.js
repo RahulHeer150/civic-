@@ -13,7 +13,6 @@ module.exports.authUser = async (req, res, next) => {
 
 
 
-
     // 2️⃣ Check cookies
     if (!token && req.cookies?.token) {
       token = req.cookies.token;
