@@ -52,7 +52,7 @@ module.exports.register = async (req, res) => {
     if (!username || !city || !state || !email || !password || !phone) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    
+
     const isUserAlready = await userModel.findOne({ email });
     if (isUserAlready) {
       return res.status(400).json({ message: "User already exists" });
@@ -60,7 +60,6 @@ module.exports.register = async (req, res) => {
 
     const hashedPassword = await userModel.hashPassword(password);
 
-    
     // Create user without OTP
     const user = await userService.createUser({
       username,
@@ -73,7 +72,6 @@ module.exports.register = async (req, res) => {
       // Don't include OTP here
     });
 
-    
     const token = user.generateAuthToken();
     res.status(201).json({ token, user });
   } catch (error) {
